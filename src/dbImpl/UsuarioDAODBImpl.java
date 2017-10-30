@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 
+import javax.swing.plaf.basic.BasicTreeUI.TreeHomeAction;
+
 import basics.*;
 
 import dao.UsuarioDAO;
@@ -69,6 +71,7 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 				e.printStackTrace();
 			} catch (SQLException e1) {
 				//no hago nada
+				//Agregar throw
 			}
 		} finally {
 			try {
@@ -76,6 +79,7 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 				c.close();
 			} catch (SQLException e1) {
 				//no hago nada
+				//manejar exepción por documento ausente
 			}
 		}
 		return retorna;
