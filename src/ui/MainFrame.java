@@ -7,56 +7,85 @@ import produccion.Handler;
 
 
 
-public class MainFrame extends JFrame implements ActionListener{
+public class MainFrame extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
- 	public Handler handler = new Handler();
-	public void setHandler(Handler handler) {
-		this.handler = handler;
-	}
-
-
+	public Handler handler;
+	
 	public MainFrame() {
-		
+		JMenuBar menubar;
+		JMenu pacientes,doctores,turnos;
+	    JMenuItem altapacientes, bajapacientes, modificacionpacientes, consultapacientes;
 		//Frame principal
 		//Panel principal y opciones
-		Handler handler = new Handler();
+		    
 		JPanel panelprincipal = new JPanel();
-		JButton botonpacientes = createButton("Pacientes");
-		panelprincipal.add(createBox().add(botonpacientes));
-		botonpacientes.addActionListener(new ActionListener() {
+		menubar=new JMenuBar();
+        setJMenuBar(menubar);
+        
+        
+        pacientes=new JMenu("Pacientes");
+        menubar.add(pacientes);
+        altapacientes=new JMenuItem("Alta");
+        pacientes.add(altapacientes);
+        altapacientes.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "alta pacientes");
+				handler.enviarPacienteNuevo();
+				
+			}
+		});
+        
+        bajapacientes=new JMenuItem("Baja");
+        pacientes.add(bajapacientes);
+        
+        modificacionpacientes=new JMenuItem("Modificacion");
+        pacientes.add(modificacionpacientes);
+        
+        consultapacientes=new JMenuItem("Consulta");
+        pacientes.add(consultapacientes);
+        
+        doctores=new JMenu("Doctores");
+        menubar.add(doctores);
+        
+        turnos=new JMenu("Turnos");
+        menubar.add(turnos);
+	    
+		JButton botonpacientes = createButton("Pacientes");
+		
+		botonpacientes.addActionListener(new ActionListener() {
+	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Panel Pacientes
 				JPanel panelpacientes = new JPanel();
 				JButton botonalta = createButton("Alta");
-				panelpacientes.add(createBox().add(botonalta));
 				botonalta.addActionListener(new ActionListener() {
-					
+				
 					//Panel Alta Pacientes
 					public void actionPerformed(ActionEvent e) {
-						AltaPanel panelaltapacientes = new AltaPanel();
-						handler.setPanelAlta(panelaltapacientes);
-						handler.enviarPacienteNuevo();
-						matapaneles(panelpacientes);
-						agregapaneles(panelaltapacientes);
+						//TODO: Handler tiene que crear los paneles
+						
 					}
 				});
+				
+				panelpacientes.add(createBox().add(botonalta));
 				
 				//Panel Baja Pacientes
 				JButton botonbaja = createButton("Baja");
 				panelpacientes.add(createBox().add(botonbaja));
-				matapaneles(panelprincipal);
-				agregapaneles(panelpacientes);
+
 				//handler conoce a todos los paneles
 			}
 		});
 		
 		
 		//panel principal
+		panelprincipal.add(createBox().add(botonpacientes));
 		panelprincipal.setSize(500,  300);
 		panelprincipal.setVisible(true);
 		this.add(panelprincipal);
@@ -80,22 +109,4 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	//METODOS AUXILIARES
 	
-
-	private void matapaneles(JPanel panel){
-		this.remove(panel);
-		this.revalidate();
-	}
-	private void agregapaneles(JPanel panel){
-		panel.setSize(500,  300);
-		panel.setVisible(true);
-		this.add(panel);
-		this.revalidate();
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }

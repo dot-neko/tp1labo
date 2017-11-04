@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.Collection;
+import java.util.List;
 
 import entidades.Pacientes;
 
@@ -10,6 +10,6 @@ public interface UsuarioDAO {
 	public void deletePacienteByDocumento(int documento);
 	public void updateUsuarioByDocumento(int documento, Pacientes p);
 	public Pacientes getPacienteByDocumento(int documento);
-	public Collection<?> getAllUsuarios();
+	public List<?> getAllUsuarios();
 	
 }

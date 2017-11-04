@@ -1,12 +1,7 @@
 package consoleImpl;
 
-//import java.sql.Connection;
-//import java.sql.SQLException;
-//import java.sql.Statement;
-import java.util.Collection;
 
-//import basics.DBManager;
-
+import java.util.List;
 import dao.UsuarioDAO;
 import entidades.Pacientes;
 
@@ -14,7 +9,7 @@ public class UsuarioDAOConsoleImpl implements UsuarioDAO{
 
 
 	@Override
-	public Collection<?> getAllUsuarios() {
+	public List<?> getAllUsuarios() {
 		// TODO Auto-generated method stub
 		return null;
 	}

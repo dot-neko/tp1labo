@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-
-import javax.swing.plaf.basic.BasicTreeUI.TreeHomeAction;
+import java.util.List;
 
 import basics.*;
 
@@ -40,7 +38,7 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public Collection<?> getAllUsuarios() {
+	public List<?> getAllUsuarios() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,7 +77,7 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 				c.close();
 			} catch (SQLException e1) {
 				//no hago nada
-				//manejar exepción por documento ausente
+				//manejar excepción por documento ausente
 			}
 		}
 		return retorna;
