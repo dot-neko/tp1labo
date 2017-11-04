@@ -3,22 +3,34 @@ package produccion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.RootPaneContainer;
 
 import ui.AltaPanel;
 import ui.MainFrame;
 
 //
 public class Handler{
-	 public Handler(){
-		 setFrame(new MainFrame()); 
-	 }
-	//Declaro paneles
 	private MainFrame frame;
 	private JPanel panelactivo;
 	private ActionListener altapaciente;
-	public BO bo = new BO();
-
+	public BO bo;
+	
+	public MainFrame getFrame() {
+		return frame;
+	}
+	public void setFrame(MainFrame mainFrame) {
+		this.frame = mainFrame;
+	}
+	
+	 public Handler(){
+	 }
+	//Declaro paneles
+	public void crearMainFrame(){
+		setFrame( new MainFrame());
+	}
 	public JPanel getPanelActivo(){
 		return panelactivo;
 	}
@@ -27,10 +39,8 @@ public class Handler{
 	}
 	public void crearPanelAlta(){
 		AltaPanel panelalta = new AltaPanel();
-		setPanelAlta(panelalta);
-		getFrame().add(getPanelActivo());
-		
-		MainFrame main = new MainFrame();
+		((RootPaneContainer) getFrame()).getContentPane().removeAll();
+		((RootPaneContainer) getFrame()).setContentPane(panelalta);
 	}
 
 	
@@ -42,12 +52,7 @@ public class Handler{
         };                
         ((AltaPanel) getPanelActivo()).getButton().addActionListener(altapaciente);   
     }
-	public MainFrame getFrame() {
-		return frame;
-	}
-	public void setFrame(MainFrame frame) {
-		this.frame = frame;
-	}
+	
 }
 
 

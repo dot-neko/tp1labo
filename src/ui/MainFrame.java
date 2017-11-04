@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -7,24 +8,25 @@ import produccion.Handler;
 
 
 
-public class MainFrame extends JFrame {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public Handler handler;
+public class MainFrame extends JPanel{
 	
+	JMenuBar menubar;
+	JMenu pacientes,doctores,turnos;
+    JMenuItem altapacientes, bajapacientes, modificacionpacientes, consultapacientes;
+ 
 	public MainFrame() {
-		JMenuBar menubar;
-		JMenu pacientes,doctores,turnos;
-	    JMenuItem altapacientes, bajapacientes, modificacionpacientes, consultapacientes;
+		
 		//Frame principal
+		JFrame frameprincial = new JFrame();
+		
+	    menubar=new JMenuBar();
+	    frameprincial.setJMenuBar(menubar);
 		//Panel principal y opciones
-		    
+		
 		JPanel panelprincipal = new JPanel();
-		menubar=new JMenuBar();
-        setJMenuBar(menubar);
-        
+		frameprincial.setLayout(new BorderLayout());
+		frameprincial.setContentPane(panelprincipal);
+        super.getPanelActivo();
         
         pacientes=new JMenu("Pacientes");
         menubar.add(pacientes);
@@ -34,9 +36,7 @@ public class MainFrame extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "alta pacientes");
-				handler.enviarPacienteNuevo();
-				
+				crearPanelAlta();
 			}
 		});
         
@@ -88,11 +88,11 @@ public class MainFrame extends JFrame {
 		panelprincipal.add(createBox().add(botonpacientes));
 		panelprincipal.setSize(500,  300);
 		panelprincipal.setVisible(true);
-		this.add(panelprincipal);
+		
 		//Parametros JFrame
-		this.setSize(500,  300);
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
+		frameprincial.setSize(500,  300);
+		frameprincial.setVisible(true);
+		frameprincial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
 	}
 	
 	
@@ -106,6 +106,7 @@ public class MainFrame extends JFrame {
 		JButton buttonlabel1 = new JButton(buttonlabel);
 		return buttonlabel1;
 	}
+
 	
 	//METODOS AUXILIARES
 	
