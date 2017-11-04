@@ -26,7 +26,6 @@ public class MainFrame extends JPanel{
 		JPanel panelprincipal = new JPanel();
 		frameprincial.setLayout(new BorderLayout());
 		frameprincial.setContentPane(panelprincipal);
-        super.getPanelActivo();
         
         pacientes=new JMenu("Pacientes");
         menubar.add(pacientes);
@@ -36,7 +35,6 @@ public class MainFrame extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				crearPanelAlta();
 			}
 		});
         
