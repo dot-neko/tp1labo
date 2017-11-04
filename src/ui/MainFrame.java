@@ -52,38 +52,9 @@ public class MainFrame extends JPanel{
         
         turnos=new JMenu("Turnos");
         menubar.add(turnos);
-	    
-		JButton botonpacientes = createButton("Pacientes");
-		
-		botonpacientes.addActionListener(new ActionListener() {
 	
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Panel Pacientes
-				JPanel panelpacientes = new JPanel();
-				JButton botonalta = createButton("Alta");
-				botonalta.addActionListener(new ActionListener() {
-				
-					//Panel Alta Pacientes
-					public void actionPerformed(ActionEvent e) {
-						//TODO: Handler tiene que crear los paneles
-						
-					}
-				});
-				
-				panelpacientes.add(createBox().add(botonalta));
-				
-				//Panel Baja Pacientes
-				JButton botonbaja = createButton("Baja");
-				panelpacientes.add(createBox().add(botonbaja));
-
-				//handler conoce a todos los paneles
-			}
-		});
-		
 		
 		//panel principal
-		panelprincipal.add(createBox().add(botonpacientes));
 		panelprincipal.setSize(500,  300);
 		panelprincipal.setVisible(true);
 		
