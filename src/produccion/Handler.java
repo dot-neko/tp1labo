@@ -16,21 +16,14 @@ public class Handler{
 	private MainFrame frame;
 	private JPanel panelactivo;
 	private ActionListener altapaciente;
-	public BO bo;
-	
-	public MainFrame getFrame() {
-		return frame;
-	}
-	public void setFrame(MainFrame mainFrame) {
-		this.frame = mainFrame;
-	}
+	BO miBO;
+	MainFrame miFrame;
+
 	
 	 public Handler(){
 	 }
 	//Declaro paneles
-	public void crearMainFrame(){
-		setFrame( new MainFrame());
-	}
+
 	public JPanel getPanelActivo(){
 		return panelactivo;
 	}
@@ -39,19 +32,30 @@ public class Handler{
 	}
 	public void crearPanelAlta(){
 		AltaPanel panelalta = new AltaPanel();
-		((RootPaneContainer) getFrame()).getContentPane().removeAll();
-		((RootPaneContainer) getFrame()).setContentPane(panelalta);
+		miFrame.getContentPane().removeAll();
+		miFrame.setContentPane(panelalta);;
 	}
 
 	
 	public void enviarPacienteNuevo(){        
 		altapaciente = new ActionListener() {
               public void actionPerformed(ActionEvent actionEvent) {                  
-                  bo.llamarDAO();
+            	  miBO.llamarDAO();
               }
         };                
         ((AltaPanel) getPanelActivo()).getButton().addActionListener(altapaciente);   
     }
+
+
+	public void addMainFrame(MainFrame miFrame) {
+		System.out.println("Agregando Frame a Handler");
+		this.miFrame = miFrame;
+		
+	}
+	public void addBO(BO miBO) {
+		System.out.println("Agregando BO a Handler");
+		this.miBO = miBO;
+	}
 	
 }
 

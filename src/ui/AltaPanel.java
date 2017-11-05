@@ -16,7 +16,7 @@ private JButton boton;
 			
 			this.add(boton);
 			this.setSize(500,  300);
-			this.setVisible(false);
+			this.setVisible(true);
 		}
 		
 	}

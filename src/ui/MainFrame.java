@@ -8,8 +8,8 @@ import produccion.Handler;
 
 
 
-public class MainFrame extends JPanel{
-	
+public class MainFrame extends JFrame{
+	Handler miHandler;
 	JMenuBar menubar;
 	JMenu pacientes,doctores,turnos;
     JMenuItem altapacientes, bajapacientes, modificacionpacientes, consultapacientes;
@@ -17,16 +17,13 @@ public class MainFrame extends JPanel{
 	public MainFrame() {
 		
 		//Frame principal
-		JFrame frameprincial = new JFrame();
 		
 	    menubar=new JMenuBar();
-	    frameprincial.setJMenuBar(menubar);
+	    this.setJMenuBar(menubar);
+	    
 		//Panel principal y opciones
-		
 		JPanel panelprincipal = new JPanel();
-		frameprincial.setLayout(new BorderLayout());
-		frameprincial.setContentPane(panelprincipal);
-        
+        this.setContentPane(panelprincipal);
         pacientes=new JMenu("Pacientes");
         menubar.add(pacientes);
         altapacientes=new JMenuItem("Alta");
@@ -35,6 +32,7 @@ public class MainFrame extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelAlta();
 			}
 		});
         
@@ -59,9 +57,10 @@ public class MainFrame extends JPanel{
 		panelprincipal.setVisible(true);
 		
 		//Parametros JFrame
-		frameprincial.setSize(500,  300);
-		frameprincial.setVisible(true);
-		frameprincial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
+		
+		this.setSize(500,  300);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
 	}
 	
 	
@@ -74,6 +73,13 @@ public class MainFrame extends JPanel{
 	private JButton createButton(String buttonlabel) {
 		JButton buttonlabel1 = new JButton(buttonlabel);
 		return buttonlabel1;
+	}
+
+
+	public void addHandler(Handler miHandler) {
+		System.out.println("Agregando Handler a vista");
+		this.miHandler = miHandler;
+		
 	}
 
 	
