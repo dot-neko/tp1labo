@@ -10,6 +10,6 @@ public interface UsuarioDAO {
 	public void deletePacienteByDocumento(int documento);
 	public void updateUsuarioByDocumento(int documento, Pacientes p);
 	public Pacientes getPacienteByDocumento(int documento);
-	public List<?> getAllUsuarios();
+	public List<Pacientes> getAllPacientes();
 	
 }

@@ -9,7 +9,7 @@ public class UsuarioDAOConsoleImpl implements UsuarioDAO{
 
 
 	@Override
-	public List<?> getAllUsuarios() {
+	public List<Pacientes> getAllPacientes() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,4 +1,4 @@
-package produccion;
+package ui;
 
 import java.util.*;
 import entidades.*;
@@ -7,19 +7,30 @@ import javax.swing.table.AbstractTableModel;
 
 public class PersonaTableModel extends AbstractTableModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Pacientes> paciente_list;
 	private static final int DNI=0;				//static garantiza que el garbagecollector no toque la variable- final no cambiar el valor
 	private static final int NOMBRE=1;			//con este alias evito forzar el orden de los elementos en la tabla.
 	private static final int APELLIDO=2;
-	private String TITLES[]={"DNI","NOMBRE","APELLIDO"};
+	private static final int EMAIL=3;
+	private String TITLES[]={"DNI","NOMBRE","APELLIDO","EMAIL"};
 	
 	
+	public PersonaTableModel(List<Pacientes> listadoPacientes) {
+		
+		paciente_list = listadoPacientes;
+	}
+
 	public Object getValueAt(int row, int col){
-		Pacientes p= paciente_list.get(row);
+		Pacientes pac= paciente_list.get(row);
 		switch(col){
-		case DNI: return p.getDocumento();
-		case NOMBRE: return p.getNombre();
-		case APELLIDO: return p.getApellido();
+		case DNI: return pac.getDocumento();
+		case NOMBRE: return pac.getNombre();
+		case APELLIDO: return pac.getApellido();
+		case EMAIL: return pac.getEmail();
 		
 		}
 		return null;
@@ -34,16 +45,15 @@ public class PersonaTableModel extends AbstractTableModel {
 	}
 	
 	public int getRowCount(){
-		return paciente_list.size();
+		if (paciente_list != null){
+			return paciente_list.size();
+		}else{
+			return 0;
+		}
 	}
 	
 	
-	//Editar
-	
-	public Pacientes getPersona(int row){
-		return paciente_list.get(row);
-		
-	}
+
 	
 	
 	

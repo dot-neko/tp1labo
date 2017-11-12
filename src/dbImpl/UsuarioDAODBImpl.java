@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import basics.*;
@@ -38,9 +39,46 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 	}
 
 	@Override
-	public List<?> getAllUsuarios() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Pacientes> getAllPacientes() {
+		Pacientes paciente = null;
+		List<Pacientes> respuesta = new ArrayList<Pacientes>();
+		String sql = "SELECT * FROM pacientes";
+		Connection c = DBManager.connect();
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			c.commit();
+			while (rs.next()) {
+				Integer id =  rs.getInt("documento");
+				String n = rs.getString("nombre");
+				String a = rs.getString("apellido");
+				String e = rs.getString("email");
+				paciente = new Pacientes();
+				paciente.setDocumento(id);
+				paciente.setNombre(n);
+				paciente.setApellido(a);
+				paciente.setEmail(e);
+				respuesta.add(paciente);
+			}
+
+		} catch (SQLException e) {
+			try {
+				c.rollback();
+				e.printStackTrace();
+			} catch (SQLException e1) {
+				//TODO: Agregar a Exception
+				System.out.println("No se pudo restaurar los datos");
+			}
+		} finally {
+			try {
+				c.close();
+			} catch (SQLException e1) {
+				//TODO: Agregar a Exception
+				System.out.println("No se pudo cerrar la conexion a la DB");
+			}
+		}
+		return respuesta;
+
 	}
 
 	@Override

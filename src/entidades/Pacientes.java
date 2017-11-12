@@ -12,6 +12,9 @@ public class Pacientes {
 		setDocumento(doc);
 		setEmail(email);
 	}
+	public Pacientes() {
+		// TODO Auto-generated constructor stub
+	}
 	public String getEmail() {
 		return email;
 	}

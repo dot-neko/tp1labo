@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -9,6 +8,10 @@ import produccion.Handler;
 
 
 public class MainFrame extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Handler miHandler;
 	JMenuBar menubar;
 	JMenu pacientes,doctores,turnos;
@@ -20,41 +23,53 @@ public class MainFrame extends JFrame{
 		
 	    menubar=new JMenuBar();
 	    this.setJMenuBar(menubar);
-	    
-		//Panel principal y opciones
-		JPanel panelprincipal = new JPanel();
-        this.setContentPane(panelprincipal);
+		//JmenuBar
         pacientes=new JMenu("Pacientes");
         menubar.add(pacientes);
+        
+        //Panel Alta
         altapacientes=new JMenuItem("Alta");
         pacientes.add(altapacientes);
         altapacientes.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				miHandler.crearPanelAlta();
+				miHandler.AltaPaciente();
 			}
 		});
-        
+        //Panel Baja
         bajapacientes=new JMenuItem("Baja");
         pacientes.add(bajapacientes);
+        bajapacientes.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelBaja();
+				
+			}
+		});
         
         modificacionpacientes=new JMenuItem("Modificacion");
         pacientes.add(modificacionpacientes);
         
+        //Panel Consulta
         consultapacientes=new JMenuItem("Consulta");
         pacientes.add(consultapacientes);
+        consultapacientes.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelConsulta();
+				
+			}
+		});
         
         doctores=new JMenu("Doctores");
         menubar.add(doctores);
         
         turnos=new JMenu("Turnos");
         menubar.add(turnos);
-	
+        
+        //FIN Jmenubar
 		
-		//panel principal
-		panelprincipal.setSize(500,  300);
-		panelprincipal.setVisible(true);
 		
 		//Parametros JFrame
 		
@@ -64,17 +79,7 @@ public class MainFrame extends JFrame{
 	}
 	
 	
-	//botones
-	private Box createBox() {
-		Box box = Box.createHorizontalBox();
-		box.add(Box.createHorizontalGlue());
-		return box;
-	}
-	private JButton createButton(String buttonlabel) {
-		JButton buttonlabel1 = new JButton(buttonlabel);
-		return buttonlabel1;
-	}
-
+	//metodohandler
 
 	public void addHandler(Handler miHandler) {
 		System.out.println("Agregando Handler a vista");
