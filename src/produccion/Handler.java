@@ -3,11 +3,12 @@ package produccion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import excepciones.BusinessException;
 import ui.*;
 
 //
 public class Handler{
-	private ActionListener altapaciente,cerrarpanel;
+	private ActionListener altapaciente,bajapaciente;
 	BO miBO;
 	MainFrame miFrame;
 
@@ -51,18 +52,30 @@ public class Handler{
         		String nombre= panelalta.getTxtNombre().getText();
         		String apellido= panelalta.getTxtApellido().getText();
         		String email = panelalta.getTxtEmail().getText();
+        		//Envia Paciente a BO
             	miBO.ValidarPacienteNuevo(documento, nombre, apellido, email);
               }
         };
-        cerrarpanel = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cerrarPanel();
-			}
-		};
     	panelalta.getButtonEnviar().addActionListener(altapaciente); 
-    	panelalta.getButtonSalir().addActionListener(cerrarpanel);
     }
 
+	public void BajaPaciente(){
+		BajaPanel panelbaja= (BajaPanel) miFrame.getContentPane();
+		bajapaciente= new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int documento=Integer.valueOf(panelbaja.getTxtDocumento().getText());
+				try {
+					miBO.validarPacientebyDocumento(documento);
+				} catch (BusinessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
+		panelbaja.getBotonBorrar().addActionListener(bajapaciente);
+	}
 	public void cerrarPanel(){
 
 	}

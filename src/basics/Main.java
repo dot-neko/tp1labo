@@ -16,16 +16,16 @@ public class Main{
 	}
 	private static void runapp() {
 		//Crea BO y JFrame
-				BO miBO 	= new BO();
-				MainFrame miFrame 	= new MainFrame();
+		BO miBO 	= new BO();
+		MainFrame miFrame 	= new MainFrame();
 
-				//crear Handler. Cargarle el BO y el Frame
-				Handler miHandler = new Handler();
-				miHandler.addBO(miBO);
-				miHandler.addMainFrame(miFrame);
+		//crear Handler. Cargarle el BO y el Frame
+		Handler miHandler = new Handler();
+		miHandler.addBO(miBO);
+		miHandler.addMainFrame(miFrame);
 
-				//Cargarle el handler al frame
-				miFrame.addHandler(miHandler);
+		//Cargarle el handler al frame
+		miFrame.addHandler(miHandler);
 
 		
 	}

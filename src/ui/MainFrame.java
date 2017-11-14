@@ -44,7 +44,7 @@ public class MainFrame extends JFrame{
 			
 			public void actionPerformed(ActionEvent e) {
 				miHandler.crearPanelBaja();
-				
+				miHandler.BajaPaciente();
 			}
 		});
         

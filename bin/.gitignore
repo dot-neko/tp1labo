@@ -4,4 +4,6 @@
 /dbImpl/
 /entidades/
 /produccion/
+/sqlite-jdbc-3.20.0.jar
 /ui/
+/excepciones/
