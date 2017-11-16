@@ -11,6 +11,7 @@ import basics.*;
 
 import dao.UsuarioDAO;
 import entidades.*;
+import excepciones.BusinessException;
 
 public class UsuarioDAODBImpl implements UsuarioDAO {
 
@@ -125,7 +126,7 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 
 
 	@Override
-	public void insertarPacientes(Pacientes p) {
+	public void insertarPacientes(Pacientes p) throws BusinessException, SQLException {
 		String sql = "INSERT INTO pacientes (documento, nombre, apellido, email) VALUES ('" + p.getDocumento() + "', '" + p.getNombre()+ "', '" + p.getApellido() + "', '" + p.getEmail()+ "')";
 		Connection c = DBManager.connect();
 		try {
@@ -136,8 +137,10 @@ public class UsuarioDAODBImpl implements UsuarioDAO {
 			try {
 				c.rollback();
 				e.printStackTrace();
+				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
+				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
 			}
 		} finally {
 			try {

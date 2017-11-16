@@ -16,8 +16,17 @@ import entidades.Pacientes;
 
 
 public class ModificacionPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtDocumento;
 	private JButton botonBorrar;
+	
+	private JTextField txtDocumento2;
+	private JTextField txtNombre;
+	private JTextField txtApellido;
+	private JTextField txtEmail;
 	
 	public JButton getBotonBorrar() {
 		return botonBorrar;
@@ -26,7 +35,7 @@ public class ModificacionPanel extends JPanel {
 		return txtDocumento;
 	}
 	public ModificacionPanel(){
-		botonBorrar= new JButton("Borrar");
+		botonBorrar= new JButton("Buscar");
 		this.add(new JLabel("Documento : "));
 		this.add(txtDocumento=new JTextField(15));
 		
@@ -34,6 +43,8 @@ public class ModificacionPanel extends JPanel {
 		this.setSize(500,  300);
 		this.setLocation(20,100);
 		this.setVisible(true);
+		
+		
 	}
 	}
 	

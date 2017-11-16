@@ -2,6 +2,10 @@ package produccion;
 /*responsabilidad de la navegacion entre bo y panel*/
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import excepciones.BusinessException;
 import ui.*;
@@ -80,7 +84,15 @@ public class Handler{
         		String apellido= panelalta.getTxtApellido().getText();
         		String email = panelalta.getTxtEmail().getText();
         		//Envia Paciente a BO
-            	miBO.ValidarPacienteNuevo(documento, nombre, apellido, email);
+            	try {
+					miBO.ValidarPacienteNuevo(documento, nombre, apellido, email);
+				} catch (BusinessException e) {
+					JOptionPane.showMessageDialog(null, BusinessException.MENSAJE, BusinessException.TITULO, 1);
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
               }
         };
     	panelalta.getButtonEnviar().addActionListener(altapaciente); 
@@ -112,12 +124,7 @@ public class Handler{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				int documento=Integer.valueOf(panelmodificacion.getTxtDocumento().getText());
-				try {
-					miBO.validarPacientebyDocumento(documento);
-				} catch (BusinessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				miBO.validarPacienteporBusqueda(documento);
 			}
 		};
 		panelmodificacion.getBotonBorrar().addActionListener(modificacionpaciente);

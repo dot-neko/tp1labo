@@ -1,6 +1,7 @@
 package produccion;
 
 import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ public class BO {
 	private UsuarioDAODBImpl dao = new UsuarioDAODBImpl();
 	Pacientes pacientes;
 
-	public void ValidarPacienteNuevo(int documento, String nombre, String apellido, String email){
+	public void ValidarPacienteNuevo(int documento, String nombre, String apellido, String email) throws BusinessException, SQLException{
 		//Llama a DAO
 		System.out.println("Validando documento");
 		//TODO: TRY//CATCH
@@ -46,6 +47,9 @@ public class BO {
 	public List<Pacientes> getAllPacientes() {
 		return dao.getAllPacientes();
 	}
+	public Pacientes validarPacienteporBusqueda(Integer documento) {
+		return dao.getPacienteByDocumento(documento);
+	}
 /*
 	public void insertarPaciente(Paciente p) throws BusinessException {
 		dao.insertarPaciente(p);
@@ -56,9 +60,7 @@ public class BO {
 		dao.updatePaciente(p);
 	}
 
-	public Paciente getPacienteByIdPaciente(Integer id) {
-		return dao.getPacienteByIdPaciente(id);
-	}
+	
 
 	public void setDao(PacienteDAO dao) {
 		this.dao = dao;
