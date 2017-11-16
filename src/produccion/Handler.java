@@ -8,13 +8,30 @@ import ui.*;
 
 //
 public class Handler{
-	private ActionListener altapaciente,bajapaciente;
+	private ActionListener altapaciente,bajapaciente,modificacionpaciente;
 	BO miBO;
 	MainFrame miFrame;
 
 	
 	 public Handler(){
 	 }
+	 
+	 //Aplicacion Principal
+	 public void runapp() {
+			//Crea BO y JFrame
+			BO miBO 	= new BO();
+			MainFrame miFrame 	= new MainFrame();
+
+			//crear Handler. Cargarle el BO y el Frame
+
+			this.addBO(miBO);
+			this.addMainFrame(miFrame);
+
+			//Cargarle el handler al frame
+			miFrame.addHandler(this);
+
+			
+		}
 	//Declaro paneles
 
 	public void crearPanelAlta(){
@@ -42,6 +59,16 @@ public class Handler{
 		miFrame.revalidate();
 		miFrame.repaint();
 	}
+	
+	public void crearPanelModificacion(){
+		miFrame.remove(miFrame.getContentPane());
+		ModificacionPanel panelmodificacion = new ModificacionPanel();
+		
+		miFrame.setContentPane(panelmodificacion);
+		miFrame.setTitle("Consulta Pacientes");
+		miFrame.revalidate();
+		miFrame.repaint();
+	}
 
 	//Agrego listener a botones paneles
 	public void AltaPaciente(){     
@@ -59,7 +86,7 @@ public class Handler{
     	panelalta.getButtonEnviar().addActionListener(altapaciente); 
     }
 
-	public void BajaPaciente(){
+	public void bajaPaciente(){
 		BajaPanel panelbaja= (BajaPanel) miFrame.getContentPane();
 		bajapaciente= new ActionListener() {
 			
@@ -76,8 +103,24 @@ public class Handler{
 		};
 		panelbaja.getBotonBorrar().addActionListener(bajapaciente);
 	}
-	public void cerrarPanel(){
-
+	
+	
+	public void modificarPaciente(){
+		ModificacionPanel panelmodificacion= (ModificacionPanel) miFrame.getContentPane();
+		modificacionpaciente= new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				int documento=Integer.valueOf(panelmodificacion.getTxtDocumento().getText());
+				try {
+					miBO.validarPacientebyDocumento(documento);
+				} catch (BusinessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		};
+		panelmodificacion.getBotonBorrar().addActionListener(modificacionpaciente);
 	}
 	
 

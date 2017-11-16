@@ -14,7 +14,7 @@ public class BajaPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	//VARIABLES LOCALES
 	private JTextField txtDocumento;
-	private JButton botonBorrar, botonSalir;
+	private JButton botonBorrar;
 	
 	public JButton getBotonBorrar() {
 		return botonBorrar;
@@ -25,13 +25,10 @@ public class BajaPanel extends JPanel {
 	//CONSTRUCTOR
 	public BajaPanel(){
 		botonBorrar= new JButton("Borrar");
-		botonSalir= new JButton("Salir");
 		this.add(new JLabel("Documento : "));
 		this.add(txtDocumento=new JTextField(15));
 		
 		this.add(botonBorrar);
-		this.add(botonSalir);
-
 		this.setSize(500,  300);
 		this.setLocation(20,100);
 		this.setVisible(true);

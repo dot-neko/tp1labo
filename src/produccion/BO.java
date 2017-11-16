@@ -1,5 +1,6 @@
 package produccion;
 
+import java.awt.HeadlessException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -18,12 +19,17 @@ public class BO {
 		//Llama a DAO
 		System.out.println("Validando documento");
 		//TODO: TRY//CATCH
-		if (documento >0 && documento<100000000) {
-			pacientes=new Pacientes(documento,nombre,apellido,email);
-			dao.insertarPacientes(pacientes);
-			JOptionPane.showMessageDialog(null, "Se ingreso: "+ documento + nombre + apellido);
-		}else{
-			System.out.println("Fallo");
+		try {
+			if (documento >0 && documento<100000000) {
+				pacientes=new Pacientes(documento,nombre,apellido,email);
+				dao.insertarPacientes(pacientes);
+				JOptionPane.showMessageDialog(null, "Se ingreso: Documento " + documento +", Nombre :"+ nombre + ", Apellido :"+ apellido);
+			}else{
+				System.out.println("Fallo");
+			}
+		} catch (HeadlessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -41,20 +47,20 @@ public class BO {
 		return dao.getAllPacientes();
 	}
 /*
-	public void insertarPedido(Pedido p) throws BusinessException {
-		dao.insertarPedido(p);
+	public void insertarPaciente(Paciente p) throws BusinessException {
+		dao.insertarPaciente(p);
 	}
 
 	
-	public void updatePedido(Pedido p) {
-		dao.updatePedido(p);
+	public void updatePaciente(Paciente p) {
+		dao.updatePaciente(p);
 	}
 
-	public Pedido getPedidoByIdPedido(Integer id) {
-		return dao.getPedidoByIdPedido(id);
+	public Paciente getPacienteByIdPaciente(Integer id) {
+		return dao.getPacienteByIdPaciente(id);
 	}
 
-	public void setDao(PedidoDAO dao) {
+	public void setDao(PacienteDAO dao) {
 		this.dao = dao;
 	}*/
 
