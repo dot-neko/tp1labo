@@ -5,7 +5,7 @@ import entidades.*;
 
 import javax.swing.table.AbstractTableModel;
 
-public class PersonaTableModel extends AbstractTableModel {
+public class PacienteTableModel extends AbstractTableModel {
 	
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class PersonaTableModel extends AbstractTableModel {
 	private String TITLES[]={"DNI","NOMBRE","APELLIDO","EMAIL"};
 	
 	
-	public PersonaTableModel(List<Pacientes> listadoPacientes) {
+	public PacienteTableModel(List<Pacientes> listadoPacientes) {
 		
 		paciente_list = listadoPacientes;
 	}

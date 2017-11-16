@@ -20,7 +20,7 @@ public class ConsultaPanel extends JPanel {
 
 	public ConsultaPanel(List<Pacientes> listapacientes){
 		this.setLayout(new BorderLayout());
-		JTable tablaconsulta = new JTable(new PersonaTableModel(listapacientes));
+		JTable tablaconsulta = new JTable(new PacienteTableModel(listapacientes));
 		JScrollPane pane = new JScrollPane(tablaconsulta);
 		this.add(pane, BorderLayout.CENTER);
 		this.setVisible(true);
