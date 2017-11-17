@@ -2,21 +2,21 @@ package consoleImpl;
 
 
 import java.util.List;
-import dao.UsuarioDAO;
-import entidades.Pacientes;
+import dao.PacienteDAO;
+import entidades.Paciente;
 
-public class UsuarioDAOConsoleImpl implements UsuarioDAO{
+public class UsuarioDAOConsoleImpl implements PacienteDAO{
 
 
 	@Override
-	public List<Pacientes> getAllPacientes() {
+	public List<Paciente> getAllPacientes() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public void insertarPacientes(Pacientes p) {
+	public void insertarPacientes(Paciente p) {
 		String sql = "INSERT INTO pacientes (nom, ape, mail) VALUES ('" + p.getNombre() + "', '" + p.getApellido() + "', '" + p.getEmail()+ "')";
 		System.out.println("Deberias tirar la siguiente consulta a la DB:" + sql);
 		
@@ -30,13 +30,13 @@ public class UsuarioDAOConsoleImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public void updateUsuarioByDocumento(int documento, Pacientes p) {
+	public void updateUsuarioByDocumento(Paciente p) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Pacientes getPacienteByDocumento(int documento) {
+	public Paciente getPacienteByDocumento(int documento) {
 		// TODO Auto-generated method stub
 		return null;
 	}

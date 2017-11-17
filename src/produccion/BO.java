@@ -1,54 +1,59 @@
 package produccion;
 
-import java.awt.HeadlessException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import dbImpl.UsuarioDAODBImpl;
-import entidades.Pacientes;
+import dao.PacienteDAO;
+import entidades.Paciente;
 import excepciones.BusinessException;
 
 
 public class BO {
 
-	private UsuarioDAODBImpl dao = new UsuarioDAODBImpl();
-	Pacientes pacientes;
+	PacienteDAO miDao;
 
-	public void ValidarPacienteNuevo(int documento, String nombre, String apellido, String email) throws BusinessException, SQLException{
+	public void ValidarPacienteNuevo(Paciente p) throws BusinessException, Exception{
 		//Llama a DAO
 		System.out.println("Validando documento");
 		//TODO: TRY//CATCH
-		try {
+			int documento= p.getDocumento();
 			if (documento >0 && documento<100000000) {
-				pacientes=new Pacientes(documento,nombre,apellido,email);
-				dao.insertarPacientes(pacientes);
-				JOptionPane.showMessageDialog(null, "Se ingreso: Documento " + documento +", Nombre :"+ nombre + ", Apellido :"+ apellido);
+				miDao.insertarPacientes(p);
+				JOptionPane.showMessageDialog(null, "Se ingreso Paciente");
 			}else{
 				System.out.println("Fallo");
 			}
-		} catch (HeadlessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
-	public void validarPacientebyDocumento(int documento) throws BusinessException {
+	public void validarPacientebyDocumento(Paciente p) throws BusinessException {
+		int documento= p.getDocumento();
 		try {
-			if (documento >0 && documento<100000000) {
-				dao.deletePacienteByDocumento(documento);
+			if (documento>0 && documento<100000000) {
+				miDao.deletePacienteByDocumento(documento);
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Se ingreso: "+ documento + ". No puede ser mayor a 100.000.000 o negativo");
 			e.printStackTrace();
 		}
 	}
-	public List<Pacientes> getAllPacientes() {
-		return dao.getAllPacientes();
+	public List<Paciente> getAllPacientes(){
+		List <Paciente> pac = null;
+		try {
+			pac= miDao.getAllPacientes();
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pac;
 	}
-	public Pacientes validarPacienteporBusqueda(Integer documento) {
-		return dao.getPacienteByDocumento(documento);
+	public Paciente validarPacienteporBusqueda(Paciente p) throws BusinessException {
+			int documento= p.getDocumento();
+			p=miDao.getPacienteByDocumento(documento);
+		return p;
+	}
+	public void updatePaciente(Paciente p) throws BusinessException {
+		miDao.updateUsuarioByDocumento(p);
 	}
 /*
 	public void insertarPaciente(Paciente p) throws BusinessException {
@@ -56,14 +61,16 @@ public class BO {
 	}
 
 	
-	public void updatePaciente(Paciente p) {
-		dao.updatePaciente(p);
-	}
+	
 
 	
 
 	public void setDao(PacienteDAO dao) {
 		this.dao = dao;
 	}*/
-
+	
+	public void addDAO(PacienteDAO miDao) {
+		System.out.println("Agregando DAO a BO");
+		this.miDao = miDao;
+	}
 }

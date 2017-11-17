@@ -1,9 +1,16 @@
 package ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import entidades.Paciente;
+import excepciones.BusinessException;
+import produccion.BO;
 
 public class AltaPanel extends JPanel{
 
@@ -11,7 +18,7 @@ public class AltaPanel extends JPanel{
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtEmail;
-	private JButton botonEnviar, botonSalir;
+	private JButton botonEnviar;
 	/**
 	 * 
 	 */
@@ -31,11 +38,11 @@ public class AltaPanel extends JPanel{
 		return txtEmail;
 	}
 	private static final long serialVersionUID = 1L;
-	public AltaPanel(){
+	public AltaPanel(BO miBO){
 		{
 			
 			botonEnviar= new JButton("Enviar");
-			botonSalir= new JButton("Salir");
+
 			this.add(new JLabel("Documento : "));
 			this.add(txtDocumento=new JTextField(15));
 			this.add(new JLabel("Nombre : "));
@@ -44,9 +51,31 @@ public class AltaPanel extends JPanel{
 			this.add(txtApellido=new JTextField(15));
 			this.add(new JLabel("Email : "));
 			this.add(txtEmail=new JTextField(15));
-
+			botonEnviar.addActionListener(new ActionListener() {
+	              public void actionPerformed(ActionEvent actionEvent) { 
+	          		
+	        		//Envia Paciente a BO
+	            	try {
+	            		int documento= Integer.valueOf(getTxtDocumento().getText()) ;
+		        		String nombre= getTxtNombre().getText();
+		        		String apellido= getTxtApellido().getText();
+		        		String email = getTxtEmail().getText();
+		        		Paciente p= new Paciente(documento,nombre,apellido,email);
+						miBO.ValidarPacienteNuevo(p);
+					} catch (BusinessException e) {
+						JOptionPane.showMessageDialog(null, BusinessException.MENSAJE, BusinessException.TITULO, 1);
+						e.printStackTrace();
+					} catch(NumberFormatException er){
+						JOptionPane.showMessageDialog(null, BusinessException.ERRNUMERO, BusinessException.TITULO, 1);
+						er.printStackTrace();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	              }
+	        });
 			this.add(botonEnviar);
-			this.add(botonSalir);
+
 
 			this.setSize(500,  200);
 			this.setLocation(0,20);
@@ -59,9 +88,7 @@ public class AltaPanel extends JPanel{
 	public JButton getButtonEnviar(){
 		return botonEnviar;
 	}
-	public JButton getButtonSalir(){
-		return botonSalir;
-	}
+
 }
 	
 	

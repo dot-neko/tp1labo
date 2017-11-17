@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import entidades.Pacientes;
+import entidades.Paciente;
 
 
 
@@ -16,9 +16,9 @@ public class ConsultaPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	List <Pacientes> listadoPacientes;
+	List <Paciente> listadoPacientes;
 
-	public ConsultaPanel(List<Pacientes> listapacientes){
+	public ConsultaPanel(List<Paciente> listapacientes){
 		this.setLayout(new BorderLayout());
 		JTable tablaconsulta = new JTable(new PacienteTableModel(listapacientes));
 		JScrollPane pane = new JScrollPane(tablaconsulta);

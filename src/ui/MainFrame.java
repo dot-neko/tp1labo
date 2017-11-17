@@ -34,7 +34,6 @@ public class MainFrame extends JFrame{
 			
 			public void actionPerformed(ActionEvent e) {
 				miHandler.crearPanelAlta();
-				miHandler.AltaPaciente();
 			}
 		});
         //Panel Baja
@@ -44,12 +43,17 @@ public class MainFrame extends JFrame{
 			
 			public void actionPerformed(ActionEvent e) {
 				miHandler.crearPanelBaja();
-				miHandler.bajaPaciente();
 			}
 		});
-        
+        //Panel Modificacion
         modificacionpacientes=new JMenuItem("Modificacion");
         pacientes.add(modificacionpacientes);
+        modificacionpacientes.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelModificacion();
+			}
+		});
         
         //Panel Consulta
         consultapacientes=new JMenuItem("Consulta");

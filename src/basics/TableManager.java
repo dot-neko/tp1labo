@@ -9,7 +9,7 @@ public class TableManager {
 
 	public static void createPacTable() {
 
-		Connection conn = DBManager.connect(); 		//Declaro conexion
+		Connection conn = DBManager.getDBManager().connect(); 		//Declaro conexion
 		
 		//String a ejecutar
 		String sql = "CREATE TABLE IF NOT EXISTS pacientes (paciente_id integer PRIMARY KEY,\n"
@@ -43,7 +43,7 @@ public class TableManager {
 	
 	public static void dropPacTable() {
 
-		Connection c = DBManager.connect();
+		Connection c = DBManager.getDBManager().connect();
 		
 		String sql = "DROP TABLE pacientes";
 		

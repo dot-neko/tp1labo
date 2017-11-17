@@ -1,21 +1,14 @@
 package produccion;
-/*responsabilidad de la navegacion entre bo y panel*/
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import excepciones.BusinessException;
+import dao.PacienteDAO;
+import dbImpl.PacienteDAODBImpl;
 import ui.*;
 
 //
 public class Handler{
-	private ActionListener altapaciente,bajapaciente,modificacionpaciente;
+
 	BO miBO;
 	MainFrame miFrame;
-
+	PacienteDAO MiDao;
 	
 	 public Handler(){
 	 }
@@ -24,7 +17,10 @@ public class Handler{
 	 public void runapp() {
 			//Crea BO y JFrame
 			BO miBO 	= new BO();
+			
 			MainFrame miFrame 	= new MainFrame();
+			
+			PacienteDAO miDao = new PacienteDAODBImpl();
 
 			//crear Handler. Cargarle el BO y el Frame
 
@@ -33,14 +29,16 @@ public class Handler{
 
 			//Cargarle el handler al frame
 			miFrame.addHandler(this);
-
+			//Cargarle DAO a BO
+			miBO.addDAO(miDao);
+			
 			
 		}
 	//Declaro paneles
 
 	public void crearPanelAlta(){
 		miFrame.remove(miFrame.getContentPane());
-		AltaPanel panelalta = new AltaPanel();
+		AltaPanel panelalta = new AltaPanel(miBO);
 		miFrame.setContentPane(panelalta);
 		miFrame.setTitle("Alta Pacientes");
 		miFrame.repaint();
@@ -48,7 +46,7 @@ public class Handler{
 	
 	public void crearPanelBaja(){
 		miFrame.remove(miFrame.getContentPane());
-		BajaPanel panelbaja = new BajaPanel();
+		BajaPanel panelbaja = new BajaPanel(miBO);
 		miFrame.setContentPane(panelbaja);
 		miFrame.setTitle("Baja Pacientes");
 		miFrame.repaint();
@@ -66,69 +64,17 @@ public class Handler{
 	
 	public void crearPanelModificacion(){
 		miFrame.remove(miFrame.getContentPane());
-		ModificacionPanel panelmodificacion = new ModificacionPanel();
+		ModificacionPanel panelmodificacion = new ModificacionPanel(miBO);
 		
 		miFrame.setContentPane(panelmodificacion);
 		miFrame.setTitle("Consulta Pacientes");
 		miFrame.revalidate();
-		miFrame.repaint();
+		miFrame.repaint();//ver de eliminar
 	}
 
-	//Agrego listener a botones paneles
-	public void AltaPaciente(){     
-		AltaPanel panelalta= (AltaPanel) miFrame.getContentPane();
-		altapaciente = new ActionListener() {
-              public void actionPerformed(ActionEvent actionEvent) { 
-          		int documento= Integer.valueOf(panelalta.getTxtDocumento().getText()) ;
-        		String nombre= panelalta.getTxtNombre().getText();
-        		String apellido= panelalta.getTxtApellido().getText();
-        		String email = panelalta.getTxtEmail().getText();
-        		//Envia Paciente a BO
-            	try {
-					miBO.ValidarPacienteNuevo(documento, nombre, apellido, email);
-				} catch (BusinessException e) {
-					JOptionPane.showMessageDialog(null, BusinessException.MENSAJE, BusinessException.TITULO, 1);
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-              }
-        };
-    	panelalta.getButtonEnviar().addActionListener(altapaciente); 
-    }
+	
+	
 
-	public void bajaPaciente(){
-		BajaPanel panelbaja= (BajaPanel) miFrame.getContentPane();
-		bajapaciente= new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				int documento=Integer.valueOf(panelbaja.getTxtDocumento().getText());
-				try {
-					miBO.validarPacientebyDocumento(documento);
-				} catch (BusinessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		};
-		panelbaja.getBotonBorrar().addActionListener(bajapaciente);
-	}
-	
-	
-	public void modificarPaciente(){
-		ModificacionPanel panelmodificacion= (ModificacionPanel) miFrame.getContentPane();
-		modificacionpaciente= new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				int documento=Integer.valueOf(panelmodificacion.getTxtDocumento().getText());
-				miBO.validarPacienteporBusqueda(documento);
-			}
-		};
-		panelmodificacion.getBotonBorrar().addActionListener(modificacionpaciente);
-	}
 	
 
 	// metodos para agregar frame y bo
@@ -141,6 +87,11 @@ public class Handler{
 		System.out.println("Agregando BO a Handler");
 		this.miBO = miBO;
 	}
+	
+	
+	//para el final version 1
+	// login
+	// hace 1 entidad y tendria que haber generalizacion entre ambas
 	
 	
 }
