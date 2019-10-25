@@ -31,7 +31,7 @@ public class TableManager {
 		} finally {										//Tanto por el try o por los catch, se ejecute el finally antes de salir del metodo, ya que tiene un throws
 			try {
 				conn.commit();
-				conn.close();							//Cerrar la conexión
+				conn.close();							//Cerrar la conexion
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
