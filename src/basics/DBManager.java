@@ -6,14 +6,20 @@ import java.sql.SQLException;
 
 public class DBManager {
 
-	// Parámetros de DB
+	// Parï¿½metros de DB
 	private static final String url = "jdbc:sqlite:consultorio.db";
 	private static final String db_driver = "org.sqlite.JDBC";
-	private static final DBManager instance = new DBManager();
+	
+	//Singleton
+	private static DBManager instance = new DBManager();
 
 	private DBManager() {
 	}
-
+	
+	public static DBManager getDBManager() {
+		return instance;
+	}
+	
 	public Connection connect() {
 		Connection conn = null;
 		try {
@@ -34,9 +40,7 @@ public class DBManager {
 	}
 
 	
-	public static DBManager getDBManager() {
-		return instance;
-	}
+	
 /*
 	 * public static void shutdown() throws Exception { Connection conn =
 	 * connect(); //crea conexion a base de datos Statement s =

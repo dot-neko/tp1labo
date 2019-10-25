@@ -16,29 +16,27 @@ public class Handler{
 	 //Aplicacion Principal
 	 public void runapp() {
 			//Crea BO y JFrame
-			BO miBO 	= new BO();
-			
-			MainFrame miFrame 	= new MainFrame();
-			
+						
 			PacienteDAO miDao = new PacienteDAODBImpl();
-
+			
 			//crear Handler. Cargarle el BO y el Frame
 
-			this.addBO(miBO);
-			this.addMainFrame(miFrame);
+			this.addBO(new BO(miDao));
+			this.addMainFrame(new MainFrame());
 
 			//Cargarle el handler al frame
-			miFrame.addHandler(this);
-			//Cargarle DAO a BO
-			miBO.addDAO(miDao);
+			this.getMiFrame().addHandler(this);
+			
 			
 			
 		}
 	//Declaro paneles
 
+	
+
 	public void crearPanelAlta(){
 		miFrame.remove(miFrame.getContentPane());
-		AltaPanel panelalta = new AltaPanel(miBO);
+		AltaPanel panelalta = new AltaPanel(this.getMiBO());
 		miFrame.setContentPane(panelalta);
 		miFrame.setTitle("Alta Pacientes");
 		miFrame.repaint();
@@ -46,7 +44,7 @@ public class Handler{
 	
 	public void crearPanelBaja(){
 		miFrame.remove(miFrame.getContentPane());
-		BajaPanel panelbaja = new BajaPanel(miBO);
+		BajaPanel panelbaja = new BajaPanel(this.getMiBO());
 		miFrame.setContentPane(panelbaja);
 		miFrame.setTitle("Baja Pacientes");
 		miFrame.repaint();
@@ -54,7 +52,7 @@ public class Handler{
 	
 	public void crearPanelConsulta(){
 		miFrame.remove(miFrame.getContentPane());
-		ConsultaPanel panelconsulta = new ConsultaPanel(miBO.getAllPacientes());
+		ConsultaPanel panelconsulta = new ConsultaPanel(this.getMiBO().getAllPacientes());
 		
 		miFrame.setContentPane(panelconsulta);
 		miFrame.setTitle("Consulta Pacientes");
@@ -64,7 +62,7 @@ public class Handler{
 	
 	public void crearPanelModificacion(){
 		miFrame.remove(miFrame.getContentPane());
-		ModificacionPanel panelmodificacion = new ModificacionPanel(miBO);
+		ModificacionPanel panelmodificacion = new ModificacionPanel(this.getMiBO());
 		
 		miFrame.setContentPane(panelmodificacion);
 		miFrame.setTitle("Consulta Pacientes");
@@ -88,6 +86,13 @@ public class Handler{
 		this.miBO = miBO;
 	}
 	
+	private BO getMiBO() {
+		return miBO;
+	}
+
+	private MainFrame getMiFrame() {
+		return miFrame;
+	}
 	
 	//para el final version 1
 	// login

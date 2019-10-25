@@ -12,6 +12,11 @@ import excepciones.BusinessException;
 public class BO {
 
 	PacienteDAO miDao;
+	
+	public BO(PacienteDAO miDao) {
+		this.miDao = miDao;
+	}
+	
 
 	public void ValidarPacienteNuevo(Paciente p) throws BusinessException, Exception{
 		//Llama a DAO
@@ -20,8 +25,9 @@ public class BO {
 			int documento= p.getDocumento();
 			if (documento >0 && documento<100000000) {
 				miDao.insertarPacientes(p);
-				JOptionPane.showMessageDialog(null, "Se ingreso Paciente");
+				JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");
 			}else{
+				JOptionPane.showMessageDialog(null, "Error al ingresar documento. Intente de nuevo.");
 				System.out.println("Fallo");
 			}
 	}
@@ -59,18 +65,5 @@ public class BO {
 	public void insertarPaciente(Paciente p) throws BusinessException {
 		dao.insertarPaciente(p);
 	}
-
-	
-	
-
-	
-
-	public void setDao(PacienteDAO dao) {
-		this.dao = dao;
-	}*/
-	
-	public void addDAO(PacienteDAO miDao) {
-		System.out.println("Agregando DAO a BO");
-		this.miDao = miDao;
-	}
+*/
 }

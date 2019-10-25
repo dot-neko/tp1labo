@@ -22,35 +22,25 @@ public class AltaPanel extends JPanel{
 	/**
 	 * 
 	 */
-	public JTextField getTxtDocumento() {
-		return txtDocumento;
-	}
-
-	public JTextField getTxtNombre() {
-		return txtNombre;
-	}
-
-	public JTextField getTxtApellido() {
-		return txtApellido;
-	}
-
-	public JTextField getTxtEmail() {
-		return txtEmail;
-	}
+	
 	private static final long serialVersionUID = 1L;
+	
 	public AltaPanel(BO miBO){
 		{
 			
-			botonEnviar= new JButton("Enviar");
-
 			this.add(new JLabel("Documento : "));
 			this.add(txtDocumento=new JTextField(15));
+			
 			this.add(new JLabel("Nombre : "));
 			this.add(txtNombre=new JTextField(15));
+			
 			this.add(new JLabel("Apellido : "));
 			this.add(txtApellido=new JTextField(15));
+			
 			this.add(new JLabel("Email : "));
 			this.add(txtEmail=new JTextField(15));
+			
+			botonEnviar= new JButton("Enviar");
 			botonEnviar.addActionListener(new ActionListener() {
 	              public void actionPerformed(ActionEvent actionEvent) { 
 	          		
@@ -82,6 +72,23 @@ public class AltaPanel extends JPanel{
 			this.setVisible(true);
 		}
 		
+	}
+	
+	//getters
+	public JTextField getTxtDocumento() {
+		return txtDocumento;
+	}
+
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+
+	public JTextField getTxtApellido() {
+		return txtApellido;
+	}
+
+	public JTextField getTxtEmail() {
+		return txtEmail;
 	}
 	
 	//botones
