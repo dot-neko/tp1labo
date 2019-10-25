@@ -27,10 +27,10 @@ public class PacienteTableModel extends AbstractTableModel {
 	public Object getValueAt(int row, int col){
 		Paciente pac= paciente_list.get(row);
 		switch(col){
-		case DNI: return pac.getDocumento();
-		case NOMBRE: return pac.getNombre();
-		case APELLIDO: return pac.getApellido();
-		case EMAIL: return pac.getEmail();
+			case DNI: return pac.getDocumento();
+			case NOMBRE: return pac.getNombre();
+			case APELLIDO: return pac.getApellido();
+			case EMAIL: return pac.getEmail();
 		
 		}
 		return null;

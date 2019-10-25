@@ -43,7 +43,7 @@ public class PacienteDAODBImpl implements PacienteDAO {
 
 	@Override
 	public List<Paciente> getAllPacientes() throws BusinessException {
-		Paciente paciente = null;
+
 		List<Paciente> respuesta = new ArrayList<Paciente>();
 		String sql = "SELECT * FROM pacientes";
 		Connection c = DBManager.getDBManager().connect();
@@ -52,16 +52,11 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			ResultSet rs = s.executeQuery(sql);
 			c.commit();
 			while (rs.next()) {
-				Integer id =  rs.getInt("documento");
-				String n = rs.getString("nombre");
-				String a = rs.getString("apellido");
-				String e = rs.getString("email");
-				paciente = new Paciente();
-				paciente.setDocumento(id);
-				paciente.setNombre(n);
-				paciente.setApellido(a);
-				paciente.setEmail(e);
-				respuesta.add(paciente);
+				Integer documento =  rs.getInt("documento");
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				String email = rs.getString("email");
+				respuesta.add(new Paciente(documento,nombre,apellido,email));
 			}
 
 		} catch (SQLException e) {
@@ -96,14 +91,10 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			ResultSet rs = s.executeQuery(sql);
 			
 			if(rs.next()) {
-				String n = rs.getString("nombre");
-				String a = rs.getString("apellido");
-				String e = rs.getString("email");
-				retorna = new Paciente(documento, n, a, e);
-				retorna.setDocumento(documento);
-				retorna.setNombre(n);
-				retorna.setApellido(a);
-				retorna.setEmail(e);
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				String email = rs.getString("email");
+				retorna = new Paciente(documento, nombre, apellido, email);
 			}
 			
 		} catch (SQLException e) {
