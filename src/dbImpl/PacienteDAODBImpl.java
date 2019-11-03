@@ -43,7 +43,6 @@ public class PacienteDAODBImpl implements PacienteDAO {
 
 	@Override
 	public List<Paciente> getAllPacientes() throws BusinessException {
-
 		List<Paciente> respuesta = new ArrayList<Paciente>();
 		String sql = "SELECT * FROM pacientes";
 		Connection c = DBManager.getDBManager().connect();

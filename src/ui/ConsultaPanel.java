@@ -15,6 +15,7 @@ public class ConsultaPanel extends JPanel {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	List <Paciente> listadoPacientes;
 

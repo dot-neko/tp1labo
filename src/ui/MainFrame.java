@@ -8,90 +8,95 @@ import produccion.Handler;
 
 
 public class MainFrame extends JFrame{
-	/**
-	 * 
-	 */
+
+
 	private static final long serialVersionUID = 1L;
-	Handler miHandler;
-	JMenuBar menubar;
-	JMenu pacientes,doctores,turnos;
-    JMenuItem altapacientes, bajapacientes, modificacionpacientes, consultapacientes;
- 
+	private static final int Pacientes=0;				
+	private static final int Doctores=1;		
+	private static final int Turnos=2;
+	private String titulos[]={"Pacientes","Doctores","Turnos"};
+	private static final int Alta=0;				
+	private static final int Baja=1;		
+	private static final int Modificacion=2;
+	private static final int Consulta=3;
+	private String tituloPanel[]={"Alta","Baja","Modificacion","Consulta"};
+	private Handler miHandler;
+
+
 	public MainFrame() {
-		
-		//Frame principal
-		
-	    menubar=new JMenuBar();
-	    this.setJMenuBar(menubar);
+
+
+		//Frame principal		
+		this.setJMenuBar(new JMenuBar());
+
 		//JmenuBar
-        pacientes=new JMenu("Pacientes");
-        menubar.add(pacientes);
-        
-        //Panel Alta
-        altapacientes=new JMenuItem("Alta");
-        pacientes.add(altapacientes);
-        altapacientes.addActionListener(new ActionListener() {
-			
+		this.getJMenuBar().add(new JMenu(titulos[Pacientes]),Pacientes);
+		this.getJMenuBar().add(new JMenu(titulos[Doctores]),Doctores);
+		this.getJMenuBar().add(new JMenu(titulos[Turnos]),Turnos);
+
+		//FIN Jmenubar
+
+		//Panel Alta
+		getJMenu(Pacientes).add(new JMenuItem("Alta")).addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelAlta();
+				getMiHandler().crearPanel(titulos[Pacientes],tituloPanel[Alta]);
 			}
 		});
-        //Panel Baja
-        bajapacientes=new JMenuItem("Baja");
-        pacientes.add(bajapacientes);
-        bajapacientes.addActionListener(new ActionListener() {
-			
+		//Panel Baja
+		getJMenu(Pacientes).add(new JMenuItem("Baja")).addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelBaja();
+				getMiHandler().crearPanel(titulos[Pacientes],tituloPanel[Baja]);
 			}
 		});
-        //Panel Modificacion
-        modificacionpacientes=new JMenuItem("Modificacion");
-        pacientes.add(modificacionpacientes);
-        modificacionpacientes.addActionListener(new ActionListener() {
-			
+
+		//Panel Modificacion
+		getJMenu(Pacientes).add(new JMenuItem("Modificacion")).addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelModificacion();
+				getMiHandler().crearPanel(titulos[Pacientes],tituloPanel[Modificacion]);
 			}
 		});
-        
-        //Panel Consulta
-        consultapacientes=new JMenuItem("Consulta");
-        pacientes.add(consultapacientes);
-        consultapacientes.addActionListener(new ActionListener() {
-			
+
+		//Panel Consulta
+		getJMenu(Pacientes).add(new JMenuItem("Consulta")).addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelConsulta();
-				
+				getMiHandler().crearPanel(titulos[Pacientes],tituloPanel[Consulta]);
 			}
 		});
-        
-        doctores=new JMenu("Doctores");
-        menubar.add(doctores);
-        
-        turnos=new JMenu("Turnos");
-        menubar.add(turnos);
-        
-        //FIN Jmenubar
-		
-		
+
+
 		//Parametros JFrame
-		
-		this.setSize(500,  300);
+
+		this.setSize(600,300);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	
+
 	//metodohandler
+
+	public Handler getMiHandler() {
+		return miHandler;
+	}
 
 	public void addHandler(Handler miHandler) {
 		System.out.println("Agregando Handler a vista");
 		this.miHandler = miHandler;
-		
 	}
 
-	
-	//METODOS AUXILIARES
-	
+	public JMenu getJMenu(int index) {
+		return getJMenuBar().getMenu(index);
+	}
 }
+
+
+
+
+
+
+
+//METODOS AUXILIARES
+
+

@@ -1,4 +1,5 @@
 package produccion;
+
 import dao.PacienteDAO;
 import dbImpl.PacienteDAODBImpl;
 import ui.*;
@@ -11,6 +12,7 @@ public class Handler{
 	PacienteDAO MiDao;
 	
 	 public Handler(){
+		 
 	 }
 	 
 	 //Aplicacion Principal
@@ -32,42 +34,21 @@ public class Handler{
 		}
 	//Declaro paneles
 
-	
-
-	public void crearPanelAlta(){
-		miFrame.remove(miFrame.getContentPane());
-		AltaPanel panelalta = new AltaPanel(this.getMiBO());
-		miFrame.setContentPane(panelalta);
-		miFrame.setTitle("Alta Pacientes");
-		miFrame.repaint();
-	}
-	
-	public void crearPanelBaja(){
-		miFrame.remove(miFrame.getContentPane());
-		BajaPanel panelbaja = new BajaPanel(this.getMiBO());
-		miFrame.setContentPane(panelbaja);
-		miFrame.setTitle("Baja Pacientes");
-		miFrame.repaint();
-	}
-	
-	public void crearPanelConsulta(){
-		miFrame.remove(miFrame.getContentPane());
-		ConsultaPanel panelconsulta = new ConsultaPanel(this.getMiBO().getAllPacientes());
 		
-		miFrame.setContentPane(panelconsulta);
-		miFrame.setTitle("Consulta Pacientes");
-		miFrame.revalidate();
-		miFrame.repaint();
-	}
-	
-	public void crearPanelModificacion(){
-		miFrame.remove(miFrame.getContentPane());
-		ModificacionPanel panelmodificacion = new ModificacionPanel(this.getMiBO());
+	public void crearPanel(String cliente, String panel){
+		MainFrame frame = getMiFrame();
+		frame.remove(frame.getContentPane());
 		
-		miFrame.setContentPane(panelmodificacion);
-		miFrame.setTitle("Consulta Pacientes");
-		miFrame.revalidate();
-		miFrame.repaint();//ver de eliminar
+		switch (panel) {
+			case "Alta": frame.setContentPane(new AltaPanel(this.getMiBO()));break;
+			case "Baja": frame.setContentPane(new BajaPanel(this.getMiBO()));break;
+			case "Consulta": frame.setContentPane(new ConsultaPanel(this.getMiBO().getAllPacientes()));break;
+			case "Modificacion": frame.setContentPane(new ModificacionPanel(this.getMiBO()));break;
+		}
+		
+		frame.setTitle((panel + cliente));
+		frame.revalidate();
+		frame.repaint();
 	}
 
 	
