@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -10,7 +12,7 @@ import javax.swing.JTextField;
 
 import entidades.Paciente;
 import excepciones.BusinessException;
-import produccion.BO;
+import produccion.Handler;
 
 public class ModificacionPanel extends JPanel {
 	/**
@@ -50,18 +52,17 @@ public class ModificacionPanel extends JPanel {
 		return txtDocumento;
 	}
 
-	public ModificacionPanel(BO miBO) {
+	public ModificacionPanel(Handler handler) {
 		botonBuscar = new JButton("Buscar");
 		this.add(new JLabel("Documento : "));
 		this.add(txtDocumento = new JTextField(15));
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Voy a buscar paciente
-				
+				String documento=getTxtDocumento().getText();
+				Paciente p= new Paciente(documento);
 				try {
-					int documento=Integer.valueOf(getTxtDocumento().getText());
-					Paciente p= new Paciente(documento);
-					p=miBO.validarPacienteporBusqueda(p);
+					p=handler.getBO().validarPacienteporBusqueda(p);
 					
 					//Pego los valores
 					getTxtNombreInput().setText(p.getNombre());
@@ -70,12 +71,7 @@ public class ModificacionPanel extends JPanel {
 					getTxtEmailInput().setText(p.getEmail());
 					
 				} catch (BusinessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, BusinessException.MENSAJE, BusinessException.TITULO, 1);
-				} catch(NumberFormatException  er){
-					JOptionPane.showMessageDialog(null, BusinessException.ERRNUMERO, BusinessException.TITULO, 1);
-					er.printStackTrace();
+					handler.HandleBusinessException(e1);
 				} catch(NullPointerException er1){
 					JOptionPane.showMessageDialog(null, BusinessException.NOENCONTRADO, BusinessException.TITULO, 1);
 					er1.printStackTrace();
@@ -99,19 +95,17 @@ public class ModificacionPanel extends JPanel {
 		botonActualizar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				int documento= Integer.valueOf(getTxtDocumentoInput().getText()) ;
+				String documento= getTxtDocumentoInput().getText();
         		String nombre= getTxtNombreInput().getText();
         		String apellido= getTxtApellidoInput().getText();
         		String email = getTxtEmailInput().getText();
         		Paciente p= new Paciente(documento,nombre,apellido,email);
         		try {
-					miBO.updatePaciente(p);
+					handler.getBO().updatePaciente(p);
 				} catch (BusinessException e1) {
-					JOptionPane.showMessageDialog(null, BusinessException.MENSAJE, BusinessException.TITULO, 1);
-					e1.printStackTrace();
-				} catch(NumberFormatException  er){
-					JOptionPane.showMessageDialog(null, BusinessException.ERRNUMERO, BusinessException.TITULO, 1);
-					er.printStackTrace();
+					handler.HandleBusinessException(e1);
+				} catch (SQLException e1) {
+					handler.GeneralException(e1);
 				}
         		getTxtNombreInput().setText(null);
 				getTxtApellidoInput().setText(null);

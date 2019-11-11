@@ -15,8 +15,11 @@ import excepciones.BusinessException;
 
 public class PacienteDAODBImpl implements PacienteDAO {
 
+	public PacienteDAODBImpl() {
+	}
+
 	@Override
-	public void deletePacienteByDocumento(int documento) throws BusinessException {
+	public void deletePacienteByDocumento(String documento) throws BusinessException, SQLException {
 		String sql = "DELETE FROM pacientes WHERE documento = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -24,25 +27,17 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			try {
-				c.rollback();
-				e.printStackTrace();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
-			}
+			c.rollback();
+			throw e;
 		} finally {
-			try {
-				c.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
-			}
+			c.close();
 		}
 	}
 
+	
+
 	@Override
-	public List<Paciente> getAllPacientes() throws BusinessException {
+	public List<Paciente> getAllPacientes() throws SQLException {
 		List<Paciente> respuesta = new ArrayList<Paciente>();
 		String sql = "SELECT * FROM pacientes";
 		Connection c = DBManager.getDBManager().connect();
@@ -51,37 +46,23 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			ResultSet rs = s.executeQuery(sql);
 			c.commit();
 			while (rs.next()) {
-				Integer documento =  rs.getInt("documento");
+				int documento =  rs.getInt("documento");
 				String nombre = rs.getString("nombre");
 				String apellido = rs.getString("apellido");
 				String email = rs.getString("email");
-				respuesta.add(new Paciente(documento,nombre,apellido,email));
+				respuesta.add(new Paciente(String.valueOf(documento),nombre,apellido,email));
 			}
-
 		} catch (SQLException e) {
-			try {
-				c.rollback();
-				e.printStackTrace();
-			} catch (SQLException e1) {
-				//TODO: Agregar a Exception
-				System.out.println("No se pudo restaurar los datos");
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
-			}
+			throw e;
 		} finally {
-			try {
-				c.close();
-			} catch (SQLException e1) {
-				//TODO: Agregar a Exception
-				System.out.println("No se pudo cerrar la conexion a la DB");
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
-			}
+			c.close();
 		}
 		return respuesta;
 
 	}
 
 	@Override
-	public Paciente getPacienteByDocumento(int documento) throws BusinessException {
+	public Paciente getPacienteByDocumento(String documento) throws BusinessException {
 		Paciente retorna = null;
 		String sql = "SELECT * FROM pacientes WHERE documento = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
@@ -93,23 +74,23 @@ public class PacienteDAODBImpl implements PacienteDAO {
 				String nombre = rs.getString("nombre");
 				String apellido = rs.getString("apellido");
 				String email = rs.getString("email");
-				retorna = new Paciente(documento, nombre, apellido, email);
+				retorna = new Paciente(String.valueOf(documento), nombre, apellido, email);
 			}
 			
 		} catch (SQLException e) {
 			try {
 				c.rollback();
 				e.printStackTrace();
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
+				throw new BusinessException();
 			} catch (SQLException e1) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
+				throw new BusinessException();
 			}
 		} finally {
 			try {
 				c.commit();
 				c.close();
 			} catch (SQLException e1) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
+				throw new BusinessException();
 			}
 		}
 		return retorna;
@@ -119,7 +100,7 @@ public class PacienteDAODBImpl implements PacienteDAO {
 
 
 	@Override
-	public void insertarPacientes(Paciente p) throws BusinessException {
+	public void insertarPacientes(Paciente p) throws SQLException {
 		String sql = "INSERT INTO pacientes (documento, nombre, apellido, email) VALUES ('" + p.getDocumento() + "', '" + p.getNombre()+ "', '" + p.getApellido() + "', '" + p.getEmail()+ "')";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -127,28 +108,17 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			try {
-				c.rollback();
-				e.printStackTrace();
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
-			}
+			c.rollback();
+			throw new SQLException();
 		} finally {
-			try {
-				c.close();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
+			c.close();
 		}
 		
 	}
 
 	@Override
-	public void updateUsuarioByDocumento(Paciente p) throws BusinessException  {
-		int documento= p.getDocumento();
-		String sql = "UPDATE pacientes set nombre = '" + p.getNombre() + "', apellido = '" + p.getApellido() + "', email = '" + p.getEmail() + "' WHERE documento = '" + documento + "'";
+	public void updateUsuarioByDocumento(Paciente p) throws BusinessException , SQLException{
+		String sql = "UPDATE pacientes set nombre = '" + p.getNombre() + "', apellido = '" + p.getApellido() + "', email = '" + p.getEmail() + "' WHERE documento = '" + p.getDocumento() + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -158,15 +128,15 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			try {
 				c.rollback();
 				e.printStackTrace();
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
+				throw new BusinessException();
 			} catch (SQLException e1) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
+				throw new BusinessException();
 			}
 		} finally {
 			try {
 				c.close();
 			} catch (SQLException e1) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.MENSAJE,BusinessException.GENERICO);
+				throw new BusinessException();
 			}
 		}
 		

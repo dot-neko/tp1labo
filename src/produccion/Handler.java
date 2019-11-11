@@ -1,7 +1,11 @@
 package produccion;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 import dao.PacienteDAO;
 import dbImpl.PacienteDAODBImpl;
+import excepciones.BusinessException;
 import ui.*;
 
 //
@@ -23,32 +27,53 @@ public class Handler{
 			
 			//crear Handler. Cargarle el BO y el Frame
 
-			this.addBO(new BO(miDao));
-			this.addMainFrame(new MainFrame());
+			this.setBO(new BO(this,miDao));
+			this.setMainFrame(new MainFrame());
 
 			//Cargarle el handler al frame
-			this.getMiFrame().addHandler(this);
+			this.setMainFrame().setHandler(this);
 			
 			
 			
 		}
 	//Declaro paneles
 
+	
+
+	public void crearPanelAlta(){
+		miFrame.remove(miFrame.getContentPane());
+		AltaPanel panelalta = new AltaPanel(this);
+		miFrame.setContentPane(panelalta);
+		miFrame.setTitle("Alta Pacientes");
+		miFrame.repaint();
+	}
+	
+	public void crearPanelBaja(){
+		miFrame.remove(miFrame.getContentPane());
+		BajaPanel panelbaja = new BajaPanel(this);
+		miFrame.setContentPane(panelbaja);
+		miFrame.setTitle("Baja Pacientes");
+		miFrame.repaint();
+	}
+	
+	public void crearPanelConsulta(){
+		miFrame.remove(miFrame.getContentPane());
+		ConsultaPanel panelconsulta = new ConsultaPanel(this);
 		
-	public void crearPanel(String cliente, String panel){
-		MainFrame frame = getMiFrame();
-		frame.remove(frame.getContentPane());
+		miFrame.setContentPane(panelconsulta);
+		miFrame.setTitle("Consulta Pacientes");
+		miFrame.revalidate();
+		miFrame.repaint();
+	}
+	
+	public void crearPanelModificacion(){
+		miFrame.remove(miFrame.getContentPane());
+		ModificacionPanel panelmodificacion = new ModificacionPanel(this);
 		
-		switch (panel) {
-			case "Alta": frame.setContentPane(new AltaPanel(this.getMiBO()));break;
-			case "Baja": frame.setContentPane(new BajaPanel(this.getMiBO()));break;
-			case "Consulta": frame.setContentPane(new ConsultaPanel(this.getMiBO().getAllPacientes()));break;
-			case "Modificacion": frame.setContentPane(new ModificacionPanel(this.getMiBO()));break;
-		}
-		
-		frame.setTitle((panel + cliente));
-		frame.revalidate();
-		frame.repaint();
+		miFrame.setContentPane(panelmodificacion);
+		miFrame.setTitle("Consulta Pacientes");
+		miFrame.revalidate();
+		miFrame.repaint();//ver de eliminar
 	}
 
 	
@@ -57,22 +82,39 @@ public class Handler{
 	
 
 	// metodos para agregar frame y bo
-	public void addMainFrame(MainFrame miFrame) {
+	public void setMainFrame(MainFrame miFrame) {
 		System.out.println("Agregando Frame a Handler");
 		this.miFrame = miFrame;
 		
 	}
-	public void addBO(BO miBO) {
+	public void setBO(BO miBO) {
 		System.out.println("Agregando BO a Handler");
 		this.miBO = miBO;
 	}
 	
-	private BO getMiBO() {
+	public BO getBO() {
 		return miBO;
 	}
 
-	private MainFrame getMiFrame() {
+	public MainFrame setMainFrame() {
 		return miFrame;
+	}
+	
+	// Business Exceptions
+	//TODO: Agrupar excepciones en un solo metodo, asi las vistas no se tienen que enterar que tipo de excepcion mandar
+	public void HandleBusinessException(BusinessException e) {
+		JOptionPane.showMessageDialog(null, e.getMessage(), e.getErr(), 1);
+		e.printStackTrace();
+	}
+	
+	public void GeneralException(Exception e) {
+		JOptionPane.showMessageDialog(null, e.getMessage(), BusinessException.TITULO, 1);
+		e.printStackTrace();
+	}
+	
+	//
+	public void IngresoPacienteOk() {
+		JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");// TIENEN QUE IR AL HANDLER
 	}
 	
 	//para el final version 1
@@ -81,5 +123,4 @@ public class Handler{
 	
 	
 }
-
 

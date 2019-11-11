@@ -20,7 +20,8 @@ public class TableManager {
 		
 		try {
 			Statement s = conn.createStatement();		//Intenta ejecutar un statement
-			s.execute(sql);								//envia el codigo
+			s.execute(sql);		
+			conn.commit();								//envia el codigo
 		} catch (SQLException e) {						//sqlexception ataja muchos de los errores de integridad
 			try {
 				conn.rollback();						//Intenta rollback
@@ -30,10 +31,9 @@ public class TableManager {
 			}
 		} finally {										//Tanto por el try o por los catch, se ejecute el finally antes de salir del metodo, ya que tiene un throws
 			try {
-				conn.commit();
 				conn.close();							//Cerrar la conexion
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

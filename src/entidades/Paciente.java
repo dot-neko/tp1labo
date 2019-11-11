@@ -1,21 +1,19 @@
 package entidades;
 
 public class Paciente {
-	private int documento;
+	private String documento;
 	private String nombre;
 	private String apellido;
 	private String email;
 	
-	public Paciente(int doc, String nom, String ape, String email){
+	public Paciente(String doc, String nom, String ape, String email){
+		setDocumento(doc);
 		setNombre(nom);
 		setApellido(ape);
-		setDocumento(doc);
 		setEmail(email);
 	}
-	public Paciente() {
-		// TODO Auto-generated constructor stub
-	}
-	public Paciente(int doc){
+	
+	public Paciente(String doc){
 		setDocumento(doc);
 	}
 	public String getEmail() {
@@ -36,10 +34,10 @@ public class Paciente {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getDocumento() {
+	public String getDocumento() {
 		return documento;
 	}
-	public void setDocumento(int documento) {
+	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
 }

@@ -1,8 +1,7 @@
 package produccion;
 
+import java.sql.SQLException;
 import java.util.List;
-
-import javax.swing.JOptionPane;
 
 import dao.PacienteDAO;
 import entidades.Paciente;
@@ -12,54 +11,99 @@ import excepciones.BusinessException;
 public class BO {
 
 	PacienteDAO miDao;
+	Handler handler;
 	
-	public BO(PacienteDAO miDao) {
+	public BO(Handler handler, PacienteDAO miDao) {
 		this.miDao = miDao;
+		this.handler = handler;
 	}
 	
 
 	public void ValidarPacienteNuevo(Paciente p) throws BusinessException, Exception{
-		//Llama a DAO
-		System.out.println("Validando documento");
-		//TODO: TRY//CATCH
-			int documento= p.getDocumento();
+		
+			int documento;
+			
+			try {
+				documento = Integer.valueOf(p.getDocumento());
+			} catch (NumberFormatException e1) {
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
+			}
+			
 			if (documento >0 && documento<100000000) {
-				miDao.insertarPacientes(p);
-				JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");
-			}else{
-				JOptionPane.showMessageDialog(null, "Error al ingresar documento. Intente de nuevo.");
-				System.out.println("Fallo");
+				try {
+					miDao.insertarPacientes(p);
+				} catch (SQLException e) {
+					throw new SQLException();
+				}
+				handler.IngresoPacienteOk();
+			}
+			else{
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 			}
 	}
 	
-	public void validarPacientebyDocumento(Paciente p) throws BusinessException {
-		int documento= p.getDocumento();
+	public void validarPacientebyDocumento(Paciente p) throws BusinessException, SQLException {
+		int documento;
 		try {
-			if (documento>0 && documento<100000000) {
-				miDao.deletePacienteByDocumento(documento);
+			documento = Integer.valueOf(p.getDocumento());
+		} catch (NumberFormatException e1) {
+			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
+		}
+		if (documento>0 && documento<100000000) {
+			try {
+				miDao.deletePacienteByDocumento(String.valueOf(documento));
+			} catch (SQLException e) {
+				throw new SQLException();
 			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Se ingreso: "+ documento + ". No puede ser mayor a 100.000.000 o negativo");
-			e.printStackTrace();
+		}else {
+			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
 	}
-	public List<Paciente> getAllPacientes(){
+	
+	
+	public List<Paciente> getAllPacientes() throws SQLException{
 		List <Paciente> pac = null;
 		try {
 			pac= miDao.getAllPacientes();
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException e) {
+			throw e;
 		}
 		return pac;
 	}
+	
+	
 	public Paciente validarPacienteporBusqueda(Paciente p) throws BusinessException {
-			int documento= p.getDocumento();
-			p=miDao.getPacienteByDocumento(documento);
+			int documento;
+			try {
+				documento = Integer.valueOf(p.getDocumento());
+			} catch (NumberFormatException e) {
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
+			}
+			if (documento>0 && documento<100000000) {
+				p=miDao.getPacienteByDocumento(String.valueOf(documento));
+			}else {
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
+			}
+			
 		return p;
 	}
-	public void updatePaciente(Paciente p) throws BusinessException {
-		miDao.updateUsuarioByDocumento(p);
+	public void updatePaciente(Paciente p) throws BusinessException, SQLException {
+		int documento;
+		try {
+			documento = Integer.valueOf(p.getDocumento());
+		} catch (NumberFormatException e) {
+			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
+		}
+		if (documento>0 && documento<100000000) {
+			try {
+				miDao.updateUsuarioByDocumento(p);
+			} catch (SQLException e) {
+				throw e;
+			}
+		}else {
+			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
+		}
+		
 	}
 /*
 	public void insertarPaciente(Paciente p) throws BusinessException {

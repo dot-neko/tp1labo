@@ -10,7 +10,7 @@ public class UsuarioDAOConsoleImpl implements PacienteDAO{
 
 	@Override
 	public List<Paciente> getAllPacientes() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -23,7 +23,7 @@ public class UsuarioDAOConsoleImpl implements PacienteDAO{
 	}
 
 	@Override
-	public void deletePacienteByDocumento(int documento) {
+	public void deletePacienteByDocumento(String documento) {
 		String sql = "DELETE FROM pacientes WHERE documento = '" + documento + "'";
 		System.out.println("Deberias tirar la siguiente consulta a la DB:" + sql);
 		
@@ -31,13 +31,13 @@ public class UsuarioDAOConsoleImpl implements PacienteDAO{
 
 	@Override
 	public void updateUsuarioByDocumento(Paciente p) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
-	public Paciente getPacienteByDocumento(int documento) {
-		// TODO Auto-generated method stub
+	public Paciente getPacienteByDocumento(String documento) {
+		
 		return null;
 	}
 

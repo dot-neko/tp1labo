@@ -4,16 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import entidades.Paciente;
 import excepciones.BusinessException;
-import produccion.BO;
+import produccion.Handler;
 
 public class AltaPanel extends JPanel{
-
+//usar flowlayout--boxlayout
 	private JTextField txtDocumento;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
@@ -25,7 +24,7 @@ public class AltaPanel extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public AltaPanel(BO miBO){
+	public AltaPanel(Handler handler){
 		{
 			
 			this.add(new JLabel("Documento : "));
@@ -43,25 +42,19 @@ public class AltaPanel extends JPanel{
 			botonEnviar= new JButton("Enviar");
 			botonEnviar.addActionListener(new ActionListener() {
 	              public void actionPerformed(ActionEvent actionEvent) { 
-	          		
+	            	  String documento= getTxtDocumento().getText();
+            		  String nombre= getTxtNombre().getText();
+            		  String apellido= getTxtApellido().getText();
+	            	  String email = getTxtEmail().getText();
+	            	  Paciente p= new Paciente(documento,nombre,apellido,email);
 	        		//Envia Paciente a BO
-	            	try {
-	            		int documento= Integer.valueOf(getTxtDocumento().getText()) ;
-		        		String nombre= getTxtNombre().getText();
-		        		String apellido= getTxtApellido().getText();
-		        		String email = getTxtEmail().getText();
-		        		Paciente p= new Paciente(documento,nombre,apellido,email);
-						miBO.ValidarPacienteNuevo(p);
-					} catch (BusinessException e) {
-						JOptionPane.showMessageDialog(null, BusinessException.MENSAJE, BusinessException.TITULO, 1);
-						e.printStackTrace();
-					} catch(NumberFormatException er){
-						JOptionPane.showMessageDialog(null, BusinessException.ERRNUMERO, BusinessException.TITULO, 1);
-						er.printStackTrace();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+	            	  try {
+	            		  handler.getBO().ValidarPacienteNuevo(p);// al handler
+	            	  } catch (BusinessException be) {
+	            		  handler.HandleBusinessException(be);
+	            	  } catch (Exception e) {
+	            		  handler.GeneralException(e);
+	            	  }
 	              }
 	        });
 			this.add(botonEnviar);

@@ -3,6 +3,7 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -11,7 +12,7 @@ import javax.swing.JTextField;
 
 import entidades.Paciente;
 import excepciones.BusinessException;
-import produccion.BO;
+import produccion.Handler;
 
 public class BajaPanel extends JPanel {
 	/**
@@ -28,20 +29,21 @@ public class BajaPanel extends JPanel {
 		return txtDocumento;
 	}
 	//CONSTRUCTOR
-	public BajaPanel(BO miBO){
+	public BajaPanel(Handler handler){
 		botonBorrar= new JButton("Borrar");
 		this.add(new JLabel("Documento : "));
 		this.add(txtDocumento=new JTextField(15));
+		
 		botonBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				int documento=Integer.valueOf(getTxtDocumento().getText());
+				String documento=getTxtDocumento().getText();
 				Paciente p= new Paciente(documento);
 				try {
-					miBO.validarPacientebyDocumento(p);
+					handler.getBO().validarPacientebyDocumento(p);
 				} catch (BusinessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					handler.HandleBusinessException(e1);
+				} catch(SQLException e2) {
+					handler.GeneralException(e2);
 				}
 			}
 		});

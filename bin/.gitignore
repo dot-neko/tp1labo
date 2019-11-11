@@ -1,9 +1,8 @@
-/basics/
-/consoleImpl/
-/dao/
-/dbImpl/
-/entidades/
-/excepciones/
-/produccion/
-/sqlite-jdbc-3.20.0.jar
 /ui/
+/produccion/
+/dbImpl/
+/dao/
+/excepciones/
+/entidades/
+/consoleImpl/
+/basics/
