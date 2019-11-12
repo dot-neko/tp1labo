@@ -18,7 +18,6 @@ public class PacienteTableModel extends AbstractTableModel {
 	private static final int EMAIL=3;
 	private String TITLES[]={"DNI","NOMBRE","APELLIDO","EMAIL"}; //TODO: Ver de cambiar a enum
 	
-	
 	public PacienteTableModel(List<Paciente> listadoPacientes) {
 		
 		paciente_list = listadoPacientes;

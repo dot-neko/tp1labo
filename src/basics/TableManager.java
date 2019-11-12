@@ -67,5 +67,37 @@ public class TableManager {
 		
 
 	}
+	
+	public static void createMedicoTable() {
 
+		Connection conn = DBManager.getDBManager().connect(); 		//Declaro conexion
+		
+		//String a ejecutar
+		String sql = "CREATE TABLE IF NOT EXISTS medico (medico_id integer PRIMARY KEY ,\n"
+                + "	consultorio integer NOT NULL,\n"
+                + "	nombre text NOT NULL,\n"
+                + "	apellido text NOT NULL,\n"
+                + "	especialidad text NOT NULL);";
+		
+		try {
+			Statement s = conn.createStatement();		//Intenta ejecutar un statement
+			s.execute(sql);		
+			conn.commit();								//envia el codigo
+		} catch (SQLException e) {						//sqlexception ataja muchos de los errores de integridad
+			try {
+				conn.rollback();						//Intenta rollback
+				e.printStackTrace();					//Imprime stack
+			} catch (SQLException e1) {					//Si falla el rollback
+				e1.printStackTrace();
+			}
+		} finally {										//Tanto por el try o por los catch, se ejecute el finally antes de salir del metodo, ya que tiene un throws
+			try {
+				conn.close();							//Cerrar la conexion
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

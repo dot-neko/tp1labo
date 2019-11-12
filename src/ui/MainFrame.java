@@ -33,7 +33,7 @@ public class MainFrame extends JFrame{
         altapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelAlta();
+				miHandler.crearPanelAltaPaciente();
 			}
 		});
         //Panel Baja
@@ -42,7 +42,7 @@ public class MainFrame extends JFrame{
         bajapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelBaja();
+				miHandler.crearPanelBajaPaciente();
 			}
 		});
         //Panel Modificacion
@@ -51,7 +51,7 @@ public class MainFrame extends JFrame{
         modificacionpacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelModificacion();
+				miHandler.crearPanelModificacionPaciente();
 			}
 		});
         
@@ -61,7 +61,7 @@ public class MainFrame extends JFrame{
         consultapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelConsulta();
+				miHandler.crearPanelConsultaPaciente();
 				
 			}
 		});
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame{
 		
 		//Parametros JFrame
 		
-		this.setSize(500,  300);
+		this.setSize(300,  300);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
 	}

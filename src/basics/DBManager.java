@@ -34,6 +34,8 @@ public class DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.exit(0);
+		}finally {
+			
 		}
 
 		return conn;

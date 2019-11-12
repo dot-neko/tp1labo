@@ -1,10 +1,9 @@
 package produccion;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import dao.PacienteDAO;
-import dbImpl.PacienteDAODBImpl;
+import dao.ConsultorioDAO;
+import dbImpl.ConsultorioDAODBImpl;
 import excepciones.BusinessException;
 import ui.*;
 
@@ -13,7 +12,7 @@ public class Handler{
 
 	BO miBO;
 	MainFrame miFrame;
-	PacienteDAO MiDao;
+	ConsultorioDAO MiDao;
 	
 	 public Handler(){
 		 
@@ -23,11 +22,11 @@ public class Handler{
 	 public void runapp() {
 			//Crea BO y JFrame
 						
-			PacienteDAO miDao = new PacienteDAODBImpl();
+			ConsultorioDAO miDao = new ConsultorioDAODBImpl();
 			
 			//crear Handler. Cargarle el BO y el Frame
 
-			this.setBO(new BO(this,miDao));
+			this.setBO(new BO(miDao));
 			this.setMainFrame(new MainFrame());
 
 			//Cargarle el handler al frame
@@ -40,25 +39,26 @@ public class Handler{
 
 	
 
-	public void crearPanelAlta(){
-		miFrame.remove(miFrame.getContentPane());
-		AltaPanel panelalta = new AltaPanel(this);
+	public void crearPanelAltaPaciente(){
+		miFrame.remove(miFrame.getContentPane());//TODO: VER COMO BORRAR PANEL Y NO PISAR EL ACTUAL
+		AltaPanelPaciente panelalta = new AltaPanelPaciente();
+		panelalta.setHandler(this);
 		miFrame.setContentPane(panelalta);
 		miFrame.setTitle("Alta Pacientes");
 		miFrame.repaint();
 	}
 	
-	public void crearPanelBaja(){
+	public void crearPanelBajaPaciente(){
 		miFrame.remove(miFrame.getContentPane());
-		BajaPanel panelbaja = new BajaPanel(this);
+		BajaPanelPaciente panelbaja = new BajaPanelPaciente(this);
 		miFrame.setContentPane(panelbaja);
 		miFrame.setTitle("Baja Pacientes");
 		miFrame.repaint();
 	}
 	
-	public void crearPanelConsulta(){
+	public void crearPanelConsultaPaciente(){
 		miFrame.remove(miFrame.getContentPane());
-		ConsultaPanel panelconsulta = new ConsultaPanel(this);
+		ConsultaPanelPaciente panelconsulta = new ConsultaPanelPaciente(this);
 		
 		miFrame.setContentPane(panelconsulta);
 		miFrame.setTitle("Consulta Pacientes");
@@ -66,19 +66,52 @@ public class Handler{
 		miFrame.repaint();
 	}
 	
-	public void crearPanelModificacion(){
-		miFrame.remove(miFrame.getContentPane());
-		ModificacionPanel panelmodificacion = new ModificacionPanel(this);
+	public void crearPanelModificacionPaciente(){		
+		ModificacionPanelPaciente panelmodificacion = new ModificacionPanelPaciente(this);
 		
 		miFrame.setContentPane(panelmodificacion);
-		miFrame.setTitle("Consulta Pacientes");
+		miFrame.setTitle("Modificacion Pacientes");
 		miFrame.revalidate();
 		miFrame.repaint();//ver de eliminar
 	}
 
+	/*
+	public void crearPanelAltaMedico(){
+		miFrame.remove(miFrame.getContentPane());
+		AltaPanelPaciente panelalta = new AltaPanelMedico(this);
+		miFrame.setContentPane(panelalta);
+		miFrame.setTitle("Alta Medico");
+		miFrame.repaint();
+	}
 	
+	public void crearPanelBajaMedico(){
+		miFrame.remove(miFrame.getContentPane());
+		BajaPanelPaciente panelbaja = new BajaPanelMedico(this);
+		miFrame.setContentPane(panelbaja);
+		miFrame.setTitle("Baja Medico");
+		miFrame.repaint();
+	}
 	
-
+	public void crearPanelConsultaMedico(){
+		miFrame.remove(miFrame.getContentPane());
+		ConsultaPanelPaciente panelconsulta = new ConsultaPanelMedico(this);
+		
+		miFrame.setContentPane(panelconsulta);
+		miFrame.setTitle("Consulta Medico");
+		miFrame.revalidate();
+		miFrame.repaint();
+	}
+	
+	public void crearPanelModificacionMedico(){
+		miFrame.remove(miFrame.getContentPane());
+		ModificacionPanelPaciente panelmodificacion = new ModificacionPanelMedico(this);
+		
+		miFrame.setContentPane(panelmodificacion);
+		miFrame.setTitle("Consulta Medico");
+		miFrame.revalidate();
+		miFrame.repaint();//ver de eliminar
+	}
+*/
 	
 
 	// metodos para agregar frame y bo
@@ -101,20 +134,15 @@ public class Handler{
 	}
 	
 	// Business Exceptions
-	//TODO: Agrupar excepciones en un solo metodo, asi las vistas no se tienen que enterar que tipo de excepcion mandar
 	public void HandleBusinessException(BusinessException e) {
-		JOptionPane.showMessageDialog(null, e.getMessage(), e.getErr(), 1);
-		e.printStackTrace();
+		JOptionPane.showMessageDialog(null, e.getMsj(), e.getTitle(), 1);
 	}
 	
-	public void GeneralException(Exception e) {
-		JOptionPane.showMessageDialog(null, e.getMessage(), BusinessException.TITULO, 1);
-		e.printStackTrace();
-	}
+
 	
 	//
 	public void IngresoPacienteOk() {
-		JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");// TIENEN QUE IR AL HANDLER
+		JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");
 	}
 	
 	//para el final version 1

@@ -2,11 +2,10 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -14,7 +13,7 @@ import entidades.Paciente;
 import excepciones.BusinessException;
 import produccion.Handler;
 
-public class ModificacionPanel extends JPanel {
+public class ModificacionPanelPaciente extends JPanel {
 	/**
 	 * 
 	 */
@@ -52,10 +51,14 @@ public class ModificacionPanel extends JPanel {
 		return txtDocumento;
 	}
 
-	public ModificacionPanel(Handler handler) {
+	public ModificacionPanelPaciente(Handler handler) {
+		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		
 		botonBuscar = new JButton("Buscar");
 		this.add(new JLabel("Documento : "));
 		this.add(txtDocumento = new JTextField(15));
+		txtDocumento.setMaximumSize(txtDocumento.getPreferredSize());
+		
 		botonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Voy a buscar paciente
@@ -72,10 +75,7 @@ public class ModificacionPanel extends JPanel {
 					
 				} catch (BusinessException e1) {
 					handler.HandleBusinessException(e1);
-				} catch(NullPointerException er1){
-					JOptionPane.showMessageDialog(null, BusinessException.NOENCONTRADO, BusinessException.TITULO, 1);
-					er1.printStackTrace();
-				} 
+				}
 
 			}
 		});
@@ -83,14 +83,22 @@ public class ModificacionPanel extends JPanel {
 		
 		//devolucion;
 		botonActualizar = new JButton("Actualizar");
-		this.add(new JLabel("Nombre :"));
-		this.add(txtNombreInput= new JTextField(20));
-		this.add(new JLabel("Apellido :"));
-		this.add(txtApellidoInput= new JTextField(20));
+		
 		this.add(new JLabel("Documento :"));
 		this.add(txtDocumentoInput= new JTextField(15));
+		txtDocumento.setMaximumSize(txtDocumento.getPreferredSize());
+		
+		this.add(new JLabel("Nombre :"));
+		this.add(txtNombreInput= new JTextField(20));
+		txtNombreInput.setMaximumSize(txtNombreInput.getPreferredSize());
+		
+		this.add(new JLabel("Apellido :"));
+		this.add(txtApellidoInput= new JTextField(20));
+		txtApellidoInput.setMaximumSize(txtApellidoInput.getPreferredSize());
+		
 		this.add(new JLabel("Email :"));
-		this.add(txtEmailInput= new JTextField(15));
+		this.add(txtEmailInput= new JTextField(30));
+		txtEmailInput.setMaximumSize(txtEmailInput.getPreferredSize());
 		
 		botonActualizar.addActionListener(new ActionListener() {
 			
@@ -104,8 +112,6 @@ public class ModificacionPanel extends JPanel {
 					handler.getBO().updatePaciente(p);
 				} catch (BusinessException e1) {
 					handler.HandleBusinessException(e1);
-				} catch (SQLException e1) {
-					handler.GeneralException(e1);
 				}
         		getTxtNombreInput().setText(null);
 				getTxtApellidoInput().setText(null);

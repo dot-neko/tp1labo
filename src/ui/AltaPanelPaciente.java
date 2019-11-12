@@ -1,7 +1,10 @@
 package ui;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,33 +14,39 @@ import entidades.Paciente;
 import excepciones.BusinessException;
 import produccion.Handler;
 
-public class AltaPanel extends JPanel{
+public class AltaPanelPaciente extends JPanel{
 //usar flowlayout--boxlayout
 	private JTextField txtDocumento;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtEmail;
 	private JButton botonEnviar;
+	private Handler handler;
 	/**
 	 * 
 	 */
 	
 	private static final long serialVersionUID = 1L;
 	
-	public AltaPanel(Handler handler){
+	public AltaPanelPaciente(){
 		{
+			this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 			
 			this.add(new JLabel("Documento : "));
 			this.add(txtDocumento=new JTextField(15));
+			txtDocumento.setMaximumSize(txtDocumento.getPreferredSize());
 			
 			this.add(new JLabel("Nombre : "));
-			this.add(txtNombre=new JTextField(15));
+			this.add(txtNombre=new JTextField(20));
+			txtNombre.setMaximumSize(txtNombre.getPreferredSize());
 			
 			this.add(new JLabel("Apellido : "));
-			this.add(txtApellido=new JTextField(15));
+			this.add(txtApellido=new JTextField(20));
+			txtApellido.setMaximumSize(txtApellido.getPreferredSize());
 			
 			this.add(new JLabel("Email : "));
-			this.add(txtEmail=new JTextField(15));
+			this.add(txtEmail=new JTextField(30));
+			txtEmail.setMaximumSize(txtEmail.getPreferredSize());
 			
 			botonEnviar= new JButton("Enviar");
 			botonEnviar.addActionListener(new ActionListener() {
@@ -50,17 +59,16 @@ public class AltaPanel extends JPanel{
 	        		//Envia Paciente a BO
 	            	  try {
 	            		  handler.getBO().ValidarPacienteNuevo(p);// al handler
+	            		  handler.IngresoPacienteOk();
 	            	  } catch (BusinessException be) {
 	            		  handler.HandleBusinessException(be);
-	            	  } catch (Exception e) {
-	            		  handler.GeneralException(e);
-	            	  }
+	            	  } 
 	              }
 	        });
 			this.add(botonEnviar);
 
-
-			this.setSize(500,  200);
+			//Configuracion de panel
+			this.setSize(300,  200);
 			this.setLocation(0,20);
 			this.setVisible(true);
 		}
@@ -87,6 +95,14 @@ public class AltaPanel extends JPanel{
 	//botones
 	public JButton getButtonEnviar(){
 		return botonEnviar;
+	}
+
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
 	}
 
 }

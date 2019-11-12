@@ -3,23 +3,21 @@ package produccion;
 import java.sql.SQLException;
 import java.util.List;
 
-import dao.PacienteDAO;
+import dao.ConsultorioDAO;
 import entidades.Paciente;
 import excepciones.BusinessException;
 
 
 public class BO {
 
-	PacienteDAO miDao;
-	Handler handler;
+	ConsultorioDAO miDao;
 	
-	public BO(Handler handler, PacienteDAO miDao) {
+	public BO(ConsultorioDAO miDao) {
 		this.miDao = miDao;
-		this.handler = handler;
 	}
 	
 
-	public void ValidarPacienteNuevo(Paciente p) throws BusinessException, Exception{
+	public void ValidarPacienteNuevo(Paciente p) throws BusinessException{
 		
 			int documento;
 			
@@ -33,16 +31,15 @@ public class BO {
 				try {
 					miDao.insertarPacientes(p);
 				} catch (SQLException e) {
-					throw new SQLException();
+					throw new BusinessException(BusinessException.TITULO,e.getMessage(),BusinessException.GENERICO);
 				}
-				handler.IngresoPacienteOk();
 			}
 			else{
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 			}
 	}
 	
-	public void validarPacientebyDocumento(Paciente p) throws BusinessException, SQLException {
+	public void validarPacientebyDocumento(Paciente p) throws BusinessException {
 		int documento;
 		try {
 			documento = Integer.valueOf(p.getDocumento());
@@ -53,7 +50,7 @@ public class BO {
 			try {
 				miDao.deletePacienteByDocumento(String.valueOf(documento));
 			} catch (SQLException e) {
-				throw new SQLException();
+				//TODO
 			}
 		}else {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
@@ -61,12 +58,12 @@ public class BO {
 	}
 	
 	
-	public List<Paciente> getAllPacientes() throws SQLException{
+	public List<Paciente> getAllPacientes() throws BusinessException{
 		List <Paciente> pac = null;
 		try {
 			pac= miDao.getAllPacientes();
 		} catch (SQLException e) {
-			throw e;
+			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRDBGET,BusinessException.GENERICO);
 		}
 		return pac;
 	}
@@ -80,14 +77,18 @@ public class BO {
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 			}
 			if (documento>0 && documento<100000000) {
-				p=miDao.getPacienteByDocumento(String.valueOf(documento));
+				try {
+					p=miDao.getPacienteByDocumento(String.valueOf(documento));
+				} catch (SQLException e) {
+					throw new BusinessException(BusinessException.TITULO,BusinessException.ERRDBGET,BusinessException.GENERICO);
+				}
 			}else {
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 			}
 			
 		return p;
 	}
-	public void updatePaciente(Paciente p) throws BusinessException, SQLException {
+	public void updatePaciente(Paciente p) throws BusinessException {
 		int documento;
 		try {
 			documento = Integer.valueOf(p.getDocumento());
@@ -98,16 +99,11 @@ public class BO {
 			try {
 				miDao.updateUsuarioByDocumento(p);
 			} catch (SQLException e) {
-				throw e;
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRDB,BusinessException.GENERICO);
 			}
 		}else {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
 		
 	}
-/*
-	public void insertarPaciente(Paciente p) throws BusinessException {
-		dao.insertarPaciente(p);
-	}
-*/
 }
