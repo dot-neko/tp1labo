@@ -16,6 +16,10 @@ public class MainFrame extends JFrame{
 	JMenuBar menubar;
 	JMenu pacientes,doctores,turnos;
     JMenuItem altapacientes, bajapacientes, modificacionpacientes, consultapacientes;
+	private JMenuItem altamedicos;
+	private JMenuItem bajamedicos;
+	private JMenuItem consultamedicos;
+	private JMenuItem modificacionmedicos;
  
 	public MainFrame() {
 		
@@ -69,6 +73,47 @@ public class MainFrame extends JFrame{
         doctores=new JMenu("Doctores");
         menubar.add(doctores);
         
+        
+      //Panel Alta Medicos
+        altamedicos=new JMenuItem("Alta");
+        doctores.add(altamedicos);
+        altamedicos.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelAltaMedico();
+			}
+		});
+        //Panel Baja
+        bajamedicos=new JMenuItem("Baja");
+        doctores.add(bajamedicos);
+        bajamedicos.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelBajaMedico();
+			}
+		});
+        //Panel Modificacion
+        modificacionmedicos=new JMenuItem("Modificacion");
+        doctores.add(modificacionmedicos);
+        modificacionmedicos.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelModificacionMedico();
+			}
+		});
+        
+        //Panel Consulta
+        consultamedicos=new JMenuItem("Consulta");
+        doctores.add(consultamedicos);
+        consultamedicos.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelConsultaMedico();
+				
+			}
+		});
+        
+        //TURNOS
         turnos=new JMenu("Turnos");
         menubar.add(turnos);
         

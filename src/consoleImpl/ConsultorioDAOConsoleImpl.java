@@ -46,21 +46,21 @@ public class ConsultorioDAOConsoleImpl implements ConsultorioDAO{
 
 
 	@Override
-	public void updateMedicoByDocumento(Medico m) throws BusinessException, SQLException {
+	public void updateMedicoByDocumento(Medico m) throws BusinessException {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void deletemedicoByDocumento(String documento) throws BusinessException, SQLException {
+	public void deletemedicoByDocumento(String documento) throws BusinessException {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public List<Medico> getAllMedicos() throws SQLException {
+	public List<Medico> getAllMedicos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -74,7 +74,7 @@ public class ConsultorioDAOConsoleImpl implements ConsultorioDAO{
 
 
 	@Override
-	public void insertarMedico(Medico m) throws SQLException {
+	public void insertarMedico(Medico m) {
 		// TODO Auto-generated method stub
 		
 	}

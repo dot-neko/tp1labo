@@ -10,10 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import entidades.Paciente;
+import entidades.Medico;
 import produccion.Handler;
 
-public class BajaPanelPaciente extends JPanel {
+public class BajaPanelMedico extends JPanel {
 	/**
 	 * 
 	 */
@@ -29,7 +29,7 @@ public class BajaPanelPaciente extends JPanel {
 		return txtDocumento;
 	}
 	//CONSTRUCTOR
-	public BajaPanelPaciente(){
+	public BajaPanelMedico(){
 		
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		botonBorrar= new JButton("Borrar");
@@ -40,9 +40,8 @@ public class BajaPanelPaciente extends JPanel {
 		botonBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String documento=getTxtDocumento().getText();
-				Paciente p= new Paciente(documento);
-				//Ejecuta metodo en handler
-				getHandler().borrarPacienteByDocumento(p);
+				Medico m= new Medico(documento);
+				getHandler().borrarMedicoByDocumento(m);
 			}
 		});
 		this.add(botonBorrar);
@@ -50,6 +49,7 @@ public class BajaPanelPaciente extends JPanel {
 		this.setLocation(20,100);
 		this.setVisible(true);
 	}
+
 	public Handler getHandler() {
 		return handler;
 	}

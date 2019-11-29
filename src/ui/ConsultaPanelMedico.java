@@ -6,32 +6,30 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import entidades.Paciente;
+
+import entidades.Medico;
 import produccion.Handler;
 
 
 
-public class ConsultaPanelPaciente extends JPanel {
+public class ConsultaPanelMedico extends JPanel {
 	
 	/**
 	 * 
 	 */
 	
 	private static final long serialVersionUID = 1L;
-	List <Paciente> listadoPacientes;
+	List <Medico> listadomedicos;
 	private Handler handler;
 
-	public ConsultaPanelPaciente(){
-		//Constructor vacio ya que se necesita el handler antes de hacer el query. Sino da nullpointerexception
-	}
-
-	public void InicializarPanel() {
-		//Obtiene pacientes
-		listadoPacientes = getHandler().ObtenerTodosPacientes();
+	public ConsultaPanelMedico(){
 		
-		//Generacion de tabla
+	}
+	public void InicializarPanel() {
+		listadomedicos=getHandler().ObtenerTodosMedicos();
+		
 		this.setLayout(new BorderLayout());
-		JTable tablaconsulta = new JTable(new PacienteTableModel(listadoPacientes));
+		JTable tablaconsulta = new JTable(new MedicoTableModel(listadomedicos));
 		JScrollPane pane = new JScrollPane(tablaconsulta);
 		this.add(pane, BorderLayout.CENTER);
 		this.setVisible(true);

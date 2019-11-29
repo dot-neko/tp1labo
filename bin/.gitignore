@@ -1,8 +1,5 @@
-/ui/
 /produccion/
-/dbImpl/
-/dao/
-/excepciones/
+/ui/
 /entidades/
-/consoleImpl/
+/dbImpl/
 /basics/

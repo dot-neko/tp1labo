@@ -16,10 +16,12 @@ import excepciones.BusinessException;
 public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	public ConsultorioDAODBImpl() {
+		TableManager.createPacTable();
+		TableManager.createMedicoTable();
 	}
 
 	@Override
-	public void deletePacienteByDocumento(String documento) throws SQLException {
+	public void deletePacienteByDocumento(String documento) throws BusinessException {
 		String sql = "DELETE FROM pacientes WHERE documento = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -27,17 +29,25 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			throw e;
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 	}
 
 	
 
 	@Override
-	public List<Paciente> getAllPacientes() throws SQLException {
+	public List<Paciente> getAllPacientes() throws BusinessException {
 		List<Paciente> respuesta = new ArrayList<Paciente>();
 		String sql = "SELECT * FROM pacientes";
 		Connection c = DBManager.getDBManager().connect();
@@ -53,16 +63,20 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 				respuesta.add(new Paciente(String.valueOf(documento),nombre,apellido,email));
 			}
 		} catch (SQLException e) {
-			throw e;
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		return respuesta;
 
 	}
 
 	@Override
-	public Paciente getPacienteByDocumento(String documento) throws  SQLException {
+	public Paciente getPacienteByDocumento(String documento) throws BusinessException {
 		Paciente retorna = null;
 		String sql = "SELECT * FROM pacientes WHERE documento = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
@@ -78,12 +92,14 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			}
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			e.printStackTrace();
-			throw e;
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 			
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		return retorna;
 	}
@@ -92,7 +108,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 
 	@Override
-	public void insertarPacientes(Paciente p) throws SQLException {
+	public void insertarPacientes(Paciente p) throws BusinessException {
 		String sql = "INSERT INTO pacientes (documento, nombre, apellido, email) VALUES ('" + p.getDocumento() + "', '" + p.getNombre()+ "', '" + p.getApellido() + "', '" + p.getEmail()+ "')";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -100,16 +116,24 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			throw e;
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		
 	}
 
 	@Override
-	public void updateUsuarioByDocumento(Paciente p) throws SQLException{
+	public void updateUsuarioByDocumento(Paciente p) throws BusinessException{
 		String sql = "UPDATE pacientes set nombre = '" + p.getNombre() + "', apellido = '" + p.getApellido() + "', email = '" + p.getEmail() + "' WHERE documento = '" + p.getDocumento() + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -117,16 +141,24 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			throw e;
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		
 	}
 
 	@Override
-	public void deletemedicoByDocumento(String documento) throws SQLException {
+	public void deletemedicoByDocumento(String documento) throws BusinessException {
 		String sql = "DELETE FROM medico WHERE documento = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -134,17 +166,25 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			throw e;
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 	}
 
 	
 
 	@Override
-	public List<Medico> getAllMedicos() throws SQLException {
+	public List<Medico> getAllMedicos() throws BusinessException {
 		List<Medico> respuesta = new ArrayList<Medico>();
 		String sql = "SELECT * FROM medico";
 		Connection c = DBManager.getDBManager().connect();
@@ -161,16 +201,20 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 				respuesta.add(new Medico(String.valueOf(documento),String.valueOf(consultorio),nombre,apellido,especialidad));
 			}
 		} catch (SQLException e) {
-			throw e;
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		return respuesta;
 
 	}
 
 	@Override
-	public Medico getMedicoByDocumento(String documento) throws SQLException {
+	public Medico getMedicoByDocumento(String documento) throws BusinessException {
 		Medico retorna = null;
 		String sql = "SELECT * FROM medico WHERE documento = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
@@ -187,11 +231,13 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			}
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			e.printStackTrace();
-			throw e;
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		return retorna;
 	}
@@ -200,24 +246,34 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 
 	@Override
-	public void insertarMedico(Medico m) throws SQLException {
-		String sql = "INSERT INTO medico (documento, nombre, apellido, email) VALUES ('" + m.getDocumento() + "', '" + m.getConsultorio() + "', '" + m.getNombre()+ "', '" + m.getApellido() + "', '" + m.getEspecialidad()+ "')";
+	public void insertarMedico(Medico m) throws BusinessException {
+		String sql = "INSERT INTO medico (documento, consultorio, nombre, apellido, especialidad) VALUES ('" + m.getDocumento() + "', '" + m.getConsultorio() + "', '" + m.getNombre()+ "', '" + m.getApellido() + "', '" + m.getEspecialidad()+ "')";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			throw new SQLException();
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}
 
 	@Override
-	public void updateMedicoByDocumento(Medico m) throws SQLException{
+	public void updateMedicoByDocumento(Medico m) throws BusinessException{
 		String sql = "UPDATE medico set consultorio = '" + m.getConsultorio() + "', nombre = '" + m.getNombre() + "', apellido = '" + m.getApellido() + "', especialidad = '" +m.getEspecialidad() + "' WHERE documento = '" + m.getDocumento() + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
@@ -225,10 +281,18 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			s.executeUpdate(sql);
 			c.commit();
 		} catch (SQLException e) {
-			c.rollback();
-			throw e;
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {
-			c.close();
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
 		}
 		
 	}

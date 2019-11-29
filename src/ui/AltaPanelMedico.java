@@ -10,15 +10,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import entidades.Paciente;
+import entidades.Medico;
 import produccion.Handler;
 
-public class AltaPanelPaciente extends JPanel{
+public class AltaPanelMedico extends JPanel{
 //usar flowlayout--boxlayout
 	private JTextField txtDocumento;
+	private JTextField txtConsultorio;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
-	private JTextField txtEmail;
+	private JTextField txtEspecialidad;
 	private JButton botonEnviar;
 	private Handler handler;
 	/**
@@ -27,13 +28,17 @@ public class AltaPanelPaciente extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public AltaPanelPaciente(){
+	public AltaPanelMedico(){
 		{
 			this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 			
 			this.add(new JLabel("Documento : "));
 			this.add(txtDocumento=new JTextField(15));
 			txtDocumento.setMaximumSize(txtDocumento.getPreferredSize());
+			
+			this.add(new JLabel("Consultorio : "));
+			this.add(txtConsultorio=new JTextField(15));
+			txtConsultorio.setMaximumSize(txtConsultorio.getPreferredSize());
 			
 			this.add(new JLabel("Nombre : "));
 			this.add(txtNombre=new JTextField(20));
@@ -43,23 +48,21 @@ public class AltaPanelPaciente extends JPanel{
 			this.add(txtApellido=new JTextField(20));
 			txtApellido.setMaximumSize(txtApellido.getPreferredSize());
 			
-			this.add(new JLabel("Email : "));
-			this.add(txtEmail=new JTextField(30));
-			txtEmail.setMaximumSize(txtEmail.getPreferredSize());
+			this.add(new JLabel("Especialidad : "));
+			this.add(txtEspecialidad=new JTextField(30));
+			txtEspecialidad.setMaximumSize(txtEspecialidad.getPreferredSize());
 			
 			botonEnviar= new JButton("Enviar");
 			botonEnviar.addActionListener(new ActionListener() {
 	              public void actionPerformed(ActionEvent actionEvent) { 
-	            	  ///handler.altaPaciente(panelToObject());
-	            	  
-	            	  
 	            	  String documento= getTxtDocumento().getText();
+	            	  String consultorio= getTxtConsultorio().getText();
             		  String nombre= getTxtNombre().getText();
             		  String apellido= getTxtApellido().getText();
-	            	  String email = getTxtEmail().getText();
-	            	  Paciente p= new Paciente(documento,nombre,apellido,email);
-	            	  //Envia Paciente a BO
-	            	  getHandler().IngresarPacienteCompleto(p);
+	            	  String especialidad = getTxtEspecialidad().getText();
+	            	  Medico m= new Medico(documento, consultorio, nombre, apellido, especialidad);
+	        		//Envia Paciente a BO
+	            	  getHandler().IngresarMedicoCompleto(m);
 	              }
 	        });
 			this.add(botonEnviar);
@@ -72,7 +75,7 @@ public class AltaPanelPaciente extends JPanel{
 		
 	}
 	
-	//getters botones
+	//getters
 	public JTextField getTxtDocumento() {
 		return txtDocumento;
 	}
@@ -84,17 +87,20 @@ public class AltaPanelPaciente extends JPanel{
 	public JTextField getTxtApellido() {
 		return txtApellido;
 	}
-
-	public JTextField getTxtEmail() {
-		return txtEmail;
-	}
 	
+	public JTextField getTxtConsultorio() {
+		return txtConsultorio;
+	}
+
+	public JTextField getTxtEspecialidad() {
+		return txtEspecialidad;
+	}
+
 	//botones
 	public JButton getButtonEnviar(){
 		return botonEnviar;
 	}
 
-	//getters y setters
 	public Handler getHandler() {
 		return handler;
 	}

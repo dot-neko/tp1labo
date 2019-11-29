@@ -14,6 +14,9 @@ public class Medico {
 		setApellido(apellido);
 		setEspecialidad(especialidad);
 	}
+	public Medico(String documento) {
+		setDocumento(documento);
+	}
 	public String getConsultorio(){
 		return consultorio;
 	}

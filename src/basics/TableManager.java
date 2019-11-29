@@ -74,6 +74,7 @@ public class TableManager {
 		
 		//String a ejecutar
 		String sql = "CREATE TABLE IF NOT EXISTS medico (medico_id integer PRIMARY KEY ,\n"
+				+ "	documento integer NOT NULL,\n"
                 + "	consultorio integer NOT NULL,\n"
                 + "	nombre text NOT NULL,\n"
                 + "	apellido text NOT NULL,\n"
@@ -98,6 +99,34 @@ public class TableManager {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	
+	public static void dropMedTable() {
+
+		Connection c = DBManager.getDBManager().connect();
+		
+		String sql = "DROP TABLE medico";
+		
+		try {
+			Statement s = c.createStatement();
+			s.execute(sql);
+			c.commit();
+		} catch (SQLException e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			try {
+				c.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+
 	}
 	
 }
