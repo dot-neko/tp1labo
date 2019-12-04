@@ -102,7 +102,7 @@ public class Handler{
 	public void crearPanelConsultaMedico(){
 		miFrame.remove(miFrame.getContentPane());
 		ConsultaPanelMedico panelconsultamedico = new ConsultaPanelMedico();
-		panelconsultamedico.setHandler(this);
+		panelconsultamedico.setHandler(this);//TODO Ver si se puede hacer todo desde aca y mandar al panel el resultado solamente sin tener que pasarle el handler, ya que no hay interacciones
 		panelconsultamedico.InicializarPanel();
 		miFrame.setContentPane(panelconsultamedico);
 		miFrame.setTitle("Consulta Medico");
