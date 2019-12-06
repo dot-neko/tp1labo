@@ -20,6 +20,8 @@ public class MainFrame extends JFrame{
 	private JMenuItem bajamedicos;
 	private JMenuItem consultamedicos;
 	private JMenuItem modificacionmedicos;
+	private JMenuItem asignarturnos;
+	private AbstractButton crearturnomedico;
  
 	public MainFrame() {
 		
@@ -113,10 +115,30 @@ public class MainFrame extends JFrame{
 			}
 		});
         
+      //Panel Crear Turnos Medico
+        crearturnomedico=new JMenuItem("Crear nuevos turnos");
+        doctores.add(crearturnomedico);
+        crearturnomedico.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelCreaTurnoMedico();
+				
+			}
+		});
+        
         //TURNOS
         turnos=new JMenu("Turnos");
         menubar.add(turnos);
         
+        
+        asignarturnos=new JMenuItem("Asignar Turnos Nuevos");
+        turnos.add(asignarturnos);
+        asignarturnos.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				miHandler.crearPanelAsignarTurnoNuevo();
+			}
+		});
         //FIN Jmenubar
 		
 		

@@ -16,13 +16,17 @@ import excepciones.BusinessException;
 public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	public ConsultorioDAODBImpl() {
+		/*TableManager.dropMedTable();
+		TableManager.dropPacTable();
+		TableManager.dropTurnosTable();*/
 		TableManager.createPacTable();
 		TableManager.createMedicoTable();
+		TableManager.createTurnosTable();
 	}
 
 	@Override
 	public void deletePacienteByDocumento(String documento) throws BusinessException {
-		String sql = "DELETE FROM pacientes WHERE documento = '" + documento + "'";
+		String sql = "DELETE FROM pacientes WHERE paciente_id = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -56,7 +60,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			ResultSet rs = s.executeQuery(sql);
 			c.commit();
 			while (rs.next()) {
-				int documento =  rs.getInt("documento");
+				int documento =  rs.getInt("paciente_id");
 				String nombre = rs.getString("nombre");
 				String apellido = rs.getString("apellido");
 				String email = rs.getString("email");
@@ -78,7 +82,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 	@Override
 	public Paciente getPacienteByDocumento(String documento) throws BusinessException {
 		Paciente retorna = null;
-		String sql = "SELECT * FROM pacientes WHERE documento = '" + documento + "'";
+		String sql = "SELECT * FROM pacientes WHERE paciente_id = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -109,7 +113,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	@Override
 	public void insertarPacientes(Paciente p) throws BusinessException {
-		String sql = "INSERT INTO pacientes (documento, nombre, apellido, email) VALUES ('" + p.getDocumento() + "', '" + p.getNombre()+ "', '" + p.getApellido() + "', '" + p.getEmail()+ "')";
+		String sql = "INSERT INTO pacientes (paciente_id, nombre, apellido, email) VALUES ('" + p.getDocumento() + "', '" + p.getNombre()+ "', '" + p.getApellido() + "', '" + p.getEmail()+ "')";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -134,7 +138,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	@Override
 	public void updateUsuarioByDocumento(Paciente p) throws BusinessException{
-		String sql = "UPDATE pacientes set nombre = '" + p.getNombre() + "', apellido = '" + p.getApellido() + "', email = '" + p.getEmail() + "' WHERE documento = '" + p.getDocumento() + "'";
+		String sql = "UPDATE pacientes set nombre = '" + p.getNombre() + "', apellido = '" + p.getApellido() + "', email = '" + p.getEmail() + "' WHERE paciente_id = '" + p.getDocumento() + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -159,7 +163,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	@Override
 	public void deletemedicoByDocumento(String documento) throws BusinessException {
-		String sql = "DELETE FROM medico WHERE documento = '" + documento + "'";
+		String sql = "DELETE FROM medico WHERE medico_id = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -193,7 +197,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			ResultSet rs = s.executeQuery(sql);
 			c.commit();
 			while (rs.next()) {
-				int documento =  rs.getInt("documento");
+				int documento =  rs.getInt("medico_id");
 				int consultorio =rs.getInt("consultorio");
 				String nombre = rs.getString("nombre");
 				String apellido = rs.getString("apellido");
@@ -216,7 +220,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 	@Override
 	public Medico getMedicoByDocumento(String documento) throws BusinessException {
 		Medico retorna = null;
-		String sql = "SELECT * FROM medico WHERE documento = '" + documento + "'";
+		String sql = "SELECT * FROM medico WHERE medico_id = '" + documento + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -247,7 +251,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	@Override
 	public void insertarMedico(Medico m) throws BusinessException {
-		String sql = "INSERT INTO medico (documento, consultorio, nombre, apellido, especialidad) VALUES ('" + m.getDocumento() + "', '" + m.getConsultorio() + "', '" + m.getNombre()+ "', '" + m.getApellido() + "', '" + m.getEspecialidad()+ "')";
+		String sql = "INSERT INTO medico (medico_id, consultorio, nombre, apellido, especialidad) VALUES ('" + m.getDocumento() + "', '" + m.getConsultorio() + "', '" + m.getNombre()+ "', '" + m.getApellido() + "', '" + m.getEspecialidad()+ "')";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();
@@ -274,7 +278,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	@Override
 	public void updateMedicoByDocumento(Medico m) throws BusinessException{
-		String sql = "UPDATE medico set consultorio = '" + m.getConsultorio() + "', nombre = '" + m.getNombre() + "', apellido = '" + m.getApellido() + "', especialidad = '" +m.getEspecialidad() + "' WHERE documento = '" + m.getDocumento() + "'";
+		String sql = "UPDATE medico set consultorio = '" + m.getConsultorio() + "', nombre = '" + m.getNombre() + "', apellido = '" + m.getApellido() + "', especialidad = '" +m.getEspecialidad() + "' WHERE medico_id = '" + m.getDocumento() + "'";
 		Connection c = DBManager.getDBManager().connect();
 		try {
 			Statement s = c.createStatement();

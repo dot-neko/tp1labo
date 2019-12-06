@@ -1,7 +1,6 @@
 package consoleImpl;
 
 
-import java.sql.SQLException;
 import java.util.List;
 import dao.ConsultorioDAO;
 import entidades.Medico;

@@ -112,7 +112,7 @@ public class Handler{
 	
 	public void crearPanelModificacionMedico(){
 		miFrame.remove(miFrame.getContentPane());
-		ModificacionPanelMedico panelmodificacionmedico = new ModificacionPanelMedico(this);
+		ModificacionPanelMedico panelmodificacionmedico = new ModificacionPanelMedico();
 		panelmodificacionmedico.setHandler(this);
 		miFrame.setContentPane(panelmodificacionmedico);
 		miFrame.setTitle("Modificacion Medico");
@@ -122,7 +122,7 @@ public class Handler{
 
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
-			getBO().ValidarPacienteNuevo(p);// estos dos metodos al handler y que no corran desde el bo, sino del handler como ingresook
+			getBO().ValidarPacienteNuevo(p);
 			IngresoOk(p);
 		} catch (BusinessException e) {
 			HandleBusinessException(e);
@@ -267,6 +267,16 @@ public class Handler{
 	}
 	protected void ActualizadoError() {
 		JOptionPane.showMessageDialog(null, "No se encontro nada con el documento ingresado");
+	}
+
+	public void crearPanelAsignarTurnoNuevo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void crearPanelCreaTurnoMedico() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	//para el final version 1
