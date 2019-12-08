@@ -4,6 +4,7 @@ import java.util.List;
 
 import entidades.Medico;
 import entidades.Paciente;
+import entidades.Turnos;
 import excepciones.BusinessException;
 
 public interface ConsultorioDAO {
@@ -20,5 +21,6 @@ public interface ConsultorioDAO {
 	public List<Medico> getAllMedicos() throws BusinessException;
 	public Medico getMedicoByDocumento(String documento) throws BusinessException;
 	public void insertarMedico(Medico m) throws BusinessException;
+	public void CrearTurnosMedicos(Turnos turno) throws BusinessException;
 	
 }

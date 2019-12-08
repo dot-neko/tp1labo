@@ -135,7 +135,7 @@ public class TableManager {
 		String sql = "CREATE TABLE IF NOT EXISTS turno (turno_id integer PRIMARY KEY AUTOINCREMENT,\n"
 				+ "	documento_medico integer NOT NULL,\n"
                 + "	fecha_hora text NOT NULL,\n"
-                + "	documento_paciente integer NOT NULL,\n"
+                + "	documento_paciente integer,\n"
                 + "	consultorio integer,"
                 + " reservado integer DEFAULT 0,"
                 + " FOREIGN KEY (documento_medico)\n" + 

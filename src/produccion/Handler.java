@@ -1,5 +1,6 @@
 package produccion;
 
+
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,7 @@ import dao.ConsultorioDAO;
 import dbImpl.ConsultorioDAODBImpl;
 import entidades.Medico;
 import entidades.Paciente;
+import entidades.Turnos;
 import excepciones.BusinessException;
 import ui.*;
 
@@ -119,6 +121,18 @@ public class Handler{
 		miFrame.revalidate();
 		miFrame.repaint();//ver de eliminar
 	}
+	
+	public void crearPanelCreaTurnoMedico() {
+		miFrame.remove(miFrame.getContentPane());
+		AltaNuevosTurnosMedicos panelaltarturnomedico = new AltaNuevosTurnosMedicos();
+		panelaltarturnomedico.setHandler(this);
+		panelaltarturnomedico.InicializarPanel();
+		miFrame.setContentPane(panelaltarturnomedico);
+		miFrame.setTitle("Alta Turnos Medico");
+		miFrame.revalidate();
+		miFrame.repaint();//ver de eliminar
+		
+	}
 
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
@@ -219,6 +233,13 @@ public class Handler{
 		}
 	}
 	
+	public void CrearTurnos(Turnos turno) {
+		try {
+			getBO().CrearTurnosMedico(turno);
+		} catch (BusinessException e) {
+			HandleBusinessException(e);
+		}		
+	}
 	
 	// metodos para agregar frame y bo
 	public void setMainFrame(MainFrame miFrame) {
@@ -243,6 +264,7 @@ public class Handler{
 	public void HandleBusinessException(BusinessException e) {
 		JOptionPane.showMessageDialog(null, e.getMsj(), e.getTitle(), 1);
 	}
+
 	
 
 	
@@ -274,10 +296,11 @@ public class Handler{
 		
 	}
 
-	public void crearPanelCreaTurnoMedico() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+
+	
+
+	
 	
 	//para el final version 1
 	// login

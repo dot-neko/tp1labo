@@ -17,8 +17,8 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	public ConsultorioDAODBImpl() {
 		/*TableManager.dropMedTable();
-		TableManager.dropPacTable();
-		TableManager.dropTurnosTable();*/
+		TableManager.dropPacTable();*/
+		TableManager.dropTurnosTable();
 		TableManager.createPacTable();
 		TableManager.createMedicoTable();
 		TableManager.createTurnosTable();
@@ -269,8 +269,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			try {
 				c.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 			}
 		}
 		
@@ -299,6 +298,29 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			}
 		}
 		
+	}
+	public void CrearTurnosMedicos(Turnos turno) throws BusinessException {
+		String sql = "INSERT INTO turno (documento_medico, fecha_hora, consultorio, reservado) "
+				+ "VALUES ('" + turno.getDocumento_medico() + "', '" + turno.getFecha_hora() + "', '" + turno.getConsultorio()+ "', '" + turno.getReservado() + "')";
+		Connection c = DBManager.getDBManager().connect();
+		try {
+			Statement s = c.createStatement();
+			s.executeUpdate(sql);
+			c.commit();
+		} catch (SQLException e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+		} finally {
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
+		}
 	}
 
 	

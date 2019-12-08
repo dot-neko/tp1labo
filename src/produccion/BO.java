@@ -1,9 +1,16 @@
 package produccion;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import dao.ConsultorioDAO;
 import entidades.Medico;
 import entidades.Paciente;
+import entidades.Turnos;
 import excepciones.BusinessException;
 
 
@@ -202,5 +209,35 @@ public class BO {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
 		
+	}
+
+
+	public void CrearTurnosMedico(Turnos turno) throws BusinessException {
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+		Date turnohora = null;
+		try {
+			turnohora = df.parse(turno.getFecha_hora());
+		} catch (ParseException e1) {
+			throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.GENERICO);
+		}
+		Calendar cal= Calendar.getInstance();
+		cal.setTime(turnohora);
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		
+		cal.set(year, month, day, 8, 0);//FORMATO INICIAL
+		for (int i = 0; i < 12; i++) {
+			turnohora=cal.getTime();
+			turno.setFecha_hora(df.format(turnohora));
+			try {
+				miDao.CrearTurnosMedicos(turno);
+			} catch (BusinessException e) {
+				throw e;
+			}
+			cal.add(Calendar.MINUTE, 30);
+			
+		}
 	}
 }

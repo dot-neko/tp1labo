@@ -5,6 +5,7 @@ import java.util.List;
 import dao.ConsultorioDAO;
 import entidades.Medico;
 import entidades.Paciente;
+import entidades.Turnos;
 import excepciones.BusinessException;
 
 public class ConsultorioDAOConsoleImpl implements ConsultorioDAO{
@@ -74,6 +75,13 @@ public class ConsultorioDAOConsoleImpl implements ConsultorioDAO{
 
 	@Override
 	public void insertarMedico(Medico m) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void CrearTurnosMedicos(Turnos turno) throws BusinessException {
 		// TODO Auto-generated method stub
 		
 	}
