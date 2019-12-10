@@ -45,7 +45,7 @@ public class Handler{
 	
 
 	public void crearPanelAltaPaciente(){
-		miFrame.remove(miFrame.getContentPane());//TODO: VER COMO BORRAR PANEL Y NO PISAR EL ACTUAL
+		miFrame.remove(miFrame.getContentPane());
 		AltaPanelPaciente panelalta = new AltaPanelPaciente();
 		panelalta.setHandler(this);
 		miFrame.setContentPane(panelalta);
@@ -103,8 +103,8 @@ public class Handler{
 	
 	public void crearPanelConsultaMedico(){
 		miFrame.remove(miFrame.getContentPane());
-		ConsultaPanelMedico panelconsultamedico = new ConsultaPanelMedico();
-		panelconsultamedico.setHandler(this);//TODO Ver si se puede hacer todo desde aca y mandar al panel el resultado solamente sin tener que pasarle el handler, ya que no hay interacciones
+		ConsultaPanelMedico panelconsultamedico = new ConsultaPanelMedico();//TODO: Ver si constructor vacío esta bien. 
+		panelconsultamedico.setHandler(this);//TODO Ver si esto realmente esta bien. El handler se requiere justo despues de instanciar
 		panelconsultamedico.InicializarPanel();
 		miFrame.setContentPane(panelconsultamedico);
 		miFrame.setTitle("Consulta Medico");
@@ -236,6 +236,7 @@ public class Handler{
 	public void CrearTurnos(Turnos turno) {
 		try {
 			getBO().CrearTurnosMedico(turno);
+			ActualizadoOk(turno);
 		} catch (BusinessException e) {
 			HandleBusinessException(e);
 		}		
@@ -286,6 +287,9 @@ public class Handler{
 	}
 	protected void ActualizadoOk(Medico m) {
 		JOptionPane.showMessageDialog(null, "Se actualizo Medico " + m.getDocumento() + " correctamente.");
+	}
+	protected void ActualizadoOk(Turnos t) {
+		JOptionPane.showMessageDialog(null, "Se ingreso correctamente los turnos para el día " + t.getFecha_hora());
 	}
 	protected void ActualizadoError() {
 		JOptionPane.showMessageDialog(null, "No se encontro nada con el documento ingresado");

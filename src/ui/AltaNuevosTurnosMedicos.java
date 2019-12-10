@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import entidades.Medico;
@@ -25,8 +26,9 @@ public class AltaNuevosTurnosMedicos extends JPanel{
 	private String documentomedico;
 	private String consultorio;
 	private String fecha;
+	private String reservado="0";
 	private JComboBox<ComboMedico> comboMedicos;
-	private JComboBox<DateCalendar> cajacombofecha;
+	private JComboBox<DateItem> cajacombofecha;
 	
 
 	private JButton botonEnviar;
@@ -44,14 +46,14 @@ public class AltaNuevosTurnosMedicos extends JPanel{
 	public void InicializarPanel() {
 		{
 			listadomedicos=getHandler().ObtenerTodosMedicos();
+			this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+			
+			
+			this.add(new JLabel("Buscar Medico : "));
 			comboMedicos= new JComboBox<ComboMedico>();//Instanciando ComboBox
 			for (Medico medico : listadomedicos) {
 				comboMedicos.addItem(new ComboMedico(medico));
 			}
-			
-			this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-			
-			
 			comboMedicos.addActionListener(new ActionListener(	) {
 				
 				@Override
@@ -65,33 +67,36 @@ public class AltaNuevosTurnosMedicos extends JPanel{
 				}
 			});
 			this.add(comboMedicos);
+			comboMedicos.setSelectedIndex(0);
+			comboMedicos.setMaximumSize(comboMedicos.getPreferredSize());
 			
 			
-			cajacombofecha = new JComboBox<DateCalendar>();
+			this.add(new JLabel("Elegir fecha a agregar : "));
 			Calendar calendar = Calendar.getInstance();//Instancio calendario
-			
+			cajacombofecha = new JComboBox<DateItem>();
 			for (int i = 0; i < 28; ++i) {
-				cajacombofecha.addItem(new DateCalendar(calendar.getTime()));
+				cajacombofecha.addItem(new DateItem(calendar.getTime()));
 			    calendar.add(Calendar.DATE, 1);			//Agrego 28 fechas a partir de hoy
 			}
 			cajacombofecha.addActionListener(new ActionListener() {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					DateCalendar fechaseleccionada= (DateCalendar) getCajacombofecha().getSelectedItem();
+					DateItem fechaseleccionada= (DateItem) getCajacombofecha().getSelectedItem();
 					Date fechalocal = fechaseleccionada.getDate();
 					setFecha(fechalocal);
 				}
 			});
 			this.add(cajacombofecha);
-			
+			cajacombofecha.setSelectedIndex(0);
+			cajacombofecha.setMaximumSize(cajacombofecha.getPreferredSize());
 			
 			botonEnviar= new JButton("Enviar");
 			botonEnviar.addActionListener(new ActionListener() {
 	              public void actionPerformed(ActionEvent actionEvent) { 
 
-	        		//TODO EMPROLIJAR LLAMADO A METODO
-	            	  Turnos turno = new Turnos(documentomedico,getFecha(),getConsultorio(),"0");
+	        		
+	            	  Turnos turno = new Turnos(documentomedico,fecha,consultorio,reservado);
 	            	  getHandler().CrearTurnos(turno);
 	              }
 	        });
@@ -120,7 +125,7 @@ public class AltaNuevosTurnosMedicos extends JPanel{
 		return comboMedicos;
 	}
 	
-	public JComboBox<DateCalendar> getCajacombofecha() {
+	public JComboBox<DateItem> getCajacombofecha() {
 		return cajacombofecha;
 	}
 

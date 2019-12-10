@@ -3,7 +3,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-//TODO metodo para establecer las integridades entre tablas
+
 
 //Encargado de generar las tablas
 public class TableManager {
@@ -138,6 +138,8 @@ public class TableManager {
                 + "	documento_paciente integer,\n"
                 + "	consultorio integer,"
                 + " reservado integer DEFAULT 0,"
+                + " UNIQUE(documento_medico,fecha_hora)"
+                
                 + " FOREIGN KEY (documento_medico)\n" + 
                 "       REFERENCES medico (medico_id)"
                 + " FOREIGN KEY (documento_paciente)\n" + 

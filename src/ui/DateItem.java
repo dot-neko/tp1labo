@@ -3,10 +3,10 @@
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateCalendar {
+public class DateItem {
 	private Date mDate;
 
-    public DateCalendar(Date date) {
+    public DateItem(Date date) {
         mDate = date;
     }
 

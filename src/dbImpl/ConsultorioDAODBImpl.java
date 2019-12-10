@@ -16,9 +16,6 @@ import excepciones.BusinessException;
 public class ConsultorioDAODBImpl implements ConsultorioDAO {
 
 	public ConsultorioDAODBImpl() {
-		/*TableManager.dropMedTable();
-		TableManager.dropPacTable();*/
-		TableManager.dropTurnosTable();
 		TableManager.createPacTable();
 		TableManager.createMedicoTable();
 		TableManager.createTurnosTable();
@@ -261,8 +258,7 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 			try {
 				c.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 			}
 			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 		} finally {

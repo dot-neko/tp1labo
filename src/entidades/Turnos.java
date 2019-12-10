@@ -1,6 +1,5 @@
 package entidades;
 
-import java.util.Date;
 
 public class Turnos {
 	
@@ -45,5 +44,4 @@ public class Turnos {
 	}
 	
 	
-//TODO: Falta clase completa turnos
 }

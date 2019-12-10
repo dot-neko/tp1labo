@@ -1,4 +1,6 @@
 package basics;
+import javax.swing.JOptionPane;
+
 import produccion.Handler;
 
 public class Main{
@@ -8,8 +10,7 @@ public class Main{
 		try {
 			new Handler().runapp();
 		} catch (Exception e) {
-			// TODO Devolver respuesta a usuario
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "No se pudo abrir la app.");
 		}
 	}
 	

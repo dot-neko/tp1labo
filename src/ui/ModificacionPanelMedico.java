@@ -23,7 +23,6 @@ public class ModificacionPanelMedico extends JPanel {
 	private JTextField txtNombreInput;
 	private JTextField txtApellidoInput;
 	private JTextField txtEspecialidadInput;
-	private JTextField txtDocumentoInput;
 
 	private JTextField txtDocumentoSearch;
 	private JButton botonBuscar;
@@ -52,7 +51,7 @@ public class ModificacionPanelMedico extends JPanel {
 				getTxtNombreInput().setText(m.getNombre());
 				getTxtConsultorioInput().setText(m.getConsultorio());
 				getTxtApellidoInput().setText(m.getApellido());
-				getTxtDocumentoInput().setText(String.valueOf(m.getDocumento()));
+				getTxtDocumento().setText(String.valueOf(m.getDocumento()));
 				getTxtEspecialidadInput().setText(m.getEspecialidad());
 					
 
@@ -62,10 +61,6 @@ public class ModificacionPanelMedico extends JPanel {
 		
 		//devolucion;
 		botonActualizar = new JButton("Actualizar");
-		
-		this.add(new JLabel("Documento :"));
-		this.add(txtDocumentoInput= new JTextField(15));
-		txtDocumentoInput.setMaximumSize(txtDocumentoInput.getPreferredSize());
 
 		this.add(new JLabel("Consultorio :"));
 		this.add(txtConsultorioInput= new JTextField(15));
@@ -86,7 +81,7 @@ public class ModificacionPanelMedico extends JPanel {
 		botonActualizar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				String documento= getTxtDocumentoInput().getText();
+				String documento= getTxtDocumento().getText();
 				String consultorio= getTxtConsultorioInput().getText();
         		String nombre= getTxtNombreInput().getText();
         		String apellido= getTxtApellidoInput().getText();
@@ -98,7 +93,7 @@ public class ModificacionPanelMedico extends JPanel {
         		getTxtNombreInput().setText(null);
         		getTxtConsultorioInput().setText(null);
 				getTxtApellidoInput().setText(null);
-				getTxtDocumentoInput().setText(null);
+				getTxtDocumento().setText(null);
 				getTxtEspecialidadInput().setText(null);
 			}
 		});
@@ -112,10 +107,6 @@ public class ModificacionPanelMedico extends JPanel {
 
 	public JTextField getTxtDocumento() {
 		return txtDocumentoSearch;
-	}
-	
-	public JTextField getTxtDocumentoInput() {
-		return txtDocumentoInput;
 	}
 
 	public JTextField getTxtNombreInput() {

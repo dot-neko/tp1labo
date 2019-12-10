@@ -17,7 +17,7 @@ public class MedicoTableModel extends AbstractTableModel {
 	private static final int NOMBRE=2;
 	private static final int APELLIDO=3;
 	private static final int ESPECIALIDAD=4;
-	private String TITLES[]={"DNI","CONSULTORIO","NOMBRE","APELLIDO","ESPECIALIDAD"}; //TODO: Ver de cambiar a enum
+	private String TITLES[]={"DNI","CONSULTORIO","NOMBRE","APELLIDO","ESPECIALIDAD"}; //TODO: Ver de cambiar a enum?
 	
 	public MedicoTableModel(List<Medico> listadoMedicos) {
 		

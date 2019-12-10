@@ -18,38 +18,15 @@ public class ModificacionPanelPaciente extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Handler handler;
-
-
-	public JTextField getTxtDocumentoInput() {
-		return txtDocumentoInput;
-	}
-
-	public JTextField getTxtNombreInput() {
-		return txtNombreInput;
-	}
-
-	public JTextField getTxtApellidoInput() {
-		return txtApellidoInput;
-	}
-
-	public JTextField getTxtEmailInput() {
-		return txtEmailInput;
-	}
-
 	private JTextField txtNombreInput;
 	private JTextField txtApellidoInput;
 	private JTextField txtEmailInput;
 	private JTextField txtDocumento;
-
-	private JTextField txtDocumentoInput;
 	private JButton botonBuscar;
-	
 	private JButton botonActualizar;
 
 
-	public JTextField getTxtDocumento() {
-		return txtDocumento;
-	}
+	
 
 	public ModificacionPanelPaciente() {
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -67,7 +44,6 @@ public class ModificacionPanelPaciente extends JPanel {
 				p=getHandler().BuscarPaciente(p);
 				getTxtNombreInput().setText(p.getNombre());
 				getTxtApellidoInput().setText(p.getApellido());
-				getTxtDocumentoInput().setText(String.valueOf(p.getDocumento()));
 				getTxtEmailInput().setText(p.getEmail());
 			}
 		});
@@ -75,10 +51,6 @@ public class ModificacionPanelPaciente extends JPanel {
 		
 		//devolucion;
 		botonActualizar = new JButton("Actualizar");
-		
-		this.add(new JLabel("Documento :"));//TODO Borrar documento ya que por integridad conviene
-		this.add(txtDocumentoInput= new JTextField(15));
-		txtDocumento.setMaximumSize(txtDocumento.getPreferredSize());
 		
 		this.add(new JLabel("Nombre :"));
 		this.add(txtNombreInput= new JTextField(20));
@@ -95,7 +67,7 @@ public class ModificacionPanelPaciente extends JPanel {
 		botonActualizar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				String documento= getTxtDocumentoInput().getText();
+				String documento= getTxtDocumento().getText();
         		String nombre= getTxtNombreInput().getText();
         		String apellido= getTxtApellidoInput().getText();
         		String email = getTxtEmailInput().getText();
@@ -104,7 +76,7 @@ public class ModificacionPanelPaciente extends JPanel {
         		//Set null una vez actualizado
         		getTxtNombreInput().setText(null);
 				getTxtApellidoInput().setText(null);
-				getTxtDocumentoInput().setText(null);
+				getTxtDocumento().setText(null);
 				getTxtEmailInput().setText(null);
 			}
 		});
@@ -116,6 +88,23 @@ public class ModificacionPanelPaciente extends JPanel {
 
 	}
 
+
+
+	public JTextField getTxtNombreInput() {
+		return txtNombreInput;
+	}
+
+	public JTextField getTxtApellidoInput() {
+		return txtApellidoInput;
+	}
+
+	public JTextField getTxtEmailInput() {
+		return txtEmailInput;
+	}
+
+	public JTextField getTxtDocumento() {
+		return txtDocumento;
+	}
 	public Handler getHandler() {
 		return handler;
 	}
