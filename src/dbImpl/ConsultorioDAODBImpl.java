@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import basics.*;
@@ -319,6 +320,60 @@ public class ConsultorioDAODBImpl implements ConsultorioDAO {
 		}
 	}
 
-	
-	
+	public List<String> BuscarTurnos(BuscaTurno b) throws BusinessException {
+		List<String> respuesta = new ArrayList<String>();
+		int documentomedico = Integer.valueOf(b.getDocumentomedico());
+		String sql = "SELECT * FROM turno WHERE documento_medico = '" + documentomedico + "'"
+				+ "AND reservado = '0'";//TODO Incorporar fecha superior a hoy
+		Connection c = DBManager.getDBManager().connect();
+		try {
+			Statement s = c.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			while(rs.next()) {
+				String fecha_hora = rs.getString("fecha_hora");
+				respuesta.add(fecha_hora);
+			}
+			c.commit();
+		} catch (SQLException e) {
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			
+		} finally {
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
+		}
+		return respuesta;
+		
+	}
+
+	@Override
+	public void ReservaTurno(Turnos t) throws BusinessException{
+		String sql = "UPDATE turno "
+				+ "set documento_paciente = '" + t.getDocumento_paciente() + "', "
+						+ "reservado = '" + t.getReservado() + "' "
+				+ "WHERE fecha_hora = '" + t.getFecha_hora() + "'"
+						+ "AND documento_medico = '" + t.getDocumento_medico() + "'";
+		Connection c = DBManager.getDBManager().connect();
+		try {
+			Statement s = c.createStatement();
+			s.executeUpdate(sql);
+			c.commit();
+		} catch (SQLException e) {
+			try {
+				c.rollback();
+			} catch (SQLException e1) {
+				throw new BusinessException(BusinessException.TITULO, e1.getMessage(), BusinessException.TYPE_SQL);
+			}
+			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+		} finally {
+			try {
+				c.close();
+			} catch (SQLException e) {
+				throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
+			}
+		}
+		
+	}
 }

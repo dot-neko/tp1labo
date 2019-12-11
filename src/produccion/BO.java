@@ -3,11 +3,13 @@ package produccion;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import dao.ConsultorioDAO;
+import entidades.BuscaTurno;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Turnos;
@@ -239,5 +241,38 @@ public class BO {
 			cal.add(Calendar.MINUTE, 30);
 			
 		}
+	}
+
+
+	public List<Date> BuscarTurnosLibres(BuscaTurno buscaturno) throws BusinessException  {
+		List<Date> retornalistafechas = new ArrayList<Date>() ;
+		List<String> turnoslibresStr = null;
+		Date turnofechahora = null;
+		try {
+			turnoslibresStr=miDao.BuscarTurnos(buscaturno);
+		} catch (BusinessException e) {
+			throw e;
+		}
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+		
+		for (String stringfechahora : turnoslibresStr) {
+			try {
+				turnofechahora = df.parse(stringfechahora);
+			} catch (ParseException e) {
+				throw new BusinessException(BusinessException.TITULO,e.getMessage(),BusinessException.GENERICO);
+			}
+			retornalistafechas.add(turnofechahora);
+		}
+		return retornalistafechas;
+		
+	}
+
+
+	public void ReservaTurno(Turnos turno) throws BusinessException {
+		try {
+			miDao.ReservaTurno(turno);
+		} catch (BusinessException e) {
+			throw e;
+		} 
 	}
 }

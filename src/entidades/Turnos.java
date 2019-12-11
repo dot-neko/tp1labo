@@ -3,6 +3,7 @@ package entidades;
 
 public class Turnos {
 	
+	private String id_turno;
 	private String documento_medico;
 	private String fecha_hora;
 	private String documento_paciente;
@@ -16,6 +17,22 @@ public class Turnos {
 		this.reservado = reservado;
 	}
 	
+	public Turnos(String documento_medico, String documento_paciente, String turno, String consultorio, String reservado) {
+		this.documento_paciente = documento_paciente;
+		this.documento_medico = documento_medico;
+		this.fecha_hora = turno;
+		this.consultorio = consultorio;
+		this.reservado = reservado;
+	}
+	
+	public void setDocumento_medico(String documento_medico) {
+		this.documento_medico = documento_medico;
+	}
+
+	public void setConsultorio(String consultorio) {
+		this.consultorio = consultorio;
+	}
+
 	public String getDocumento_medico() {
 		return documento_medico;
 	}

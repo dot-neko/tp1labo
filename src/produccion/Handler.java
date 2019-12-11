@@ -1,12 +1,14 @@
 package produccion;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import dao.ConsultorioDAO;
 import dbImpl.ConsultorioDAODBImpl;
+import entidades.BuscaTurno;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Turnos;
@@ -79,7 +81,7 @@ public class Handler{
 		miFrame.setContentPane(panelmodificacion);
 		miFrame.setTitle("Modificacion Pacientes");
 		miFrame.revalidate();
-		miFrame.repaint();//ver de eliminar
+		miFrame.repaint();
 	}
 
 	
@@ -119,7 +121,7 @@ public class Handler{
 		miFrame.setContentPane(panelmodificacionmedico);
 		miFrame.setTitle("Modificacion Medico");
 		miFrame.revalidate();
-		miFrame.repaint();//ver de eliminar
+		miFrame.repaint();
 	}
 	
 	public void crearPanelCreaTurnoMedico() {
@@ -130,10 +132,23 @@ public class Handler{
 		miFrame.setContentPane(panelaltarturnomedico);
 		miFrame.setTitle("Alta Turnos Medico");
 		miFrame.revalidate();
-		miFrame.repaint();//ver de eliminar
+		miFrame.repaint();
 		
 	}
 
+	public void crearPanelAsignarTurnoNuevo() {
+		miFrame.remove(miFrame.getContentPane());
+		AsignarTurnos panelasignarturnos = new AsignarTurnos();
+		panelasignarturnos.setHandler(this);
+		panelasignarturnos.InicializarPanel();
+		miFrame.setContentPane(panelasignarturnos);
+		miFrame.setTitle("Asignar turnos a Pacientes");
+		miFrame.revalidate();
+		miFrame.repaint();
+		
+	}
+	
+	
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
 			getBO().ValidarPacienteNuevo(p);
@@ -242,6 +257,27 @@ public class Handler{
 		}		
 	}
 	
+	public List <Date> BuscarTurnosLibres(BuscaTurno buscaturno) {
+		List<Date> turnoslibres = null;
+		try {
+			turnoslibres=getBO().BuscarTurnosLibres(buscaturno);
+		} catch (BusinessException e) {
+			HandleBusinessException(e);
+		}
+		return turnoslibres;
+	}
+	
+	
+	public void ReservarTurnolibre(Turnos turno) {
+		try {
+			getBO().ReservaTurno(turno);
+			TurnoIngresadoOk(turno);
+		} catch (BusinessException e){
+			HandleBusinessException(e);
+		}
+		
+	}
+	
 	// metodos para agregar frame y bo
 	public void setMainFrame(MainFrame miFrame) {
 		System.out.println("Agregando Frame a Handler");
@@ -291,15 +327,19 @@ public class Handler{
 	protected void ActualizadoOk(Turnos t) {
 		JOptionPane.showMessageDialog(null, "Se ingreso correctamente los turnos para el día " + t.getFecha_hora());
 	}
+	protected void TurnoIngresadoOk(Turnos t) {
+		JOptionPane.showMessageDialog(null, "Se asignó correctamente el turno para el dia " + t.getFecha_hora() + ""
+										+ "para el paciente "+ t.getDocumento_paciente()+".");
+	}
 	protected void ActualizadoError() {
 		JOptionPane.showMessageDialog(null, "No se encontro nada con el documento ingresado");
 	}
 
-	public void crearPanelAsignarTurnoNuevo() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
+	
+
+	
 	
 
 	

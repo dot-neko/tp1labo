@@ -3,6 +3,7 @@ package consoleImpl;
 
 import java.util.List;
 import dao.ConsultorioDAO;
+import entidades.BuscaTurno;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Turnos;
@@ -82,6 +83,21 @@ public class ConsultorioDAOConsoleImpl implements ConsultorioDAO{
 
 	@Override
 	public void CrearTurnosMedicos(Turnos turno) throws BusinessException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public List<String> BuscarTurnos(BuscaTurno buscaturno) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void ReservaTurno(Turnos turno) {
 		// TODO Auto-generated method stub
 		
 	}
