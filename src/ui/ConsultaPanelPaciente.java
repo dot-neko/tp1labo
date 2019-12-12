@@ -12,23 +12,22 @@ import produccion.Handler;
 
 
 public class ConsultaPanelPaciente extends JPanel {
-	
+
 	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
 	List <Paciente> listadoPacientes;
 	private Handler handler;
 
-	public ConsultaPanelPaciente(){
-		//Constructor vacio ya que se necesita el handler antes de hacer el query. Sino da nullpointerexception
-	}
+	public ConsultaPanelPaciente(Handler handler){
+		this.handler=handler;
+		
 
-	public void InicializarPanel() {
 		//Obtiene pacientes
 		listadoPacientes = getHandler().ObtenerTodosPacientes();
-		
+
 		//Generacion de tabla
 		this.setLayout(new BorderLayout());
 		JTable tablaconsulta = new JTable(new PacienteTableModel(listadoPacientes));
@@ -40,9 +39,4 @@ public class ConsultaPanelPaciente extends JPanel {
 		return handler;
 	}
 
-	public void setHandler(Handler handler) {
-		this.handler = handler;
-	}
-	
-	
 }

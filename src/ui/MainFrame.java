@@ -39,7 +39,7 @@ public class MainFrame extends JFrame{
         altapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelAltaPaciente();
+				miHandler.setCustomJPanel(new AltaPanelPaciente(miHandler),"Alta Pacientes");
 			}
 		});
         //Panel Baja
@@ -48,7 +48,7 @@ public class MainFrame extends JFrame{
         bajapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelBajaPaciente();
+				miHandler.setCustomJPanel(new BajaPanelPaciente(miHandler),"Baja Pacientes");
 			}
 		});
         //Panel Modificacion
@@ -57,7 +57,7 @@ public class MainFrame extends JFrame{
         modificacionpacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelModificacionPaciente();
+				miHandler.setCustomJPanel(new ModificacionPanelPaciente(miHandler),"Modificación Pacientes");
 			}
 		});
         
@@ -67,7 +67,7 @@ public class MainFrame extends JFrame{
         consultapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelConsultaPaciente();
+				miHandler.setCustomJPanel(new ConsultaPanelPaciente(miHandler),"Consultar Pacientes");
 				
 			}
 		});
@@ -82,7 +82,7 @@ public class MainFrame extends JFrame{
         altamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelAltaMedico();
+				miHandler.setCustomJPanel(new AltaPanelMedico(miHandler),"Alta Medicos");
 			}
 		});
         //Panel Baja
@@ -91,7 +91,7 @@ public class MainFrame extends JFrame{
         bajamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelBajaMedico();
+				miHandler.setCustomJPanel(new BajaPanelMedico(miHandler),"Baja Medicos");
 			}
 		});
         //Panel Modificacion
@@ -100,7 +100,7 @@ public class MainFrame extends JFrame{
         modificacionmedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelModificacionMedico();
+				miHandler.setCustomJPanel(new ModificacionPanelMedico(miHandler),"Modificar Medicos");
 			}
 		});
         
@@ -110,7 +110,7 @@ public class MainFrame extends JFrame{
         consultamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelConsultaMedico();
+				miHandler.setCustomJPanel(new ConsultaPanelMedico(miHandler),"Consulta Medicos");
 				
 			}
 		});
@@ -121,7 +121,7 @@ public class MainFrame extends JFrame{
         crearturnomedico.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelCreaTurnoMedico();
+				miHandler.setCustomJPanel(new CrearTurnosPanel(miHandler),"Creación Turnos");
 				
 			}
 		});
@@ -136,7 +136,7 @@ public class MainFrame extends JFrame{
         asignarturnos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.crearPanelAsignarTurnoNuevo();
+				miHandler.setCustomJPanel(new AsignarTurnosPanel(miHandler),"Asignar Turnos");
 			}
 		});
         //FIN Jmenubar

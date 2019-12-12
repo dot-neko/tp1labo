@@ -10,7 +10,7 @@ public class TableManager {
 
 	public static void createPacTable() {
 
-		Connection conn = DBManager.getDBManager().connect(); 		//Declaro conexion
+		Connection conn = DBManager.getInstance().connect(); 		//Declaro conexion
 		
 		//String a ejecutar
 		String sql = "CREATE TABLE IF NOT EXISTS pacientes (paciente_id integer PRIMARY KEY,\n"
@@ -43,7 +43,7 @@ public class TableManager {
 	
 	public static void dropPacTable() {
 
-		Connection c = DBManager.getDBManager().connect();
+		Connection c = DBManager.getInstance().connect();
 		
 		String sql = "DROP TABLE pacientes";
 		
@@ -70,7 +70,7 @@ public class TableManager {
 	
 	public static void createMedicoTable() {
 
-		Connection conn = DBManager.getDBManager().connect(); 		//Declaro conexion
+		Connection conn = DBManager.getInstance().connect(); 		//Declaro conexion
 		
 		//String a ejecutar
 		String sql = "CREATE TABLE IF NOT EXISTS medico (medico_id integer PRIMARY KEY ,\n"
@@ -102,7 +102,7 @@ public class TableManager {
 		
 	public static void dropMedTable() {
 
-		Connection c = DBManager.getDBManager().connect();
+		Connection c = DBManager.getInstance().connect();
 		
 		String sql = "DROP TABLE medico";
 		
@@ -129,7 +129,7 @@ public class TableManager {
 	
 	public static void createTurnosTable() {
 
-		Connection conn = DBManager.getDBManager().connect(); 		//Declaro conexion
+		Connection conn = DBManager.getInstance().connect(); 		//Declaro conexion
 		
 		//String a ejecutar
 		String sql = "CREATE TABLE IF NOT EXISTS turno (turno_id integer PRIMARY KEY AUTOINCREMENT,\n"
@@ -169,7 +169,7 @@ public class TableManager {
 		
 	public static void dropTurnosTable() {
 
-		Connection c = DBManager.getDBManager().connect();
+		Connection c = DBManager.getInstance().connect();
 		
 		String sql = "DROP TABLE turno";
 		

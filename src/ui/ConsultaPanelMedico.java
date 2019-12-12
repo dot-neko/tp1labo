@@ -13,21 +13,20 @@ import produccion.Handler;
 
 
 public class ConsultaPanelMedico extends JPanel {
-	
+
 	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
 	List <Medico> listadomedicos;
 	private Handler handler;
 
-	public ConsultaPanelMedico(){
-		
-	}
-	public void InicializarPanel() {
-		listadomedicos=getHandler().ObtenerTodosMedicos();
-		
+	public ConsultaPanelMedico(Handler handler){
+		this.handler=handler;
+
+		listadomedicos=getHandler().obtenerTodosMedicos();
+
 		this.setLayout(new BorderLayout());
 		JTable tablaconsulta = new JTable(new MedicoTableModel(listadomedicos));
 		JScrollPane pane = new JScrollPane(tablaconsulta);
@@ -38,9 +37,5 @@ public class ConsultaPanelMedico extends JPanel {
 		return handler;
 	}
 
-	public void setHandler(Handler handler) {
-		this.handler = handler;
-	}
-	
-	
+
 }

@@ -1,12 +1,10 @@
 package dao;
 
-import java.util.Date;
 import java.util.List;
 
-import entidades.BuscaTurno;
 import entidades.Medico;
 import entidades.Paciente;
-import entidades.Turnos;
+import entidades.Turno;
 import excepciones.BusinessException;
 
 public interface ConsultorioDAO {
@@ -23,8 +21,8 @@ public interface ConsultorioDAO {
 	public List<Medico> getAllMedicos() throws BusinessException;
 	public Medico getMedicoByDocumento(String documento) throws BusinessException;
 	public void insertarMedico(Medico m) throws BusinessException;
-	public void CrearTurnosMedicos(Turnos turno) throws BusinessException;
-	public List<String> BuscarTurnos(BuscaTurno buscaturno) throws BusinessException;
-	public void ReservaTurno(Turnos turno) throws BusinessException;
+	public void CrearTurnosMedicos(Turno turno) throws BusinessException;
+	public List<String> BuscarTurnos(Turno buscaturno) throws BusinessException;
+	public void ReservaTurno(Turno turno) throws BusinessException;
 	
 }

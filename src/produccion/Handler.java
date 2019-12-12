@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import dao.ConsultorioDAO;
 import dbImpl.ConsultorioDAODBImpl;
-import entidades.BuscaTurno;
 import entidades.Medico;
 import entidades.Paciente;
-import entidades.Turnos;
+import entidades.Turno;
 import excepciones.BusinessException;
 import ui.*;
 
@@ -37,133 +37,38 @@ public class Handler{
 			this.setMainFrame(new MainFrame());
 
 			//Cargarle el handler al frame
-			this.setMainFrame().setHandler(this);
-			
-			
+			this.getMainFrame().setHandler(this);
 			
 		}
 	//Declaro paneles
 
 	
+	 
 
-	public void crearPanelAltaPaciente(){
+	public void setCustomJPanel(JPanel panel, String title) {
 		miFrame.remove(miFrame.getContentPane());
-		AltaPanelPaciente panelalta = new AltaPanelPaciente();
-		panelalta.setHandler(this);
-		miFrame.setContentPane(panelalta);
-		miFrame.setTitle("Alta Pacientes");
-		miFrame.repaint();
-	}
-	
-	public void crearPanelBajaPaciente(){
-		miFrame.remove(miFrame.getContentPane());
-		BajaPanelPaciente panelbaja = new BajaPanelPaciente();
-		panelbaja.setHandler(this);
-		miFrame.setContentPane(panelbaja);
-		miFrame.setTitle("Baja Pacientes");
-		miFrame.repaint();
-	}
-	
-	public void crearPanelConsultaPaciente(){
-		miFrame.remove(miFrame.getContentPane());
-		ConsultaPanelPaciente panelconsulta = new ConsultaPanelPaciente();
-		panelconsulta.setHandler(this);
-		panelconsulta.InicializarPanel();
-		miFrame.setContentPane(panelconsulta);
-		miFrame.setTitle("Consulta Pacientes");
+		miFrame.setContentPane(panel);
+		miFrame.setTitle(title);
 		miFrame.revalidate();
 		miFrame.repaint();
-	}
-	
-	public void crearPanelModificacionPaciente(){		
-		ModificacionPanelPaciente panelmodificacion = new ModificacionPanelPaciente();
-		panelmodificacion.setHandler(this);
-		miFrame.setContentPane(panelmodificacion);
-		miFrame.setTitle("Modificacion Pacientes");
-		miFrame.revalidate();
-		miFrame.repaint();
-	}
-
-	
-	public void crearPanelAltaMedico(){
-		miFrame.remove(miFrame.getContentPane());
-		AltaPanelMedico panelaltamedico = new AltaPanelMedico();
-		panelaltamedico.setHandler(this);
-		miFrame.setContentPane(panelaltamedico);
-		miFrame.setTitle("Alta Medico");
-		miFrame.repaint();
-	}
-	
-	public void crearPanelBajaMedico(){
-		miFrame.remove(miFrame.getContentPane());
-		BajaPanelMedico panelbajamedico = new BajaPanelMedico();
-		panelbajamedico.setHandler(this);
-		miFrame.setContentPane(panelbajamedico);
-		miFrame.setTitle("Baja Medico");
-		miFrame.repaint();
-	}
-	
-	public void crearPanelConsultaMedico(){
-		miFrame.remove(miFrame.getContentPane());
-		ConsultaPanelMedico panelconsultamedico = new ConsultaPanelMedico();//TODO: Ver si constructor vacío esta bien. 
-		panelconsultamedico.setHandler(this);//TODO Ver si esto realmente esta bien. El handler se requiere justo despues de instanciar
-		panelconsultamedico.InicializarPanel();
-		miFrame.setContentPane(panelconsultamedico);
-		miFrame.setTitle("Consulta Medico");
-		miFrame.revalidate();
-		miFrame.repaint();
-	}
-	
-	public void crearPanelModificacionMedico(){
-		miFrame.remove(miFrame.getContentPane());
-		ModificacionPanelMedico panelmodificacionmedico = new ModificacionPanelMedico();
-		panelmodificacionmedico.setHandler(this);
-		miFrame.setContentPane(panelmodificacionmedico);
-		miFrame.setTitle("Modificacion Medico");
-		miFrame.revalidate();
-		miFrame.repaint();
-	}
-	
-	public void crearPanelCreaTurnoMedico() {
-		miFrame.remove(miFrame.getContentPane());
-		AltaNuevosTurnosMedicos panelaltarturnomedico = new AltaNuevosTurnosMedicos();
-		panelaltarturnomedico.setHandler(this);
-		panelaltarturnomedico.InicializarPanel();
-		miFrame.setContentPane(panelaltarturnomedico);
-		miFrame.setTitle("Alta Turnos Medico");
-		miFrame.revalidate();
-		miFrame.repaint();
-		
-	}
-
-	public void crearPanelAsignarTurnoNuevo() {
-		miFrame.remove(miFrame.getContentPane());
-		AsignarTurnos panelasignarturnos = new AsignarTurnos();
-		panelasignarturnos.setHandler(this);
-		panelasignarturnos.InicializarPanel();
-		miFrame.setContentPane(panelasignarturnos);
-		miFrame.setTitle("Asignar turnos a Pacientes");
-		miFrame.revalidate();
-		miFrame.repaint();
-		
 	}
 	
 	
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
 			getBO().ValidarPacienteNuevo(p);
-			IngresoOk(p);
+			ingresoOk(p);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 	}
 	
 	public void borrarPacienteByDocumento(Paciente p) {
 		try {
 			getBO().validarPacientebyDocumento(p);//TODO Ver de si no encuentra no diga que borró.
-			BorradoOk(p);
+			borradoOk(p);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 	}
 	
@@ -172,108 +77,108 @@ public class Handler{
 		try {
 			listapacientes=getBO().getAllPacientes();
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 		return listapacientes;
 	}
 	
-	public Paciente BuscarPaciente(Paciente p) {
+	public Paciente buscarPaciente(Paciente p) {
 		try {
 			p=getBO().validarPacienteporBusqueda(p);
 			if (p.getNombre()==null) {
-				ActualizadoError();
+				actualizadoError();
 			}
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 		return p;
 	}
 	
-	public void ActualizarPaciente(Paciente p) {
+	public void actualizarPaciente(Paciente p) {
 		try {
 			getBO().updatePaciente(p);
-			ActualizadoOk(p);
+			actualizadoOk(p);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 	}
 
 
-	public void IngresarMedicoCompleto(Medico m) {
+	public void ingresarMedicoCompleto(Medico m) {
 		try {
 			getBO().ValidarMedicoNuevo(m);// estos dos metodos al handler y que no corran desde el bo, sino del handler como ingresook
-			IngresoOk(m);
+			ingresoOk(m);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 	}
 	
 	public void borrarMedicoByDocumento(Medico m) {
 		try {
 			getBO().validarMedicobyDocumento(m);
-			BorradoOk(m);
+			borradoOk(m);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 	}
 	
-	public List<Medico> ObtenerTodosMedicos() {
+	public List<Medico> obtenerTodosMedicos() {
 		List<Medico> listamedicos = null;
 		try {
 			listamedicos=getBO().getAllMedicos();
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 		return listamedicos;
 	}
 	
-	public Medico BuscarMedico(Medico m) {
+	public Medico buscarMedico(Medico m) {
 		try {
 			m=getBO().validarMedicoporBusqueda(m);
 			if (m.getNombre()==null) {
-				ActualizadoError();
+				actualizadoError();
 			}
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 		return m;
 	}
 	
-	public void ActualizarMedico(Medico m) {
+	public void actualizarMedico(Medico m) {
 		try {
 			getBO().updateMedico(m);
-			ActualizadoOk(m);
+			actualizadoOk(m);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 	}
 	
-	public void CrearTurnos(Turnos turno) {
+	public void crearTurnos(Turno turno) {
 		try {
 			getBO().CrearTurnosMedico(turno);
-			ActualizadoOk(turno);
+			actualizadoOk(turno);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}		
 	}
 	
-	public List <Date> BuscarTurnosLibres(BuscaTurno buscaturno) {
+	public List <Date> buscarTurnosLibres(Turno buscaturno) {
 		List<Date> turnoslibres = null;
 		try {
 			turnoslibres=getBO().BuscarTurnosLibres(buscaturno);
 		} catch (BusinessException e) {
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 		return turnoslibres;
 	}
 	
 	
-	public void ReservarTurnolibre(Turnos turno) {
+	public void reservarTurnolibre(Turno turno) {
 		try {
 			getBO().ReservaTurno(turno);
-			TurnoIngresadoOk(turno);
+			turnoIngresadoOk(turno);
 		} catch (BusinessException e){
-			HandleBusinessException(e);
+			handleBusinessException(e);
 		}
 		
 	}
@@ -293,12 +198,12 @@ public class Handler{
 		return miBO;
 	}
 
-	public MainFrame setMainFrame() {
+	public MainFrame getMainFrame() {
 		return miFrame;
 	}
 	
 	// Business Exceptions
-	public void HandleBusinessException(BusinessException e) {
+	public void handleBusinessException(BusinessException e) {
 		JOptionPane.showMessageDialog(null, e.getMsj(), e.getTitle(), 1);
 	}
 
@@ -306,32 +211,32 @@ public class Handler{
 
 	
 	// Jpane informacion
-	protected void IngresoOk(Paciente p) {
+	protected void ingresoOk(Paciente p) {
 		JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");
 	}
-	protected void IngresoOk(Medico m) {
+	protected void ingresoOk(Medico m) {
 		JOptionPane.showMessageDialog(null, "Se ingreso Medico correctamente.");
 	}
-	protected void BorradoOk(Paciente p) {
+	protected void borradoOk(Paciente p) {
 		JOptionPane.showMessageDialog(null, "Se borro Paciente con documento = " + p.getDocumento());
 	}
-	protected void BorradoOk(Medico m) {
+	protected void borradoOk(Medico m) {
 		JOptionPane.showMessageDialog(null, "Se borro Medico con documento = " + m.getDocumento());
 	}
-	protected void ActualizadoOk(Paciente p) {
+	protected void actualizadoOk(Paciente p) {
 		JOptionPane.showMessageDialog(null, "Se actualizo Paciente " + p.getDocumento() + " correctamente.");
 	}
-	protected void ActualizadoOk(Medico m) {
+	protected void actualizadoOk(Medico m) {
 		JOptionPane.showMessageDialog(null, "Se actualizo Medico " + m.getDocumento() + " correctamente.");
 	}
-	protected void ActualizadoOk(Turnos t) {
+	protected void actualizadoOk(Turno t) {
 		JOptionPane.showMessageDialog(null, "Se ingreso correctamente los turnos para el día " + t.getFecha_hora());
 	}
-	protected void TurnoIngresadoOk(Turnos t) {
+	protected void turnoIngresadoOk(Turno t) {
 		JOptionPane.showMessageDialog(null, "Se asignó correctamente el turno para el dia " + t.getFecha_hora() + ""
-										+ "para el paciente "+ t.getDocumento_paciente()+".");
+										+ "para el paciente "+ t.getdocumentoPaciente()+".");
 	}
-	protected void ActualizadoError() {
+	protected void actualizadoError() {
 		JOptionPane.showMessageDialog(null, "No se encontro nada con el documento ingresado");
 	}
 

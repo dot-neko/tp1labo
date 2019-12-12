@@ -32,7 +32,8 @@ public class ModificacionPanelMedico extends JPanel {
 
 	
 
-	public ModificacionPanelMedico() {
+	public ModificacionPanelMedico(Handler handler) {
+		this.handler=handler;
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
 		botonBuscar = new JButton("Buscar");
@@ -45,7 +46,7 @@ public class ModificacionPanelMedico extends JPanel {
 				//Voy a buscar paciente
 				String documento=getTxtDocumento().getText();
 				Medico m= new Medico(documento);
-				m=getHandler().BuscarMedico(m);
+				m=getHandler().buscarMedico(m);
 				
 				//Pego los valores
 				getTxtNombreInput().setText(m.getNombre());
@@ -88,7 +89,7 @@ public class ModificacionPanelMedico extends JPanel {
         		String especalidad = getTxtEspecialidadInput().getText();
         		Medico m= new Medico(documento,consultorio, nombre, apellido,especalidad);
         		//Envia el paciente a actualizar
-        		getHandler().ActualizarMedico(m);
+        		getHandler().actualizarMedico(m);
         		//Set null una vez actualizado
         		getTxtNombreInput().setText(null);
         		getTxtConsultorioInput().setText(null);
@@ -129,9 +130,5 @@ public class ModificacionPanelMedico extends JPanel {
 
 	public Handler getHandler() {
 		return handler;
-	}
-
-	public void setHandler(Handler handler) {
-		this.handler = handler;
 	}
 }

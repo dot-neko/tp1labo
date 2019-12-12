@@ -9,10 +9,9 @@ import java.util.Date;
 import java.util.List;
 
 import dao.ConsultorioDAO;
-import entidades.BuscaTurno;
 import entidades.Medico;
 import entidades.Paciente;
-import entidades.Turnos;
+import entidades.Turno;
 import excepciones.BusinessException;
 
 
@@ -36,11 +35,7 @@ public class BO {
 			}
 			
 			if (documento >0 && documento<100000000) {
-				try {
-					miDao.insertarPacientes(p);
-				} catch (BusinessException e) {
-					throw e;
-				}
+				miDao.insertarPacientes(p);
 			}
 			else{
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
@@ -55,11 +50,7 @@ public class BO {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 		}
 		if (documento>0 && documento<100000000) {
-			try {
-				miDao.deletePacienteByDocumento(String.valueOf(documento));
-			} catch (BusinessException e) {
-				throw e;
-			}
+			miDao.deletePacienteByDocumento(String.valueOf(documento));
 		}else {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
@@ -68,11 +59,7 @@ public class BO {
 	
 	public List<Paciente> getAllPacientes() throws BusinessException{
 		List <Paciente> pac = null;
-		try {
-			pac= miDao.getAllPacientes();
-		} catch (BusinessException e) {
-			throw e;
-		}
+		pac= miDao.getAllPacientes();
 		return pac;
 	}
 	
@@ -85,14 +72,10 @@ public class BO {
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 			}
 			if (documento>0 && documento<100000000) {
-				try {
-					p=miDao.getPacienteByDocumento(String.valueOf(documento));
+				p=miDao.getPacienteByDocumento(String.valueOf(documento));
 					if (p==null) {
 						p = new Paciente(String.valueOf(documento));
-					}
-				} catch (BusinessException e) {
-					throw e;
-				}
+						}
 			}else {
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 			}
@@ -107,11 +90,7 @@ public class BO {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 		}
 		if (documento>0 && documento<100000000) {
-			try {
-				miDao.updateUsuarioByDocumento(p);
-			} catch (BusinessException e) {
-				throw e;
-			}
+			miDao.updateUsuarioByDocumento(p);
 		}else {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
@@ -132,16 +111,12 @@ public class BO {
 		}
 		
 		if (documento >0 && documento<100000000) {
-			try {
-				miDao.insertarMedico(m);
-			} catch (BusinessException e) {
-				throw e;
-			}
+			miDao.insertarMedico(m);
 		}
 		else{
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
-		}
+	}
 	
 	public void validarMedicobyDocumento(Medico p) throws BusinessException {
 		int documento;
@@ -151,11 +126,7 @@ public class BO {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 		}
 		if (documento>0 && documento<100000000) {
-			try {
-				miDao.deletemedicoByDocumento(String.valueOf(documento));
-			} catch (BusinessException e) {
-				throw e;
-			}
+			miDao.deletemedicoByDocumento(String.valueOf(documento));
 		}else {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
@@ -163,11 +134,8 @@ public class BO {
 	
 	public List<Medico> getAllMedicos() throws BusinessException{
 		List <Medico> medicos = null;
-		try {
-			medicos= miDao.getAllMedicos();
-		} catch (BusinessException e) {
-			throw e;
-		}
+		medicos= miDao.getAllMedicos();
+		
 		return medicos;
 	}
 	
@@ -180,13 +148,9 @@ public class BO {
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 			}
 			if (documento>0 && documento<100000000) {
-				try {
-					m=miDao.getMedicoByDocumento(String.valueOf(documento));
-					if (m==null) {
-						m = new Medico(String.valueOf(documento));
-					}
-				} catch (BusinessException e) {
-					throw e;
+				m=miDao.getMedicoByDocumento(String.valueOf(documento));
+				if (m==null) {
+					m = new Medico(String.valueOf(documento));
 				}
 			}else {
 				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
@@ -202,11 +166,7 @@ public class BO {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 		}
 		if (documento>0 && documento<100000000) {
-			try {
-				miDao.updateMedicoByDocumento(m);
-			} catch (BusinessException e) {
-				throw e;
-			}
+			miDao.updateMedicoByDocumento(m);
 		}else {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
 		}
@@ -214,7 +174,7 @@ public class BO {
 	}
 
 
-	public void CrearTurnosMedico(Turnos turno) throws BusinessException {
+	public void CrearTurnosMedico(Turno turno) throws BusinessException {
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		Date turnohora = null;
@@ -233,26 +193,19 @@ public class BO {
 		for (int i = 0; i < 12; i++) {
 			turnohora=cal.getTime();
 			turno.setFecha_hora(df.format(turnohora));
-			try {
-				miDao.CrearTurnosMedicos(turno);
-			} catch (BusinessException e) {
-				throw e;
-			}
+			miDao.CrearTurnosMedicos(turno);
 			cal.add(Calendar.MINUTE, 30);
 			
 		}
 	}
 
 
-	public List<Date> BuscarTurnosLibres(BuscaTurno buscaturno) throws BusinessException  {
+	public List<Date> BuscarTurnosLibres(Turno buscaturno) throws BusinessException  {
 		List<Date> retornalistafechas = new ArrayList<Date>() ;
 		List<String> turnoslibresStr = null;
 		Date turnofechahora = null;
-		try {
-			turnoslibresStr=miDao.BuscarTurnos(buscaturno);
-		} catch (BusinessException e) {
-			throw e;
-		}
+		turnoslibresStr=miDao.BuscarTurnos(buscaturno);
+		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		
 		for (String stringfechahora : turnoslibresStr) {
@@ -268,11 +221,7 @@ public class BO {
 	}
 
 
-	public void ReservaTurno(Turnos turno) throws BusinessException {
-		try {
-			miDao.ReservaTurno(turno);
-		} catch (BusinessException e) {
-			throw e;
-		} 
-	}
+	public void ReservaTurno(Turno turno) throws BusinessException {
+		miDao.ReservaTurno(turno);
+		}
 }

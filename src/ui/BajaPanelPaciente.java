@@ -29,8 +29,8 @@ public class BajaPanelPaciente extends JPanel {
 		return txtDocumento;
 	}
 	//CONSTRUCTOR
-	public BajaPanelPaciente(){
-		
+	public BajaPanelPaciente(Handler handler){
+		this.handler=handler;
 		this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		botonBorrar= new JButton("Borrar");
 		this.add(new JLabel("Documento : "));
@@ -52,9 +52,6 @@ public class BajaPanelPaciente extends JPanel {
 	}
 	public Handler getHandler() {
 		return handler;
-	}
-	public void setHandler(Handler handler) {
-		this.handler = handler;
 	}
 
 }

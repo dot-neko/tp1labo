@@ -2,10 +2,10 @@ package ui;
 
 import entidades.Paciente;
 
-public class ComboPaciente {
+public class PacienteItem {
 	private Paciente paciente;
 
-    public ComboPaciente(Paciente paciente) {
+    public PacienteItem(Paciente paciente) {
         this.paciente = paciente;
     }
 

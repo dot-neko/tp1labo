@@ -28,8 +28,9 @@ public class AltaPanelMedico extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public AltaPanelMedico(){
+	public AltaPanelMedico(Handler handler){
 		{
+			this.handler=handler;
 			this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 			
 			this.add(new JLabel("Documento : "));
@@ -62,7 +63,7 @@ public class AltaPanelMedico extends JPanel{
 	            	  String especialidad = getTxtEspecialidad().getText();
 	            	  Medico m= new Medico(documento, consultorio, nombre, apellido, especialidad);
 	        		//Envia Paciente a BO
-	            	  getHandler().IngresarMedicoCompleto(m);
+	            	  getHandler().ingresarMedicoCompleto(m);
 	              }
 	        });
 			this.add(botonEnviar);
@@ -103,10 +104,6 @@ public class AltaPanelMedico extends JPanel{
 
 	public Handler getHandler() {
 		return handler;
-	}
-
-	public void setHandler(Handler handler) {
-		this.handler = handler;
 	}
 
 }

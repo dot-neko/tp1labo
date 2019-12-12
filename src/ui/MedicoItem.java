@@ -2,10 +2,10 @@
 
 import entidades.Medico;
 
-public class ComboMedico {
+public class MedicoItem {
 	private Medico medico;
 
-    public ComboMedico(Medico medico) {
+    public MedicoItem(Medico medico) {
         this.medico = medico;
     }
 

@@ -27,8 +27,9 @@ public class AltaPanelPaciente extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public AltaPanelPaciente(){
+	public AltaPanelPaciente(Handler handler){
 		{
+			this.handler=handler;
 			this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 			
 			this.add(new JLabel("Documento : "));
@@ -97,10 +98,6 @@ public class AltaPanelPaciente extends JPanel{
 	//getters y setters
 	public Handler getHandler() {
 		return handler;
-	}
-
-	public void setHandler(Handler handler) {
-		this.handler = handler;
 	}
 
 }
