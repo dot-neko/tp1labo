@@ -3,8 +3,6 @@ package dao;
 import java.util.List;
 
 import entidades.Medico;
-import entidades.Paciente;
-import entidades.Turno;
 import excepciones.BusinessException;
 
 public interface MedicoDAO {

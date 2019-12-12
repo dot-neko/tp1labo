@@ -8,11 +8,11 @@ public class Medico {
 	private String especialidad;
 	
 	public Medico(String documento, String consultorio, String nombre, String apellido, String especialidad){
-		setDocumento(documento);
-		setConsultorio(consultorio);
-		setNombre(nombre);
-		setApellido(apellido);
-		setEspecialidad(especialidad);
+		this.documento=documento;
+		this.consultorio=consultorio;
+		this.nombre=nombre;
+		this.apellido=apellido;
+		this.especialidad=especialidad;
 	}
 	public Medico(String documento) {
 		setDocumento(documento);
@@ -25,18 +25,6 @@ public class Medico {
 	}
 	private void setDocumento(String documento) {
 		this.documento=documento;
-	}
-	private void setConsultorio(String consultorio){
-		this.consultorio=consultorio;
-	}
-	private void setNombre(String nombre){
-		this.nombre=nombre;
-	}
-	private void setApellido(String apellido){
-		this.apellido=apellido;
-	}
-	private void setEspecialidad(String especialidad){
-		this.especialidad=especialidad;
 	}
 	public String getNombre() {
 		return nombre;

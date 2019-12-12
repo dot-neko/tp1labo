@@ -1,17 +1,9 @@
 package produccion;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import dao.MedicoDAO;
 import entidades.Medico;
-import entidades.Paciente;
-import entidades.Turno;
 import excepciones.BusinessException;
 
 

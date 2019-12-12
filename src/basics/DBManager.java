@@ -43,11 +43,5 @@ public class DBManager {
 
 	
 	
-/*
-	 * public static void shutdown() throws Exception { Connection conn =
-	 * connect(); //crea conexion a base de datos Statement s =
-	 * conn.createStatement(); //Statement posilibidad de crear un query
-	 * true/false s.execute("SHUTDOWN"); conn.close(); //Importante cerrar las
-	 * conexiones }
-	 */
+
 }
