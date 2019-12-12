@@ -2,13 +2,15 @@ package consoleImpl;
 
 
 import java.util.List;
-import dao.ConsultorioDAO;
+import dao.MedicoDAO;
+import dao.PacienteDAO;
+import dao.TurnoDAO;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Turno;
 import excepciones.BusinessException;
 
-public class ConsultorioDAOConsoleImpl implements ConsultorioDAO{
+public class ConsultorioDAOConsoleImpl implements MedicoDAO, PacienteDAO, TurnoDAO{
 
 
 	@Override

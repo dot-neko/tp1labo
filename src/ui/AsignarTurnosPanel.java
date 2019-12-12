@@ -52,13 +52,13 @@ public class AsignarTurnosPanel extends JPanel{
 		listadomedicos=getHandler().obtenerTodosMedicos();
 		listadopacientes=getHandler().ObtenerTodosPacientes();
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
-
-
-
+		comboFecha = new JComboBox<DateTimeItem>();
+		comboMedico= new JComboBox<MedicoItem>();//Instanciando ComboBox
+		comboPaciente= new JComboBox<PacienteItem>();//Instanciando ComboBox
 
 		//MEDICOS
 		this.add(new JLabel("Buscar Medico : "));
-		comboMedico= new JComboBox<MedicoItem>();//Instanciando ComboBox
+		
 		comboMedico.setPreferredSize(new Dimension(200,25));
 		for (Medico medico : listadomedicos) {
 			comboMedico.addItem(new MedicoItem(medico));
@@ -70,36 +70,40 @@ public class AsignarTurnosPanel extends JPanel{
 				Medico medico = (Medico) medicoseleccion.getMedico();
 				String documento = medico.getDocumento();
 				setDocumentoMedico(documento);
-			}
-		});
-		this.add(comboMedico);
-		comboMedico.setSelectedIndex(0);
-		comboMedico.setMaximumSize(comboMedico.getPreferredSize());
-
-		botonEnviar= new JButton("Buscar");
-		botonEnviar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) { 
+				getCajacombofecha().removeAllItems();
 				Turno buscaturno = new Turno(documentomedico,fecha);
 				listadodate=getHandler().buscarTurnosLibres(buscaturno);
 				//Rellena Combobox Fechas
 				for (Date date : listadodate) {
 					getCajacombofecha().addItem(new DateTimeItem(date));
 				}
+			}
+		});
+		this.add(comboMedico);
+		comboMedico.setSelectedIndex(0);
+		comboMedico.setMaximumSize(comboMedico.getPreferredSize());
+/*
+		botonEnviar= new JButton("Buscar");
+		botonEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) { 
+				
 
 			}
 		});
 		this.add(botonEnviar);
-
+*/
 		//FECHAS
 		this.add(new JLabel("Elegir fecha de turno: "));
-		comboFecha = new JComboBox<DateTimeItem>();
+		
 		comboFecha.setPreferredSize(new Dimension(200,25));
 		comboFecha.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DateTimeItem fechaseleccionada= (DateTimeItem) getCajacombofecha().getSelectedItem();
-				Date fechalocal = fechaseleccionada.getDate();
-				setFecha(fechalocal);
+				while (getCajacombofecha().getItemCount()>0) {
+					DateTimeItem fechaseleccionada= (DateTimeItem) getCajacombofecha().getSelectedItem();
+					Date fechalocal = fechaseleccionada.getDate();
+					setFecha(fechalocal);
+				}
 			}
 		});
 		this.add(comboFecha);
@@ -110,7 +114,7 @@ public class AsignarTurnosPanel extends JPanel{
 		//PACIENTES
 		this.add(new JLabel("Buscar Paciente : "));
 
-		comboPaciente= new JComboBox<PacienteItem>();//Instanciando ComboBox
+		
 		comboPaciente.setPreferredSize(new Dimension(200,25));
 
 		for (Paciente paciente : listadopacientes) {

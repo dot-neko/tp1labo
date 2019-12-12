@@ -7,8 +7,12 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import dao.ConsultorioDAO;
-import dbImpl.ConsultorioDAODBImpl;
+import dao.MedicoDAO;
+import dao.PacienteDAO;
+import dao.TurnoDAO;
+import dbImpl.MedicoDAODBImpl;
+import dbImpl.PacienteDAODBImpl;
+import dbImpl.TurnoDAODBImpl;
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Turno;
@@ -18,8 +22,10 @@ import ui.*;
 //
 public class Handler{
 
-	BO miBO;
+	private MedicoBO medicoBO;
 	MainFrame miFrame;
+	private TurnoBO turnoBO;
+	private PacienteBO pacienteBO;
 	
 	 public Handler(){
 		 
@@ -29,11 +35,16 @@ public class Handler{
 	 public void runapp() {
 			//Crea BO y JFrame
 						
-			ConsultorioDAO miDao = new ConsultorioDAODBImpl();
+			MedicoDAO medicoDao = new MedicoDAODBImpl();
+			PacienteDAO pacienteDao = new PacienteDAODBImpl();
+			TurnoDAO turnoDao = new TurnoDAODBImpl();
 			
 			//crear Handler. Cargarle el BO y el Frame
 
-			this.setBO(new BO(miDao));
+			this.setMedicoBO(new MedicoBO(medicoDao));
+			this.setPacienteBO(new PacienteBO(pacienteDao));
+			this.setTurnoBO(new TurnoBO(turnoDao));
+			
 			this.setMainFrame(new MainFrame());
 
 			//Cargarle el handler al frame
@@ -56,8 +67,8 @@ public class Handler{
 	
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
-			getBO().ValidarPacienteNuevo(p);
-			ingresoOk(p);
+			getPacienteBO().ValidarPacienteNuevo(p);
+			ingresoOk("Se ingreso Paciente correctamente.");
 		} catch (BusinessException e) {
 			handleBusinessException(e);
 		}
@@ -65,7 +76,7 @@ public class Handler{
 	
 	public void borrarPacienteByDocumento(Paciente p) {
 		try {
-			getBO().validarPacientebyDocumento(p);//TODO Ver de si no encuentra no diga que borró.
+			getPacienteBO().validarPacientebyDocumento(p);//TODO Ver de si no encuentra no diga que borró.
 			borradoOk(p);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -75,7 +86,7 @@ public class Handler{
 	public List<Paciente> ObtenerTodosPacientes() {
 		List<Paciente> listapacientes = null;
 		try {
-			listapacientes=getBO().getAllPacientes();
+			listapacientes=getPacienteBO().getAllPacientes();
 		} catch (BusinessException e) {
 			handleBusinessException(e);
 		}
@@ -84,7 +95,7 @@ public class Handler{
 	
 	public Paciente buscarPaciente(Paciente p) {
 		try {
-			p=getBO().validarPacienteporBusqueda(p);
+			p=getPacienteBO().validarPacienteporBusqueda(p);
 			if (p.getNombre()==null) {
 				actualizadoError();
 			}
@@ -96,7 +107,7 @@ public class Handler{
 	
 	public void actualizarPaciente(Paciente p) {
 		try {
-			getBO().updatePaciente(p);
+			getPacienteBO().updatePaciente(p);
 			actualizadoOk(p);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -106,8 +117,8 @@ public class Handler{
 
 	public void ingresarMedicoCompleto(Medico m) {
 		try {
-			getBO().ValidarMedicoNuevo(m);// estos dos metodos al handler y que no corran desde el bo, sino del handler como ingresook
-			ingresoOk(m);
+			getMedicoBO().ValidarMedicoNuevo(m);// estos dos metodos al handler y que no corran desde el bo, sino del handler como ingresook
+			ingresoOk("Se ingreso Medico correctamente.");
 		} catch (BusinessException e) {
 			handleBusinessException(e);
 		}
@@ -115,7 +126,7 @@ public class Handler{
 	
 	public void borrarMedicoByDocumento(Medico m) {
 		try {
-			getBO().validarMedicobyDocumento(m);
+			getMedicoBO().validarMedicobyDocumento(m);
 			borradoOk(m);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -125,7 +136,7 @@ public class Handler{
 	public List<Medico> obtenerTodosMedicos() {
 		List<Medico> listamedicos = null;
 		try {
-			listamedicos=getBO().getAllMedicos();
+			listamedicos=getMedicoBO().getAllMedicos();
 		} catch (BusinessException e) {
 			handleBusinessException(e);
 		}
@@ -134,7 +145,7 @@ public class Handler{
 	
 	public Medico buscarMedico(Medico m) {
 		try {
-			m=getBO().validarMedicoporBusqueda(m);
+			m=getMedicoBO().validarMedicoporBusqueda(m);
 			if (m.getNombre()==null) {
 				actualizadoError();
 			}
@@ -146,7 +157,7 @@ public class Handler{
 	
 	public void actualizarMedico(Medico m) {
 		try {
-			getBO().updateMedico(m);
+			getMedicoBO().updateMedico(m);
 			actualizadoOk(m);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -155,7 +166,7 @@ public class Handler{
 	
 	public void crearTurnos(Turno turno) {
 		try {
-			getBO().CrearTurnosMedico(turno);
+			getTrunoBO().CrearTurnosMedico(turno);
 			actualizadoOk(turno);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -165,7 +176,7 @@ public class Handler{
 	public List <Date> buscarTurnosLibres(Turno buscaturno) {
 		List<Date> turnoslibres = null;
 		try {
-			turnoslibres=getBO().BuscarTurnosLibres(buscaturno);
+			turnoslibres=getTrunoBO().BuscarTurnosLibres(buscaturno);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
 		}
@@ -175,7 +186,7 @@ public class Handler{
 	
 	public void reservarTurnolibre(Turno turno) {
 		try {
-			getBO().ReservaTurno(turno);
+			getTrunoBO().ReservaTurno(turno);
 			turnoIngresadoOk(turno);
 		} catch (BusinessException e){
 			handleBusinessException(e);
@@ -189,13 +200,31 @@ public class Handler{
 		this.miFrame = miFrame;
 		
 	}
-	public void setBO(BO miBO) {
-		System.out.println("Agregando BO a Handler");
-		this.miBO = miBO;
+	public void setMedicoBO(MedicoBO medicoBO) {
+		System.out.println("Agregando BO Medico a Handler");
+		this.medicoBO = medicoBO;
 	}
 	
-	public BO getBO() {
-		return miBO;
+	public void setPacienteBO(PacienteBO pacienteBO) {
+		System.out.println("Agregando BO Paciente a Handler");
+		this.pacienteBO = pacienteBO;
+	}
+	
+	public void setTurnoBO(TurnoBO turnoBO) {
+		System.out.println("Agregando BO Turno a Handler");
+		this.turnoBO = turnoBO;
+	}
+	
+	public MedicoBO getMedicoBO() {
+		return medicoBO;
+	}
+	
+	public PacienteBO getPacienteBO() {
+		return pacienteBO;
+	}
+	
+	public TurnoBO getTrunoBO() {
+		return turnoBO;
 	}
 
 	public MainFrame getMainFrame() {
@@ -211,11 +240,8 @@ public class Handler{
 
 	
 	// Jpane informacion
-	protected void ingresoOk(Paciente p) {
-		JOptionPane.showMessageDialog(null, "Se ingreso Paciente correctamente.");
-	}
-	protected void ingresoOk(Medico m) {
-		JOptionPane.showMessageDialog(null, "Se ingreso Medico correctamente.");
+	protected void ingresoOk(String string) {
+		JOptionPane.showMessageDialog(null, string);
 	}
 	protected void borradoOk(Paciente p) {
 		JOptionPane.showMessageDialog(null, "Se borro Paciente con documento = " + p.getDocumento());
