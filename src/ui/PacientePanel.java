@@ -10,27 +10,40 @@ import produccion.Handler;
 public abstract class PacientePanel extends AbstractPanel {
 
 
+	public PacientePanel(Handler handler) {
+		super(handler);
+	}
 	private static final long serialVersionUID = 1L;
 
-	public static JTable getPacienteJTable (Handler handler) {
-		List<Paciente> pacienteList  = handler.obtenerPacientes();
+	@Override
+	public JTable getCustomJTable () {
+		List<Paciente> pacienteList  = getHandler().obtenerPacientes();
 		JTable jtable = new JTable(new PacienteTableModel(pacienteList));
 		return jtable;
 	}
-	protected static void buttonDeleteAction(Handler handler, String matricula) {
+	@Override
+	public void buttonDeleteAction(String matricula) {
 		Paciente p= new Paciente(matricula);
-		handler.borrarPacienteByDocumento(p);
+		getHandler().borrarPacienteByDocumento(p);
 	}
-	protected static void buttonCreatePaciente(Handler handler,String documento, String nombre, String apellido, String email) {
+	@Override
+	public void buttonCreateAction(String documento, String nombre, String apellido, String email) {
 		Paciente p= new Paciente(documento, nombre, apellido, email);
-		handler.IngresarPacienteCompleto(p);
+		getHandler().IngresarPacienteCompleto(p);
 	}
-	protected static Paciente buttonSearchPaciente(Handler handler,String documento){
+
+	protected Paciente buttonSearchPac(String documento){
 		Paciente p= new Paciente(documento);
-		return handler.buscarPaciente(p);
+		return getHandler().buscarPaciente(p);
 	}
-	protected static void buttonUpdatePaciente(Handler handler,String documento, String nombre, String apellido, String email) {
+	protected  void buttonUpdatePac(String documento, String nombre, String apellido, String email) {
 		Paciente p= new Paciente(documento, nombre, apellido, email);
-		handler.IngresarPacienteCompleto(p);
+		getHandler().IngresarPacienteCompleto(p);
+	}
+	protected abstract void setAction();
+	
+	@Override
+	public void buttonCreateAction(String documento, String consultorio, String nombre, String apellido,
+			String especialidad) {	
 	}
 }

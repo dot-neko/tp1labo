@@ -8,13 +8,14 @@ import javax.swing.JButton;
 
 import produccion.Handler;
 
-public class AltaPanelPac extends PacientePanel{
+public class AltaPanelMed extends MedicoPanel{
 	private TextboxItem txtDocumento;
+	private TextboxItem txtConsultorio;
 	private TextboxItem txtNombre;
 	private TextboxItem txtApellido;
-	private TextboxItem txtEmail;
+	private TextboxItem txtEspecialidad;
 	private JButton botonEnviar;
-	
+
 
 	/**
 	 * 
@@ -22,33 +23,34 @@ public class AltaPanelPac extends PacientePanel{
 
 	private static final long serialVersionUID = 1L;
 
-	public AltaPanelPac(Handler handler){
+	public AltaPanelMed(Handler handler){
 		super(handler);
-		
-		this.add(txtDocumento 	= new TextboxItem("Documento", 15));		
+
+		this.add(txtDocumento 	= new TextboxItem("Matricula", 15));		
 		this.add(txtNombre 		= new TextboxItem("Nombre", 20));
 		this.add(txtApellido 	= new TextboxItem("Apellido", 20));
-		
+
 		botonEnviar= new JButton("Enviar");
 	}
-	
+	@Override
 	public void setAction() {
-		this.add(txtEmail = new TextboxItem("Email", 25));
-		
+		this.add(txtConsultorio	= new TextboxItem("Consultorio", 20));
+		this.add(txtEspecialidad= new TextboxItem("Especialidad", 20));
+
 		botonEnviar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent actionEvent) { 
 				String documento= getTxtDocumento();
+				String consultorio= getTxtConsultorio();
 				String nombre= getTxtNombre();
 				String apellido= getTxtApellido();
-				String email = getTxtEmail();
-				buttonCreateAction(documento,nombre,apellido,email);
+				String especialidad = getTxtEspecialidad();
+				buttonCreateAction(documento, consultorio, nombre, apellido, especialidad);
 			}
 		});
 		this.add(botonEnviar);
 		this.add(agregarSalirButton());
 	}
-
 
 	//getters
 	public String getTxtDocumento() {
@@ -63,11 +65,13 @@ public class AltaPanelPac extends PacientePanel{
 		return txtApellido.getTxtField().getText();
 	}
 
-	public String getTxtEmail() {
-		return txtEmail.getTxtField().getText();
+	public String getTxtConsultorio() {
+		return txtConsultorio.getTxtField().getText();
 	}
 
-
+	public String getTxtEspecialidad() {
+		return txtEspecialidad.getTxtField().getText();
+	}
 
 }
 

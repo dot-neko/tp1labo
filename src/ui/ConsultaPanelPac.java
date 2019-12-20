@@ -7,11 +7,11 @@ import produccion.Handler;
 
 
 
-public class ConsultaPanelMed extends MedicoPanel {
+public class ConsultaPanelPac extends PacientePanel {
 	private static final long serialVersionUID = 1L;
 
 	
-	public ConsultaPanelMed(Handler handler){
+	public ConsultaPanelPac(Handler handler){
 		super(handler);
 	}
 	@Override

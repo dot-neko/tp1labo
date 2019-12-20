@@ -13,7 +13,7 @@ public class TableManager {
 		Connection conn = DBManager.getInstance().connect(); 		//Declaro conexion
 		
 		//String a ejecutar
-		String sql = "CREATE TABLE IF NOT EXISTS pacientes (paciente_id integer PRIMARY KEY,\n"
+		String sql = "CREATE TABLE IF NOT EXISTS pacientes (paciente_id integer NOT NULL,\n"
                 + "	nombre text NOT NULL,\n"
                 + "	apellido text NOT NULL,\n"
                 + "	email text NOT NULL);";
@@ -73,7 +73,7 @@ public class TableManager {
 		Connection conn = DBManager.getInstance().connect(); 		//Declaro conexion
 		
 		//String a ejecutar
-		String sql = "CREATE TABLE IF NOT EXISTS medico (medico_id integer PRIMARY KEY ,\n"
+		String sql = "CREATE TABLE IF NOT EXISTS medico (medico_id integer NOT NULL ,\n"
                 + "	consultorio integer NOT NULL,\n"
                 + "	nombre text NOT NULL,\n"
                 + "	apellido text NOT NULL,\n"
@@ -138,13 +138,7 @@ public class TableManager {
                 + "	documento_paciente integer,\n"
                 + "	consultorio integer,"
                 + " reservado integer DEFAULT 0,"
-                + " UNIQUE(documento_medico,fecha_hora)"
-                
-                + " FOREIGN KEY (documento_medico)\n" + 
-                "       REFERENCES medico (medico_id)"
-                + " FOREIGN KEY (documento_paciente)\n" + 
-                "       REFERENCES pacientes (paciente_id)"
-                + " );";
+                + " UNIQUE(documento_medico,fecha_hora) );";
 		
 		try {
 			Statement s = conn.createStatement();		//Intenta ejecutar un statement

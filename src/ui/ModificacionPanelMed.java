@@ -6,18 +6,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-import entidades.Paciente;
+import entidades.Medico;
 import produccion.Handler;
 
-public class ModificacionPanelPac extends PacientePanel {
+public class ModificacionPanelMed extends MedicoPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private TextboxItem txtConsultorioInput;
 	private TextboxItem txtNombreInput;
 	private TextboxItem txtApellidoInput;
-	private TextboxItem txtEmailInput;
+	private TextboxItem txtEspecialidadInput;
 
 	private TextboxItem txtDocumentoSearch;
 	private JButton botonBuscar;
@@ -27,13 +28,13 @@ public class ModificacionPanelPac extends PacientePanel {
 
 
 
-	public ModificacionPanelPac(Handler handler) {
+	public ModificacionPanelMed(Handler handler) {
 		super(handler);
 		botonBuscar = new JButton("Buscar");
 		botonActualizar = new JButton("Actualizar");
 
 
-		this.add(txtDocumentoSearch 	= new TextboxItem("Documento", 15));	
+		this.add(txtDocumentoSearch 	= new TextboxItem("Documento/Matricula", 15));	
 		this.add(botonBuscar);
 
 
@@ -44,43 +45,49 @@ public class ModificacionPanelPac extends PacientePanel {
 	}
 	
 	public void setAction() {
-		this.add(txtEmailInput = new TextboxItem("Email", 25));
+		this.add(txtConsultorioInput = new TextboxItem("Consultorio", 15));
+		this.add(txtEspecialidadInput = new TextboxItem("Especialidad", 20));	
 		botonBuscar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				//Voy a buscar
 				String documento = getTxtDocumento().getText();
-				Paciente p = buttonSearchPac(documento);
+				Medico m = buttonSearchMed(documento);
 
 				//Pego los valores
-				getTxtNombreInput().setText(p.getNombre());
-				getTxtApellidoInput().setText(p.getApellido());
-				getTxtDocumento().setText(String.valueOf(p.getDocumento()));
-				getTxtEmailInput().setText(p.getEmail());
+				getTxtNombreInput().setText(m.getNombre());
+				getTxtConsultorioInput().setText(m.getConsultorio());
+				getTxtApellidoInput().setText(m.getApellido());
+				getTxtDocumento().setText(String.valueOf(m.getDocumento()));
+				getTxtEspecialidadInput().setText(m.getEspecialidad());
 			}
 		});
-		
+	
 		botonActualizar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				String documento= getTxtDocumento().getText();
+				String consultorio= getTxtConsultorioInput().getText();
 				String nombre= getTxtNombreInput().getText();
 				String apellido= getTxtApellidoInput().getText();
-				String email = getTxtEmailInput().getText();
-				buttonUpdatePac(documento, nombre, apellido, email);
+				String especalidad = getTxtEspecialidadInput().getText();
+				buttonUpdateMedico(documento,consultorio, nombre, apellido,especalidad);
 				
 				//Set null una vez actualizado
 				getTxtNombreInput().setText(null);
+				getTxtConsultorioInput().setText(null);
 				getTxtApellidoInput().setText(null);
 				getTxtDocumento().setText(null);
-				getTxtEmailInput().setText(null);
+				getTxtEspecialidadInput().setText(null);
 			}
 		});
 
 		this.add(botonActualizar);
 		this.add(agregarSalirButton());
 	}
-	
+
+
+
 	public JTextField getTxtDocumento() {
 		return txtDocumentoSearch.getTxtField();
 	}
@@ -92,8 +99,15 @@ public class ModificacionPanelPac extends PacientePanel {
 	public JTextField getTxtApellidoInput() {
 		return txtApellidoInput.getTxtField();
 	}
-	
-	public JTextField getTxtEmailInput() {
-		return txtEmailInput.getTxtField();
+
+	public JTextField getTxtConsultorioInput() {
+		return txtConsultorioInput.getTxtField();
 	}
+
+
+	public JTextField getTxtEspecialidadInput() {
+		return txtEspecialidadInput.getTxtField();
+	}
+
+
 }

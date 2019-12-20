@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 
 import entidades.Medico;
 import entidades.Turno;
@@ -30,7 +31,6 @@ public class CrearTurnosPanel extends AbstractPanel {
 	private JComboBox<DateItem> cajacombofecha;
 
 	private JButton botonEnviar;
-	private Handler handler;
 	/**
 	 * 
 	 */
@@ -38,8 +38,7 @@ public class CrearTurnosPanel extends AbstractPanel {
 	private static final long serialVersionUID = 1L;
 
 	public CrearTurnosPanel(Handler handler) {
-		super();
-		this.handler=handler;
+		super(handler);
 		listadomedicos = getHandler().obtenerTodosMedicos();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -111,7 +110,7 @@ public class CrearTurnosPanel extends AbstractPanel {
 	}
 
 	public Handler getHandler() {
-		return handler;
+		return super.getHandler();
 	}
 
 	public JComboBox<MedicoItem> getComboMedicos() {
@@ -167,6 +166,35 @@ public class CrearTurnosPanel extends AbstractPanel {
 
 	public void setReservado(int reservado) {
 		this.reservado = String.valueOf(reservado);
+	}
+
+
+	@Override
+	public void buttonDeleteAction(String matricula) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void buttonCreateAction(String documento, String nombre, String apellido, String email) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void buttonCreateAction(String documento, String consultorio, String nombre, String apellido,
+			String especialidad) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public JTable getCustomJTable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

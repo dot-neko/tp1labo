@@ -137,14 +137,15 @@ public class MedicoDAODBImpl implements MedicoDAO {
 
 	@Override
 	public void updateMedicoByDocumento(int documento, int consultorio, String nombre, String apellido, String especialidad) throws BusinessException{
-		String sql = "UPDATE medico set consultorio = ?, nombre = ?, apellido = ?, especialidad = ? WHERE medico_id = ?";
+		String sql = "UPDATE medico set medico_id= ?, consultorio = ?, nombre = ?, apellido = ?, especialidad = ? WHERE medico_id = ? ";
 		Connection c = DBManager.getInstance().connect();
 		try(PreparedStatement pstmt= c.prepareStatement(sql)) {
-			pstmt.setInt(1, consultorio);
+			pstmt.setInt(1,documento);
+			pstmt.setInt(2, consultorio);
 			pstmt.setString(3, nombre);
-			pstmt.setString(3, apellido);
-			pstmt.setString(4, especialidad);
-			pstmt.setInt(5,documento);
+			pstmt.setString(4, apellido);
+			pstmt.setString(5, especialidad);
+			pstmt.setInt(6,documento);
 			pstmt.executeUpdate();
 			c.commit();
 		} catch (SQLException e) {

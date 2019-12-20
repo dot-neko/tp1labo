@@ -9,18 +9,17 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Date;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import entidades.Medico;
 import entidades.Paciente;
 import entidades.Turno;
 import produccion.Handler;
 
-public class AsignarTurnosPanel extends JPanel{
+public class AsignarTurnosPanel extends AbstractPanel{
 	//usar flowlayout--boxlayout
 
 	List <Medico> listadomedicos;
@@ -28,7 +27,6 @@ public class AsignarTurnosPanel extends JPanel{
 	List <Date> listadodate;
 
 	private String fecha;
-	private String reservado;
 	private JComboBox<PacienteItem> comboPaciente;
 	private JComboBox<MedicoItem> comboMedico;
 	private JComboBox<DateTimeItem> comboFecha;
@@ -37,7 +35,6 @@ public class AsignarTurnosPanel extends JPanel{
 
 	private JButton botonAgendar;
 	private JButton botonEnviar;
-	private Handler handler;
 
 	/**
 	 * 
@@ -48,10 +45,10 @@ public class AsignarTurnosPanel extends JPanel{
 
 	public AsignarTurnosPanel(Handler handler) 
 	{
-		this.handler=handler;
+		super(handler);
 		listadomedicos=getHandler().obtenerTodosMedicos();
 		listadopacientes=getHandler().obtenerPacientes();
-		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+		
 		comboFecha = new JComboBox<DateTimeItem>();
 		comboMedico= new JComboBox<MedicoItem>();//Instanciando ComboBox
 		comboPaciente= new JComboBox<PacienteItem>();//Instanciando ComboBox
@@ -101,8 +98,9 @@ public class AsignarTurnosPanel extends JPanel{
 
 
 		//PACIENTES
-		this.add(new JLabel("Buscar Paciente : "));
 
+		this.add(new JLabel("Buscar Paciente : "));
+		
 
 		comboPaciente.setPreferredSize(new Dimension(200,25));
 
@@ -122,12 +120,12 @@ public class AsignarTurnosPanel extends JPanel{
 		comboPaciente.setSelectedIndex(0);								//primero de la lista
 		comboPaciente.setMaximumSize(comboPaciente.getPreferredSize());
 
-		setReservado(1);
+		
 		botonAgendar= new JButton("Agendar");
 		botonAgendar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) { 
 				String fechaHora =getFecha();
-				String reservado = getReservado();
+				String reservado = "1";
 				Medico medico = getMedico();
 				Paciente paciente =getPaciente();
 				Turno turno = new Turno(fechaHora, reservado, medico, paciente);
@@ -135,6 +133,8 @@ public class AsignarTurnosPanel extends JPanel{
 			}
 		});
 		this.add(botonAgendar);
+		this.add(agregarSalirButton());
+		
 
 	}
 
@@ -142,10 +142,6 @@ public class AsignarTurnosPanel extends JPanel{
 	//botones
 	public JButton getButtonEnviar(){
 		return botonEnviar;
-	}
-
-	public Handler getHandler() {
-		return handler;
 	}
 
 	protected JComboBox<MedicoItem> getComboMedicos() {
@@ -171,12 +167,6 @@ public class AsignarTurnosPanel extends JPanel{
 		this.fecha = turnohora;
 	}
 
-	private String getReservado() {
-		return reservado;
-	}
-	private void setReservado(int i) {
-		this.reservado = String.valueOf(reservado);
-	}
 
 	private Medico getMedico() {
 		return medico;
@@ -192,6 +182,35 @@ public class AsignarTurnosPanel extends JPanel{
 
 	private void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
+	}
+
+
+	@Override
+	public void buttonDeleteAction(String matricula) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void buttonCreateAction(String documento, String nombre, String apellido, String email) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void buttonCreateAction(String documento, String consultorio, String nombre, String apellido,
+			String especialidad) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public JTable getCustomJTable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

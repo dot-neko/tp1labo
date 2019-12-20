@@ -64,11 +64,11 @@ public class Handler{
 		miFrame.revalidate();
 		miFrame.repaint();
 	}
+
 	
-	public void setCustomJTable(ConsultaPanel panel, String title) {
+	public void executeSalirPanel() {
 		miFrame.remove(miFrame.getContentPane());
-		miFrame.setContentPane(panel);
-		miFrame.setTitle(title);
+		miFrame.setContentPane(new JPanel());
 		miFrame.revalidate();
 		miFrame.repaint();
 	}
@@ -279,6 +279,8 @@ public class Handler{
 	protected void actualizadoError() {
 		JOptionPane.showMessageDialog(null, "No se encontro nada con el documento ingresado");
 	}
+
+	
 
 	
 	

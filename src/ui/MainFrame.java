@@ -41,9 +41,8 @@ public class MainFrame extends JFrame{
         altapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				PacientePanel pp = null;
-				AltaPanel panel = new AltaPanel(miHandler);
-				panel.setActionAlta(pp);
+				AltaPanelPac panel = new AltaPanelPac(miHandler);
+				panel.setAction();
 				miHandler.setCustomJPanel(panel,"Alta Pacientes");				
 			}
 		});
@@ -54,10 +53,9 @@ public class MainFrame extends JFrame{
         bajapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				PacientePanel pp = null;
 				String title ="Baja Pacientes";
-				BajaPanel bajapanelpac = new BajaPanel(miHandler);
-				bajapanelpac.setAction(pp);
+				BajaPanelPac bajapanelpac = new BajaPanelPac(miHandler);
+				bajapanelpac.setAction();
 				miHandler.setCustomJPanel(bajapanelpac,title);		
 			}
 		});
@@ -67,11 +65,9 @@ public class MainFrame extends JFrame{
         modificacionpacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				PacientePanel pp = null;
 				String title ="Modificar Pacientes";
-				ModificacionPanel panel = new ModificacionPanel(miHandler);
-				panel.setActionSearch(pp);
-				panel.setActionUpdate(pp);
+				ModificacionPanelPac panel = new ModificacionPanelPac(miHandler);
+				panel.setAction();
 				miHandler.setCustomJPanel(panel,title);
 			}
 		});
@@ -82,11 +78,10 @@ public class MainFrame extends JFrame{
         consultapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				PacientePanel pp = null;
 				String title = "Consulta Pacientes";
-				ConsultaPanel consultapanel = new ConsultaPanel(miHandler);
-				consultapanel.setAction(pp);
-				miHandler.setCustomJTable(consultapanel, title);
+				ConsultaPanelPac consultapanel = new ConsultaPanelPac(miHandler);
+				consultapanel.setAction();
+				miHandler.setCustomJPanel(consultapanel, title);
 			}
 		});
         
@@ -101,10 +96,9 @@ public class MainFrame extends JFrame{
         altamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				MedicoPanel mp = null;
 				String title ="Alta Medicos";
-				AltaPanel panel = new AltaPanel(miHandler);
-				panel.setActionAlta(mp);
+				AltaPanelMed panel = new AltaPanelMed(miHandler);
+				panel.setAction();
 				miHandler.setCustomJPanel(panel,title);				
 			}
 		});
@@ -116,10 +110,9 @@ public class MainFrame extends JFrame{
         bajamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				MedicoPanel mp = null;
 				String title ="Baja Medicos";
-				BajaPanel bajapanelmed = new BajaPanel(miHandler);
-				bajapanelmed.setAction(mp);
+				BajaPanelMed bajapanelmed = new BajaPanelMed(miHandler);
+				bajapanelmed.setAction();
 				miHandler.setCustomJPanel(bajapanelmed,title);				
 			}
 		});
@@ -129,11 +122,9 @@ public class MainFrame extends JFrame{
         modificacionmedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				MedicoPanel mp = null;
 				String title ="Modificar Medico";
-				ModificacionPanel panel = new ModificacionPanel(miHandler);
-				panel.setActionSearch(mp);
-				panel.setActionUpdate(mp);
+				ModificacionPanelMed panel = new ModificacionPanelMed(miHandler);
+				panel.setAction();
 				miHandler.setCustomJPanel(panel,title);
 			}
 		});
@@ -144,11 +135,10 @@ public class MainFrame extends JFrame{
         consultamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				MedicoPanel mp = null;
 				String title = "Consulta Medicos";
-				ConsultaPanel consultapanel = new ConsultaPanel(miHandler);
-				consultapanel.setAction(mp);
-				miHandler.setCustomJTable(consultapanel, title);
+				ConsultaPanelMed consultapanel = new ConsultaPanelMed(miHandler);
+				consultapanel.setAction();
+				miHandler.setCustomJPanel(consultapanel, title);
 			}
 		});
         
@@ -181,7 +171,7 @@ public class MainFrame extends JFrame{
 		
 		//Parametros JFrame
 		
-		this.setSize(300,  300);
+		this.setSize(600,  400);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//salir al cierre
 	}
