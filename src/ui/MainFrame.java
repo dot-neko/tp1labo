@@ -22,33 +22,43 @@ public class MainFrame extends JFrame{
 	private JMenuItem modificacionmedicos;
 	private JMenuItem asignarturnos;
 	private AbstractButton crearturnomedico;
+
+	
  
 	public MainFrame() {
 		
 		//Frame principal
-		
 	    menubar=new JMenuBar();
 	    this.setJMenuBar(menubar);
 		//JmenuBar
         pacientes=new JMenu("Pacientes");
         menubar.add(pacientes);
         
+
         //Panel Alta
         altapacientes=new JMenuItem("Alta");
         pacientes.add(altapacientes);
         altapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new AltaPanelPaciente(miHandler),"Alta Pacientes");
+				PacientePanel pp = null;
+				AltaPanel panel = new AltaPanel(miHandler);
+				panel.setActionAlta(pp);
+				miHandler.setCustomJPanel(panel,"Alta Pacientes");				
 			}
 		});
+        
         //Panel Baja
         bajapacientes=new JMenuItem("Baja");
         pacientes.add(bajapacientes);
         bajapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new BajaPanelPaciente(miHandler),"Baja Pacientes");
+				PacientePanel pp = null;
+				String title ="Baja Pacientes";
+				BajaPanel bajapanelpac = new BajaPanel(miHandler);
+				bajapanelpac.setAction(pp);
+				miHandler.setCustomJPanel(bajapanelpac,title);		
 			}
 		});
         //Panel Modificacion
@@ -57,18 +67,21 @@ public class MainFrame extends JFrame{
         modificacionpacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new ModificacionPanelPaciente(miHandler),"Modificación Pacientes");
+				miHandler.setCustomJPanel(new ModificacionPanel(miHandler),"Modificación Pacientes");
 			}
 		});
         
-        //Panel Consulta
+      //Panel Consulta
         consultapacientes=new JMenuItem("Consulta");
         pacientes.add(consultapacientes);
         consultapacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new ConsultaPanelPaciente(miHandler),"Consultar Pacientes");
-				
+				PacientePanel pp = null;
+				String title = "Consulta Pacientes";
+				ConsultaPanel consultapanel = new ConsultaPanel(miHandler);
+				consultapanel.setAction(pp);
+				miHandler.setCustomJTable(consultapanel, title);
 			}
 		});
         
@@ -77,21 +90,32 @@ public class MainFrame extends JFrame{
         
         
       //Panel Alta Medicos
+        
         altamedicos=new JMenuItem("Alta");
         doctores.add(altamedicos);
         altamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new AltaPanelMedico(miHandler),"Alta Medicos");
+				MedicoPanel mp = null;
+				String title ="Alta Medicos";
+				AltaPanel panel = new AltaPanel(miHandler);
+				panel.setActionAlta(mp);
+				miHandler.setCustomJPanel(panel,title);				
 			}
 		});
-        //Panel Baja
+        
+        
+        //Panel Baja Medicos
         bajamedicos=new JMenuItem("Baja");
         doctores.add(bajamedicos);
         bajamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new BajaPanelMedico(miHandler),"Baja Medicos");
+				MedicoPanel mp = null;
+				String title ="Baja Medicos";
+				BajaPanel bajapanelmed = new BajaPanel(miHandler);
+				bajapanelmed.setAction(mp);
+				miHandler.setCustomJPanel(bajapanelmed,title);				
 			}
 		});
         //Panel Modificacion
@@ -100,18 +124,21 @@ public class MainFrame extends JFrame{
         modificacionmedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new ModificacionPanelMedico(miHandler),"Modificar Medicos");
+				miHandler.setCustomJPanel(new ModificacionPanel(miHandler),"Modificar Medicos");
 			}
 		});
         
-        //Panel Consulta
+      //Panel Consulta
         consultamedicos=new JMenuItem("Consulta");
         doctores.add(consultamedicos);
         consultamedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new ConsultaPanelMedico(miHandler),"Consulta Medicos");
-				
+				MedicoPanel mp = null;
+				String title = "Consulta Medicos";
+				ConsultaPanel consultapanel = new ConsultaPanel(miHandler);
+				consultapanel.setAction(mp);
+				miHandler.setCustomJTable(consultapanel, title);
 			}
 		});
         
@@ -157,8 +184,4 @@ public class MainFrame extends JFrame{
 		this.miHandler = miHandler;
 		
 	}
-
-	
-	//METODOS AUXILIARES
-	
 }

@@ -50,7 +50,7 @@ public class AsignarTurnosPanel extends JPanel{
 	{
 		this.handler=handler;
 		listadomedicos=getHandler().obtenerTodosMedicos();
-		listadopacientes=getHandler().ObtenerTodosPacientes();
+		listadopacientes=getHandler().obtenerPacientes();
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 		comboFecha = new JComboBox<DateTimeItem>();
 		comboMedico= new JComboBox<MedicoItem>();//Instanciando ComboBox

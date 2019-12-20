@@ -11,7 +11,7 @@ public class MedicoTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<Medico> medico_list;
+	private List<Medico> medicoList;
 	private static final int MEDICODNI=0;				//static garantiza que el garbagecollector no toque la variable- final no cambiar el valor
 	private static final int MEDICOCONSULTORIO=1;			//con este alias evito forzar el orden de los elementos en la tabla.
 	private static final int MEDICONOMBRE=2;
@@ -21,11 +21,11 @@ public class MedicoTableModel extends AbstractTableModel {
 	
 	public MedicoTableModel(List<Medico> listadoMedicos) {
 		
-		medico_list = listadoMedicos;
+		medicoList = listadoMedicos;
 	}
-
+	@Override
 	public Object getValueAt(int row, int col){
-		Medico medico= medico_list.get(row);
+		Medico medico= medicoList.get(row);
 		switch(col){
 			case MEDICODNI: return medico.getDocumento();
 			case MEDICOCONSULTORIO: return medico.getConsultorio();
@@ -36,20 +36,31 @@ public class MedicoTableModel extends AbstractTableModel {
 		}
 		return null;
 	}
-	
+	@Override
 	public String getColumnName(int col){		//Header de la columna
 		return TITLES [col];
 	}
-	
+	@Override
 	public int getColumnCount(){
 		return TITLES.length;
 	}
-	
+	@Override
 	public int getRowCount(){
-		if (medico_list != null){
-			return medico_list.size();
+		if (medicoList != null){
+			return medicoList.size();
 		}else{
 			return 0;
 		}
 	}
+	/*@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex)
+	{
+	    return true;
+	}*/
+	public void medicoList(List<Medico> medicoList) {
+		this.medicoList = medicoList;
+	}
+	
+
+	
 }

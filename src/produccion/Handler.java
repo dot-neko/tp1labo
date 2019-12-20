@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import dao.MedicoDAO;
 import dao.PacienteDAO;
@@ -64,6 +65,19 @@ public class Handler{
 		miFrame.repaint();
 	}
 	
+	public void setCustomJTable(ConsultaPanel panel, String title) {
+		miFrame.remove(miFrame.getContentPane());
+		miFrame.setContentPane(panel);
+		miFrame.setTitle(title);
+		miFrame.revalidate();
+		miFrame.repaint();
+	}
+
+	public JTable getPacienteJTable () {
+		List<Paciente> pacienteList  = this.obtenerPacientes();
+		JTable jtable = new JTable(new PacienteTableModel(pacienteList));
+		return jtable;
+	}
 	
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
@@ -83,7 +97,7 @@ public class Handler{
 		}
 	}
 	
-	public List<Paciente> ObtenerTodosPacientes() {
+	public List<Paciente> obtenerPacientes() {
 		List<Paciente> listapacientes = null;
 		try {
 			listapacientes=getPacienteBO().getAllPacientes();
@@ -266,6 +280,7 @@ public class Handler{
 		JOptionPane.showMessageDialog(null, "No se encontro nada con el documento ingresado");
 	}
 
+	
 	
 
 	
