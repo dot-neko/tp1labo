@@ -102,7 +102,7 @@ public class ModificacionPanel extends AbstractPanel {
 				getTxtNombreInput().setText(p.getNombre());
 				getTxtApellidoInput().setText(p.getApellido());
 				getTxtDocumento().setText(String.valueOf(p.getDocumento()));
-				getTxtEspecialidadInput().setText(p.getEmail());
+				getTxtEmailInput().setText(p.getEmail());
 			}
 		});
 	}

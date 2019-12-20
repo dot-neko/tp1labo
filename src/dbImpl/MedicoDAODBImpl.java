@@ -1,9 +1,9 @@
 package dbImpl;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +22,12 @@ public class MedicoDAODBImpl implements MedicoDAO {
 	}
 
 	@Override
-	public void deletemedicoByDocumento(String documento) throws BusinessException {
-		String sql = "DELETE FROM medico WHERE medico_id = '" + documento + "'";
+	public void deletemedicoByDocumento(int documento) throws BusinessException {
+		String sql = "DELETE FROM medico WHERE medico_id = ?";
 		Connection c = DBManager.getInstance().connect();
-		try {
-			Statement s = c.createStatement();
-			s.executeUpdate(sql);
-			c.commit();
+		try (PreparedStatement pstmt= c.prepareStatement(sql)){
+			pstmt.setInt(1,documento);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -52,10 +51,8 @@ public class MedicoDAODBImpl implements MedicoDAO {
 		List<Medico> respuesta = new ArrayList<Medico>();
 		String sql = "SELECT * FROM medico";
 		Connection c = DBManager.getInstance().connect();
-		try {
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery(sql);
-			c.commit();
+		try (PreparedStatement pstmt= c.prepareStatement(sql)){
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				int documento =  rs.getInt("medico_id");
 				int consultorio =rs.getInt("consultorio");
@@ -78,14 +75,13 @@ public class MedicoDAODBImpl implements MedicoDAO {
 	}
 
 	@Override
-	public Medico getMedicoByDocumento(String documento) throws BusinessException {
+	public Medico getMedicoByDocumento(int documento) throws BusinessException {
 		Medico retorna = null;
-		String sql = "SELECT * FROM medico WHERE medico_id = '" + documento + "'";
+		String sql = "SELECT * FROM medico WHERE medico_id = ?";
 		Connection c = DBManager.getInstance().connect();
-		try {
-			Statement s = c.createStatement();
-			ResultSet rs = s.executeQuery(sql);
-			
+		try (PreparedStatement pstmt= c.prepareStatement(sql)){
+			pstmt.setInt(1,documento);
+			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				int consultorio = rs.getInt("consultorio");
 				String nombre = rs.getString("nombre");
@@ -110,13 +106,16 @@ public class MedicoDAODBImpl implements MedicoDAO {
 
 
 	@Override
-	public void insertarMedico(Medico m) throws BusinessException {
-		String sql = "INSERT INTO medico (medico_id, consultorio, nombre, apellido, especialidad) VALUES ('" + m.getDocumento() + "', '" + m.getConsultorio() + "', '" + m.getNombre()+ "', '" + m.getApellido() + "', '" + m.getEspecialidad()+ "')";
+	public void insertarMedico(int documento, int consultorio, String nombre, String apellido, String especialidad) throws BusinessException {
+		String sql = "INSERT INTO medico (medico_id, consultorio, nombre, apellido, especialidad) VALUES (?,?,?,?,?)";
 		Connection c = DBManager.getInstance().connect();
-		try {
-			Statement s = c.createStatement();
-			s.executeUpdate(sql);
-			c.commit();
+		try(PreparedStatement pstmt= c.prepareStatement(sql)) {
+			pstmt.setInt(1,documento);
+			pstmt.setInt(2, consultorio);
+			pstmt.setString(3, nombre);
+			pstmt.setString(4, apellido);
+			pstmt.setString(5, especialidad);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -135,13 +134,16 @@ public class MedicoDAODBImpl implements MedicoDAO {
 	}
 
 	@Override
-	public void updateMedicoByDocumento(Medico m) throws BusinessException{
-		String sql = "UPDATE medico set consultorio = '" + m.getConsultorio() + "', nombre = '" + m.getNombre() + "', apellido = '" + m.getApellido() + "', especialidad = '" +m.getEspecialidad() + "' WHERE medico_id = '" + m.getDocumento() + "'";
+	public void updateMedicoByDocumento(int documento, int consultorio, String nombre, String apellido, String especialidad) throws BusinessException{
+		String sql = "UPDATE medico set consultorio = ?, nombre = ?, apellido = ?, especialidad = ? WHERE medico_id = ?";
 		Connection c = DBManager.getInstance().connect();
-		try {
-			Statement s = c.createStatement();
-			s.executeUpdate(sql);
-			c.commit();
+		try(PreparedStatement pstmt= c.prepareStatement(sql)) {
+			pstmt.setInt(1, consultorio);
+			pstmt.setString(3, nombre);
+			pstmt.setString(3, apellido);
+			pstmt.setString(4, especialidad);
+			pstmt.setInt(5,documento);
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			try {
 				c.rollback();

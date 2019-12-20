@@ -54,7 +54,7 @@ public class AltaPanel extends AbstractPanel{
 		});
 		this.add(botonEnviar);
 	}
-	@Override
+	
 	public void setActionAlta(PacientePanel panel) {
 		this.add(txtEmail = new TextboxItem("Email", 25));
 		

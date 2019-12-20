@@ -81,7 +81,7 @@ public class Handler{
 	
 	public void IngresarPacienteCompleto(Paciente p) {
 		try {
-			getPacienteBO().ValidarPacienteNuevo(p);
+			getPacienteBO().IngresarPacienteNuevo(p);
 			ingresoOk("Se ingreso Paciente correctamente.");
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -90,7 +90,7 @@ public class Handler{
 	
 	public void borrarPacienteByDocumento(Paciente p) {
 		try {
-			getPacienteBO().validarPacientebyDocumento(p);//TODO Ver de si no encuentra no diga que borró.
+			getPacienteBO().borrarPacientebyDocumento(p);//TODO Ver de si no encuentra no diga que borró.
 			borradoOk(p);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -109,7 +109,7 @@ public class Handler{
 	
 	public Paciente buscarPaciente(Paciente p) {
 		try {
-			p=getPacienteBO().validarPacienteporBusqueda(p);
+			p=getPacienteBO().obtenerPacienteporBusqueda(p);
 			if (p.getNombre()==null) {
 				actualizadoError();
 			}
@@ -131,7 +131,7 @@ public class Handler{
 
 	public void ingresarMedicoCompleto(Medico m) {
 		try {
-			getMedicoBO().ValidarMedicoNuevo(m);// estos dos metodos al handler y que no corran desde el bo, sino del handler como ingresook
+			getMedicoBO().ingresarMedicoNuevo(m);// estos dos metodos al handler y que no corran desde el bo, sino del handler como ingresook
 			ingresoOk("Se ingreso Medico correctamente.");
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -140,7 +140,7 @@ public class Handler{
 	
 	public void borrarMedicoByDocumento(Medico m) {
 		try {
-			getMedicoBO().validarMedicobyDocumento(m);
+			getMedicoBO().borrarMedicoporDocumento(m);
 			borradoOk(m);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -159,7 +159,7 @@ public class Handler{
 	
 	public Medico buscarMedico(Medico m) {
 		try {
-			m=getMedicoBO().validarMedicoporBusqueda(m);
+			m=getMedicoBO().obtenerMedicoporDocumento(m);
 			if (m.getNombre()==null) {
 				actualizadoError();
 			}
@@ -180,7 +180,7 @@ public class Handler{
 	
 	public void crearTurnos(Turno turno) {
 		try {
-			getTrunoBO().CrearTurnosMedico(turno);
+			getTrunoBO().crearTurnosNuevo(turno);
 			actualizadoOk(turno);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
@@ -190,7 +190,7 @@ public class Handler{
 	public List <Date> buscarTurnosLibres(Turno buscaturno) {
 		List<Date> turnoslibres = null;
 		try {
-			turnoslibres=getTrunoBO().BuscarTurnosLibres(buscaturno);
+			turnoslibres=getTrunoBO().buscarTurnosLibres(buscaturno);
 		} catch (BusinessException e) {
 			handleBusinessException(e);
 		}
@@ -200,7 +200,7 @@ public class Handler{
 	
 	public void reservarTurnolibre(Turno turno) {
 		try {
-			getTrunoBO().ReservaTurno(turno);
+			getTrunoBO().reservaTurno(turno);
 			turnoIngresadoOk(turno);
 		} catch (BusinessException e){
 			handleBusinessException(e);

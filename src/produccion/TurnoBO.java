@@ -22,10 +22,11 @@ public class TurnoBO {
 	}
 	
 
-	public void CrearTurnosMedico(Turno turno) throws BusinessException {
+	public void crearTurnosNuevo(Turno turno) throws BusinessException {
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		Date turnohora = null;
+		int diaslimite = 12; //dias a futuro para ofrecer turnos
 		try {
 			turnohora = df.parse(turno.getFecha_hora());
 		} catch (ParseException e1) {
@@ -38,21 +39,21 @@ public class TurnoBO {
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		
 		cal.set(year, month, day, 8, 0);//FORMATO INICIAL
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < diaslimite; i++) {
 			turnohora=cal.getTime();
 			turno.setFecha_hora(df.format(turnohora));
-			miDao.CrearTurnosMedicos(turno);
+			miDao.CrearTurnosMedicos(Integer.valueOf(turno.getdocumentoMedico()),turno.getFecha_hora(),Integer.valueOf(turno.getdocumentoPaciente()),Integer.valueOf(turno.getConsultorio()),0);
 			cal.add(Calendar.MINUTE, 30);
 			
 		}
 	}
 
 
-	public List<Date> BuscarTurnosLibres(Turno buscaturno) throws BusinessException  {
+	public List<Date> buscarTurnosLibres(Turno buscaturno) throws BusinessException  {
 		List<Date> retornalistafechas = new ArrayList<Date>() ;
 		List<String> turnoslibresStr = null;
 		Date turnofechahora = null;
-		turnoslibresStr=miDao.BuscarTurnos(buscaturno);
+		turnoslibresStr=miDao.BuscarTurnos(Integer.valueOf(buscaturno.getdocumentoMedico()),buscaturno.getFecha_hora(),Integer.valueOf(buscaturno.getdocumentoPaciente()),Integer.valueOf(buscaturno.getConsultorio()),0);
 		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 		
@@ -69,7 +70,7 @@ public class TurnoBO {
 	}
 
 
-	public void ReservaTurno(Turno turno) throws BusinessException {
-		miDao.ReservaTurno(turno);
+	public void reservaTurno(Turno turno) throws BusinessException {
+		miDao.ReservaTurno(Integer.valueOf(turno.getdocumentoMedico()),turno.getFecha_hora(),Integer.valueOf(turno.getdocumentoPaciente()),Integer.valueOf(turno.getConsultorio()),Integer.valueOf(turno.getReservado()));
 		}
 }

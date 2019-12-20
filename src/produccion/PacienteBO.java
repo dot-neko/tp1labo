@@ -10,83 +10,64 @@ import excepciones.BusinessException;
 public class PacienteBO {
 
 	private PacienteDAO miDao;
-	
+
 	public PacienteBO(PacienteDAO pacienteDao) {
 		this.miDao = pacienteDao;
 	}
-	
 
-	public void ValidarPacienteNuevo(Paciente p) throws BusinessException{
+	public void IngresarPacienteNuevo(Paciente p) throws BusinessException{
+
+		int documento = validarDocumentoPaciente(p.getDocumento());
+		miDao.insertarPacientes(documento,p.getNombre(),p.getApellido(),p.getEmail());
+
+	}
+
+	public void borrarPacientebyDocumento(Paciente p) throws BusinessException {
 		
-			int documento;
-			
-			try {
-				documento = Integer.valueOf(p.getDocumento());
-			} catch (NumberFormatException e1) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
-			}
-			
-			if (documento >0 && documento<100000000) {
-				miDao.insertarPacientes(p);
-			}
-			else{
-				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-			}
+		int documento = validarDocumentoPaciente(p.getDocumento());
+		miDao.deletePacienteByDocumento(documento);
 	}
-	
-	public void validarPacientebyDocumento(Paciente p) throws BusinessException {
-		int documento;
-		try {
-			documento = Integer.valueOf(p.getDocumento());
-		} catch (NumberFormatException e1) {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
-		}
-		if (documento>0 && documento<100000000) {
-			miDao.deletePacienteByDocumento(String.valueOf(documento));
-		}else {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-		}
-	}
-	
-	
+
+
 	public List<Paciente> getAllPacientes() throws BusinessException{
+		
 		List <Paciente> pac = null;
 		pac= miDao.getAllPacientes();
 		return pac;
 	}
-	
-	
-	public Paciente validarPacienteporBusqueda(Paciente p) throws BusinessException {
-			int documento;
-			try {
-				documento = Integer.valueOf(p.getDocumento());
-			} catch (NumberFormatException e) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
-			}
-			if (documento>0 && documento<100000000) {
-				p=miDao.getPacienteByDocumento(String.valueOf(documento));
-					if (p==null) {
-						p = new Paciente(String.valueOf(documento));
-						}
-			}else {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-			}
-			
+
+	public Paciente obtenerPacienteporBusqueda(Paciente p) throws BusinessException {
+		
+		int documento = validarDocumentoPaciente(p.getDocumento());
+		p=miDao.getPacienteByDocumento(documento);
+		p=validarPaciente(p,documento);
 		return p;
 	}
+	
 	public void updatePaciente(Paciente p) throws BusinessException {
-		int documento;
+		int documento = validarDocumentoPaciente(p.getDocumento());
+		miDao.updateUsuarioByDocumento(documento,p.getNombre(),p.getApellido(),p.getEmail());
+	}
+
+	
+	public int validarDocumentoPaciente(String doc)throws BusinessException{
 		try {
-			documento = Integer.valueOf(p.getDocumento());
-		} catch (NumberFormatException e) {
+			int documento = Integer.valueOf(doc);
+			if (documento >0 && documento<100000000) {
+				return documento;
+			}
+			else{
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
+			}
+		} catch (NumberFormatException e1) {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 		}
-		if (documento>0 && documento<100000000) {
-			miDao.updateUsuarioByDocumento(p);
-		}else {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-		}
-		
 	}
-	
+
+	public Paciente validarPaciente(Paciente p, int documento) {
+		if (p==null) {
+			p = new Paciente(String.valueOf(documento));
+		}
+		return p;
+	}
 }

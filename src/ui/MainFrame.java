@@ -67,7 +67,12 @@ public class MainFrame extends JFrame{
         modificacionpacientes.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new ModificacionPanel(miHandler),"Modificación Pacientes");
+				PacientePanel pp = null;
+				String title ="Modificar Pacientes";
+				ModificacionPanel panel = new ModificacionPanel(miHandler);
+				panel.setActionSearch(pp);
+				panel.setActionUpdate(pp);
+				miHandler.setCustomJPanel(panel,title);
 			}
 		});
         
@@ -124,7 +129,12 @@ public class MainFrame extends JFrame{
         modificacionmedicos.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				miHandler.setCustomJPanel(new ModificacionPanel(miHandler),"Modificar Medicos");
+				MedicoPanel mp = null;
+				String title ="Modificar Medico";
+				ModificacionPanel panel = new ModificacionPanel(miHandler);
+				panel.setActionSearch(mp);
+				panel.setActionUpdate(mp);
+				miHandler.setCustomJPanel(panel,title);
 			}
 		});
         

@@ -19,78 +19,55 @@ public class MedicoBO {
 	
 	//medicos
 	
-	public void ValidarMedicoNuevo(Medico m) throws BusinessException{
+	public void ingresarMedicoNuevo(Medico m) throws BusinessException{
+		int documento = validarDocumentoMedico(m.getDocumento());
+		miDao.insertarMedico(documento,Integer.valueOf(m.getConsultorio()),m.getNombre(),m.getApellido(),m.getEspecialidad());
 		
-		int documento;
-		
-		try {
-			documento = Integer.valueOf(m.getDocumento());
-		} catch (NumberFormatException e1) {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
-		}
-		
-		if (documento >0 && documento<100000000) {
-			miDao.insertarMedico(m);
-		}
-		else{
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-		}
 	}
 	
-	public void validarMedicobyDocumento(Medico p) throws BusinessException {
-		int documento;
-		try {
-			documento = Integer.valueOf(p.getDocumento());
-		} catch (NumberFormatException e1) {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
-		}
-		if (documento>0 && documento<100000000) {
-			miDao.deletemedicoByDocumento(String.valueOf(documento));
-		}else {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-		}
+	public void borrarMedicoporDocumento(Medico m) throws BusinessException {
+		int documento = validarDocumentoMedico(m.getDocumento());
+		miDao.deletemedicoByDocumento(documento);
+		
 	}
 	
 	public List<Medico> getAllMedicos() throws BusinessException{
 		List <Medico> medicos = null;
 		medicos= miDao.getAllMedicos();
-		
 		return medicos;
 	}
 	
 
-	public Medico validarMedicoporBusqueda(Medico m) throws BusinessException {
-			int documento;
-			try {
-				documento = Integer.valueOf(m.getDocumento());
-			} catch (NumberFormatException e) {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
-			}
-			if (documento>0 && documento<100000000) {
-				m=miDao.getMedicoByDocumento(String.valueOf(documento));
-				if (m==null) {
-					m = new Medico(String.valueOf(documento));
-				}
-			}else {
-				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
-			}
-			
+	public Medico obtenerMedicoporDocumento(Medico m) throws BusinessException {
+		int documento = validarDocumentoMedico(m.getDocumento());
+		m=miDao.getMedicoByDocumento(documento);
+		m=validarMedico(m, documento);
 		return m;
 	}
 	public void updateMedico(Medico m) throws BusinessException {
-		int documento;
+		int documento = validarDocumentoMedico(m.getDocumento());
+		miDao.updateMedicoByDocumento(documento,Integer.valueOf(m.getConsultorio()),m.getNombre(),m.getApellido(),m.getEspecialidad());
+	}
+
+	public int validarDocumentoMedico(String doc)throws BusinessException{
 		try {
-			documento = Integer.valueOf(m.getDocumento());
-		} catch (NumberFormatException e) {
+			int documento = Integer.valueOf(doc);
+			if (documento >0 && documento<100000000) {
+				return documento;
+			}
+			else{
+				throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
+			}
+		} catch (NumberFormatException e1) {
 			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMERO,BusinessException.GENERICO);
 		}
-		if (documento>0 && documento<100000000) {
-			miDao.updateMedicoByDocumento(m);
-		}else {
-			throw new BusinessException(BusinessException.TITULO,BusinessException.ERRNUMEROINVALIDO,BusinessException.GENERICO);
+	}
+
+	public Medico validarMedico(Medico m, int documento) {
+		if (m==null) {
+			m = new Medico(String.valueOf(documento));
 		}
-		
+		return m;
 	}
 
-
-	}
+}
