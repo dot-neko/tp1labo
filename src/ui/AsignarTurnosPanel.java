@@ -26,14 +26,14 @@ public class AsignarTurnosPanel extends JPanel{
 	List <Medico> listadomedicos;
 	List <Paciente> listadopacientes;
 	List <Date> listadodate;
-	private String documentomedico;
-	private String documentopaciente;
-	private String consultorio;
+
 	private String fecha;
-	private String reservado="1";
+	private String reservado;
 	private JComboBox<PacienteItem> comboPaciente;
 	private JComboBox<MedicoItem> comboMedico;
 	private JComboBox<DateTimeItem> comboFecha;
+	private Medico medico;
+	private Paciente paciente;
 
 	private JButton botonAgendar;
 	private JButton botonEnviar;
@@ -58,7 +58,7 @@ public class AsignarTurnosPanel extends JPanel{
 
 		//MEDICOS
 		this.add(new JLabel("Buscar Medico : "));
-		
+
 		comboMedico.setPreferredSize(new Dimension(200,25));
 		for (Medico medico : listadomedicos) {
 			comboMedico.addItem(new MedicoItem(medico));
@@ -68,10 +68,10 @@ public class AsignarTurnosPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				MedicoItem medicoseleccion= (MedicoItem) getComboMedicos().getSelectedItem();
 				Medico medico = (Medico) medicoseleccion.getMedico();
-				String documento = medico.getDocumento();
-				setDocumentoMedico(documento);
+				setMedico(medico);
+				Turno buscaturno = new Turno(medico,fecha);
+
 				getCajacombofecha().removeAllItems();
-				Turno buscaturno = new Turno(documentomedico,fecha);
 				listadodate=getHandler().buscarTurnosLibres(buscaturno);
 				//Rellena Combobox Fechas
 				for (Date date : listadodate) {
@@ -82,24 +82,14 @@ public class AsignarTurnosPanel extends JPanel{
 		this.add(comboMedico);
 		comboMedico.setSelectedIndex(0);
 		comboMedico.setMaximumSize(comboMedico.getPreferredSize());
-/*
-		botonEnviar= new JButton("Buscar");
-		botonEnviar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) { 
-				
 
-			}
-		});
-		this.add(botonEnviar);
-*/
 		//FECHAS
 		this.add(new JLabel("Elegir fecha de turno: "));
-		
 		comboFecha.setPreferredSize(new Dimension(200,25));
 		comboFecha.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				while (getCajacombofecha().getItemCount()>0) {
+				if ((DateTimeItem) getCajacombofecha().getSelectedItem() != null) {
 					DateTimeItem fechaseleccionada= (DateTimeItem) getCajacombofecha().getSelectedItem();
 					Date fechalocal = fechaseleccionada.getDate();
 					setFecha(fechalocal);
@@ -107,14 +97,13 @@ public class AsignarTurnosPanel extends JPanel{
 			}
 		});
 		this.add(comboFecha);
-		/*comboFecha.setSelectedIndex(0);*/
 		comboFecha.setMaximumSize(comboFecha.getPreferredSize() );
 
 
 		//PACIENTES
 		this.add(new JLabel("Buscar Paciente : "));
 
-		
+
 		comboPaciente.setPreferredSize(new Dimension(200,25));
 
 		for (Paciente paciente : listadopacientes) {
@@ -126,97 +115,84 @@ public class AsignarTurnosPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				PacienteItem pacienteseleccion= (PacienteItem) getComboPaciente().getSelectedItem();
 				Paciente paciente = (Paciente) pacienteseleccion.getPaciente();
-				String documento = paciente.getDocumento();
-				setDocumentoPaciente(documento);
+				setPaciente(paciente);
 			}
-
 		});
 		this.add(comboPaciente);
 		comboPaciente.setSelectedIndex(0);								//primero de la lista
 		comboPaciente.setMaximumSize(comboPaciente.getPreferredSize());
 
-
+		setReservado(1);
 		botonAgendar= new JButton("Agendar");
 		botonAgendar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) { 
-				Turno turno = new Turno(getDocumentoMedico(), getDocumentoPaciente(), getFecha(), getConsultorio(), getReservado());
+				String fechaHora =getFecha();
+				String reservado = getReservado();
+				Medico medico = getMedico();
+				Paciente paciente =getPaciente();
+				Turno turno = new Turno(fechaHora, reservado, medico, paciente);
 				getHandler().reservarTurnolibre(turno);
-				//Rellena Combobox Fechas
-
-
 			}
 		});
 		this.add(botonAgendar);
 
-		//Configuracion de panel
-		this.setSize(300,  200);
-		this.setLocation(0,20);
-		this.setVisible(true);
 	}
 
 
+	//botones
+	public JButton getButtonEnviar(){
+		return botonEnviar;
+	}
+
+	public Handler getHandler() {
+		return handler;
+	}
+
+	protected JComboBox<MedicoItem> getComboMedicos() {
+		return comboMedico;
+	}
+
+	protected JComboBox<PacienteItem> getComboPaciente() {
+		return comboPaciente;
+	}
+
+	protected JComboBox<DateTimeItem> getCajacombofecha() {
+		return comboFecha;
+	}
 
 
+	private String getFecha() {
+		return fecha;
+	}
 
+	public void setFecha(Date fechaseleccionada)  {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+		String turnohora = df.format(fechaseleccionada);
+		this.fecha = turnohora;
+	}
 
-//botones
-public JButton getButtonEnviar(){
-	return botonEnviar;
-}
+	private String getReservado() {
+		return reservado;
+	}
+	private void setReservado(int i) {
+		this.reservado = String.valueOf(reservado);
+	}
 
-public Handler getHandler() {
-	return handler;
-}
+	private Medico getMedico() {
+		return medico;
+	}
 
-protected JComboBox<MedicoItem> getComboMedicos() {
-	return comboMedico;
-}
+	private void setMedico(Medico medico) {
+		this.medico = medico;
+	}
 
-protected JComboBox<PacienteItem> getComboPaciente() {
-	return comboPaciente;
-}
+	private Paciente getPaciente() {
+		return paciente;
+	}
 
-protected JComboBox<DateTimeItem> getCajacombofecha() {
-	return comboFecha;
-}
-
-protected void setDocumentoMedico(String documento) {
-	this.documentomedico = documento;
-}
-
-protected String getDocumentoMedico() {
-	return documentomedico;
-}
-
-protected void setDocumentoPaciente(String documento) {
-	this.documentopaciente = documento;
-}
-
-protected String getDocumentoPaciente() {
-	return documentopaciente;
-}
-
-public String getFecha() {
-	return fecha;
-}
-
-public void setFecha(Date fechaseleccionada) {
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-	String turnohora = df.format(fechaseleccionada);
-	this.fecha = turnohora;
-}
-
-public String getConsultorio() {
-	return consultorio;
-}
-
-public void setConsultorio(String consultorio) {
-	this.consultorio = consultorio;
-}
-
-public String getReservado() {
-	return reservado;
-}
+	private void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
 }
 
 

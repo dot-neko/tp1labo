@@ -49,7 +49,7 @@ public class MedicoBO {
 		miDao.updateMedicoByDocumento(documento,Integer.valueOf(m.getConsultorio()),m.getNombre(),m.getApellido(),m.getEspecialidad());
 	}
 
-	public int validarDocumentoMedico(String doc)throws BusinessException{
+	private int validarDocumentoMedico(String doc)throws BusinessException{
 		try {
 			int documento = Integer.valueOf(doc);
 			if (documento >0 && documento<100000000) {
@@ -63,7 +63,7 @@ public class MedicoBO {
 		}
 	}
 
-	public Medico validarMedico(Medico m, int documento) {
+	private Medico validarMedico(Medico m, int documento) {
 		if (m==null) {
 			m = new Medico(String.valueOf(documento));
 		}

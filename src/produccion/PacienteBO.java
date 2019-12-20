@@ -50,7 +50,7 @@ public class PacienteBO {
 	}
 
 	
-	public int validarDocumentoPaciente(String doc)throws BusinessException{
+	private int validarDocumentoPaciente(String doc)throws BusinessException{
 		try {
 			int documento = Integer.valueOf(doc);
 			if (documento >0 && documento<100000000) {
@@ -64,7 +64,7 @@ public class PacienteBO {
 		}
 	}
 
-	public Paciente validarPaciente(Paciente p, int documento) {
+	private Paciente validarPaciente(Paciente p, int documento) {
 		if (p==null) {
 			p = new Paciente(String.valueOf(documento));
 		}

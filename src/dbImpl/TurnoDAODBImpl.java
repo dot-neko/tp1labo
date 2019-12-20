@@ -21,17 +21,17 @@ public class TurnoDAODBImpl implements TurnoDAO {
 	}
 
 	@Override
-	public void CrearTurnosMedicos(int docmed, String turno, int docpac, int consultorio, int reservado) throws BusinessException {
-		String sql = "INSERT INTO turno (documento_medico, fecha_hora, consultorio, reservado) "
+	public void CrearTurnosMedicos(int docmed, String turno, int consultorio, int reservado) throws BusinessException {
+		String sql = "INSERT INTO turno (documento_medico, fecha_hora, consultorio, reservado)"
 				+ "VALUES (?,?,?,?)";
 		Connection c = DBManager.getInstance().connect();
 		try(PreparedStatement pstmt= c.prepareStatement(sql)) {
 			pstmt.setInt(1,docmed);
 			pstmt.setString(2, turno);
-			pstmt.setInt(3, docpac);
-			pstmt.setInt(4, consultorio);
-			pstmt.setInt(5, reservado);
+			pstmt.setInt(3, consultorio);
+			pstmt.setInt(4, reservado);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -48,20 +48,18 @@ public class TurnoDAODBImpl implements TurnoDAO {
 		}
 	}
 
-	public List<String> BuscarTurnos(int docmed, String turno, int docpac, int consultorio, int reservado) throws BusinessException {
+	public List<String> BuscarTurnos(int docmed) throws BusinessException {
 		List<String> respuesta = new ArrayList<String>();
 		String sql = "SELECT * FROM turno WHERE documento_medico = ? AND reservado = ?";
 		Connection c = DBManager.getInstance().connect();
 		try (PreparedStatement pstmt= c.prepareStatement(sql)){
 			pstmt.setInt(1,docmed);
-			pstmt.setInt(2, 0);
-			pstmt.executeUpdate();
+			pstmt.setInt(2,0);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				String fecha_hora = rs.getString("fecha_hora");
 				respuesta.add(fecha_hora);
 			}
-			c.commit();
 		} catch (SQLException e) {
 			throw new BusinessException(BusinessException.TITULO, e.getMessage(), BusinessException.TYPE_SQL);
 			
@@ -77,7 +75,7 @@ public class TurnoDAODBImpl implements TurnoDAO {
 	}
 
 	@Override
-	public void ReservaTurno(int docmed, String turno, int docpac, int consultorio, int reservado) throws BusinessException{
+	public void ReservaTurno(int docmed, String turno, int docpac, int reservado) throws BusinessException{
 		String sql = "UPDATE turno set documento_paciente = ?, reservado = ? WHERE fecha_hora = ? AND documento_medico = ?";
 		Connection c = DBManager.getInstance().connect();
 		try(PreparedStatement pstmt= c.prepareStatement(sql)) {
@@ -86,6 +84,7 @@ public class TurnoDAODBImpl implements TurnoDAO {
 			pstmt.setString(3, turno);
 			pstmt.setInt(4, docmed);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();

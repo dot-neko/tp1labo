@@ -28,6 +28,7 @@ public class PacienteDAODBImpl implements PacienteDAO {
 		try (PreparedStatement pstmt= c.prepareStatement(sql)){
 			pstmt.setInt(1,documento);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -114,6 +115,7 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			pstmt.setString(3, apellido);
 			pstmt.setString(4, email);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -141,6 +143,7 @@ public class PacienteDAODBImpl implements PacienteDAO {
 			pstmt.setString(3, email);
 			pstmt.setInt(4,documento);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();

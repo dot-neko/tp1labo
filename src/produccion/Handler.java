@@ -270,10 +270,10 @@ public class Handler{
 		JOptionPane.showMessageDialog(null, "Se actualizo Medico " + m.getDocumento() + " correctamente.");
 	}
 	protected void actualizadoOk(Turno t) {
-		JOptionPane.showMessageDialog(null, "Se ingreso correctamente los turnos para el día " + t.getFecha_hora());
+		JOptionPane.showMessageDialog(null, "Se ingreso correctamente los turnos para el día " + t.getfechaHora());
 	}
 	protected void turnoIngresadoOk(Turno t) {
-		JOptionPane.showMessageDialog(null, "Se asignó correctamente el turno para el dia " + t.getFecha_hora() + ""
+		JOptionPane.showMessageDialog(null, "Se asignó correctamente el turno para el dia " + t.getfechaHora() + ""
 										+ "para el paciente "+ t.getdocumentoPaciente()+".");
 	}
 	protected void actualizadoError() {

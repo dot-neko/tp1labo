@@ -3,66 +3,47 @@ package entidades;
 
 public class Turno {
 	
-	private String documentoMedico;
-	private String fecha_hora;
-	private String documentoPaciente;
-	private String consultorio;
+	private Paciente paciente;
+	private Medico medico;
+	private String fechaHora;
 	private String reservado;
 	
-	public Turno(String documentoMedico, String turno, String consultorio, String reservado) {
-		this.documentoMedico = documentoMedico;
-		this.fecha_hora = turno;
-		this.consultorio = consultorio;
+	public Turno(String fechaHora, String reservado, Medico medico) {
+		this.fechaHora = fechaHora;
 		this.reservado = reservado;
+		this.medico=medico;
 	}
 	
-	public Turno(String documentoMedico, String documentoPaciente, String turno, String consultorio, String reservado) {
-		this.documentoPaciente = documentoPaciente;
-		this.documentoMedico = documentoMedico;
-		this.fecha_hora = turno;
-		this.consultorio = consultorio;
+	public Turno(String fechaHora, String reservado, Medico medico, Paciente paciente) {
+		this.fechaHora = fechaHora;
 		this.reservado = reservado;
+		this.medico=medico;
+		this.paciente=paciente;
 	}
 	
-	public Turno(String documentoMedico, String fecha) {
-		this.documentoMedico = documentoMedico;
-		this.fecha_hora = fecha;
-	}
-	
-	public void setdocumentoMedico(String documentoMedico) {
-		this.documentoMedico = documentoMedico;
-	}
-
-	public void setConsultorio(String consultorio) {
-		this.consultorio = consultorio;
+	public Turno(Medico medico, String fecha) {
+		this.fechaHora = fecha;
+		this.medico=medico;
 	}
 
 	public String getdocumentoMedico() {
-		return documentoMedico;
+		return medico.getDocumento();
 	}
 
-	public String getFecha_hora() {
-		return fecha_hora;
+	public String getfechaHora() {
+		return fechaHora;
 	}
 	public void setFecha_hora(String turno) {
-		this.fecha_hora = turno;
+		this.fechaHora = turno;
 	}
 
 	public String getdocumentoPaciente() {
-		return documentoPaciente;
-	}
-	public void setdocumentoPaciente(String documentoPaciente) {
-		this.documentoPaciente = documentoPaciente;
+		return paciente.getDocumento();
 	}
 	public String getConsultorio() {
-		return consultorio;
+		return medico.getConsultorio();
 	}
 	public String getReservado() {
 		return reservado;
 	}
-	public void setReservado(String reservado) {
-		this.reservado = reservado;
-	}
-	
-	
 }

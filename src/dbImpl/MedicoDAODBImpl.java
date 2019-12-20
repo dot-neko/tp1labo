@@ -28,6 +28,7 @@ public class MedicoDAODBImpl implements MedicoDAO {
 		try (PreparedStatement pstmt= c.prepareStatement(sql)){
 			pstmt.setInt(1,documento);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -116,6 +117,7 @@ public class MedicoDAODBImpl implements MedicoDAO {
 			pstmt.setString(4, apellido);
 			pstmt.setString(5, especialidad);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
@@ -144,6 +146,7 @@ public class MedicoDAODBImpl implements MedicoDAO {
 			pstmt.setString(4, especialidad);
 			pstmt.setInt(5,documento);
 			pstmt.executeUpdate();
+			c.commit();
 		} catch (SQLException e) {
 			try {
 				c.rollback();
